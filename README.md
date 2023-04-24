@@ -1,7 +1,5 @@
 # meduzzen-frontend-internship
 
-# meduzzen-frontend-internship
-
 ### Hello! Let`s go started
 
 To run project in your device follow this few steps:
