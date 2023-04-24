@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main-page{
+    margin: 0;
+    width: 100%;
+    min-height: 600px;
+    background-color: #42a5f5;
+    color: white;
+    text-align: center;
+}
+
+.main-page-heading{
+    text-transform: uppercase;
+    padding: 100px 100px 50px;
+    font-size: 4rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+.main-page-greeting{
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+.main-page-wave{
+    margin-top: -300px;
+}
