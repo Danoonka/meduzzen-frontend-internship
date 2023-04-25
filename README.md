@@ -33,3 +33,27 @@ npm start
 
 
 ### Congratulations! Have a nice surfing!
+
+## 
+
+### Let`s try with docker!
+
+requirments:
+- Docker(latest version)
+
+1. Follow 1-3 steps from previous instruction
+
+2. Build project image. Use command:
+```
+docker build -t <container name>
+```
+3. Run project image by command:
+```
+docker run -e WATCHPACK_POLLING=true -v <full path to project>:/app -d -p 3000:3000 --name <container name> <image name>
+```
+4. Type in search string, and wait few minutes:
+[http://localhost:3000/](http://localhost:3000/)
+
+### Happy codding!
+
+
