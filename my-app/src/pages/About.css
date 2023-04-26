@@ -1,0 +1,57 @@
+.about-page{
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
+.about-page-description{
+    font-size: 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    width: 800px;
+    margin: 0 auto;
+}
+.about-page-users, .about-page-companies{
+    min-height: 400px;
+}
+
+.about-page-users h2, .about-page-companies h2{
+    margin-left: 100px ;
+    color:#42a5f5;
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    font-size: 2rem;
+}
+
+.about-page-users-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.about-page-users-img{
+    margin-left: 200px;
+    margin-top: 50px ;
+    width: 30%;
+    height: 30%;
+}
+.about-page-users-description, .about-page-companies-description {
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    text-align: center;
+    margin-right: 150px;
+    margin-top: 200px;
+    font-size: 1.5rem;
+    color:#42a5f5;
+}
+
+.about-page-companies h2{
+    margin-left: 900px ;
+
+}
+
+.about-page-companies-description{
+    margin-left: 200px;
+}
+
+.about-page-companies-img{
+    margin-right: 150px;
+    margin-top: 50px;
+}
+
+
