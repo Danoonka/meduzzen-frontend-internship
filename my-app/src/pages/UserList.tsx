@@ -1,6 +1,7 @@
 import React from 'react';
 import aboutPageCompanyImg from '../assets/about-page-company-img.png'
 import {Link} from "react-router-dom";
+import './UserList.css'
 
 const UserList = () => {
     const userList = [
@@ -12,12 +13,12 @@ const UserList = () => {
     ]
     const users = userList.map((item) =>
             <Link to='/userProfile' key={item.id} state={{data: item}}>
-                <div>
+                <div className="user-item-container">
                     <img src={item.user_avatar} alt="user avatar"/>
                     <div>
                         <h4>{item.user_firstname} {item.user_lastname}</h4>
-                        <p>{item.user_status}</p>
-                        <p>{item.user_city}</p>
+                        <p>Status: {item.user_status}</p>
+                        <p>Location: {item.user_city}</p>
                     </div>
                 </div>
             </Link>
@@ -25,9 +26,13 @@ const UserList = () => {
 
 
     return (
-        <div className="container">
-            {users}
+        <div>
+            <h3 className="user-list-heading">User List</h3>
+            <div className="user-list-container">
+                {users}
+            </div>
         </div>
+
     );
 };
 

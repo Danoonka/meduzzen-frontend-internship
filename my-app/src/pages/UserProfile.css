@@ -1,0 +1,24 @@
+.user-profile-container{
+    width: 80%;
+    margin: 50px auto;
+    display: flex;
+    min-height: 300px
+}
+
+.user-profile-container img{
+    width: 300px;
+}
+
+.user-profile-container h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    text-align: center;
+
+    font-size: 2rem;
+    color:#42a5f5;
+}
+
+.user-profile-container p{
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    font-size: 1rem;
+    color:#42a5f5;
+}

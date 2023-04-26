@@ -6,12 +6,15 @@ const CompanyProfile = () => {
     const {data} = location.state
 
     return (
-        <div>
+        <div className="user-profile-container">
             <img src={data.company_avatar} alt="company avatar"/>
-            <h2>{data.company_name}</h2>
-            <p>{data.company_email}</p>
-            <p>{data.company_city}</p>
-            <p>{data.company_phone}</p>
+            <div>
+                <h2>{data.company_name}</h2>
+                <p>Email: {data.company_email}</p>
+                <p>Location: {data.company_city}</p>
+                <p>Contacts: {data.company_phone}</p>
+            </div>
+
         </div>
     );
 };

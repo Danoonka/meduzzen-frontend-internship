@@ -3,7 +3,8 @@ import Input from "../utils/Input";
 
 const UserAuthorization = () => {
     return (
-        <div>
+        <div className="input-container">
+            <h2>Log in</h2>
             <form action="submit">
                 <label>Email</label>
                 <Input/>

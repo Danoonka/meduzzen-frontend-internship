@@ -15,11 +15,11 @@ const CompanyList = () => {
     ]
     const companies = companyList.map((item) =>
         <Link to='/companyProfile' key={item.id} state={{data: item}}>
-            <div>
+            <div className="user-item-container">
                 <img src={item.company_avatar} alt="company avatar"/>
                 <div>
                     <h4>{item.company_name}</h4>
-                    <p>{item.company_city}</p>
+                    <p>Location: {item.company_city}</p>
                 </div>
             </div>
         </Link>
@@ -27,8 +27,12 @@ const CompanyList = () => {
 
     return (
         <div>
-            {companies}
+            <h3 className="user-list-heading">Companies List</h3>
+            <div className="user-list-container">
+                {companies}
+            </div>
         </div>
+
     );
 };
 
