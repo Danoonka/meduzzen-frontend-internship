@@ -1,0 +1,11 @@
+.page-404{
+    margin: 100px auto;
+    width: 400px;
+    text-align: center;
+}
+.page-404 h2{
+    text-transform: uppercase;
+    font-size: 6rem;
+    color: #42a5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}

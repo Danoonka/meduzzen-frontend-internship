@@ -1,9 +1,12 @@
 import React from 'react';
 import './Input.css'
 
-const Input = () => {
+const Input = (props: any) => {
     return (
-        <input className="default-input" type="text"/>
+        <>
+            <label>{props.props}</label>
+            <input className="default-input" type="text"/>
+        </>
     );
 };
 

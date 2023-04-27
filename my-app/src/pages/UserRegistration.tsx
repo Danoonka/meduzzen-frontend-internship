@@ -3,21 +3,16 @@ import Input from "../utils/Input";
 import './UserRegistration.css'
 
 const UserRegistration = () => {
-    const [newUser, setNewUser] = useState({})
+    const registrationFields = ["Email", "Password", "Repeat Password", "First Name", "Last Name"]
+
+    const fields = registrationFields.map(item =>
+        <Input props={item}/>
+    )
     return (
         <div className="input-container">
             <h2>Create account</h2>
             <form action="submit">
-                <label>Email</label>
-                <Input/>
-                <label>Password</label>
-                <Input/>
-                <label>Repeat Password</label>
-                <Input/>
-                <label>First Name</label>
-                <Input/>
-                <label>Last Name</label>
-                <Input/>
+                {fields}
                 <input type="submit" value="Submit"/>
             </form>
         </div>
