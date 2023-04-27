@@ -18,7 +18,7 @@ function App() {
 
       <Mock>
           <Routes>
-              <Route path="/" element={<MainPage />}/>
+              <Route path="/meduzzen-demo" element={<MainPage />}/>
               <Route path="/about" element={ <About/>}/>
               <Route path="/userList" element={ <UserList/>}/>
               <Route path="/userProfile" element={ <UserProfile/>}/>

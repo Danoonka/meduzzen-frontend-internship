@@ -10,7 +10,7 @@ const NavBar = () => {
     const [isAuth, setIsAuth] = useState(false)
     return (
         <nav className="nav">
-            <a href="/" className="nav-title">INK</a>
+            <a href="/meduzzen-demo" className="nav-title">INK</a>
             <ul>
                 <li><Link  to="/about"> About</Link></li>
                 <li><Link to="/userList">User List</Link></li>
