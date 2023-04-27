@@ -16,7 +16,7 @@ const UserList = () => {
 
     ]
     const users = userList.map((item) =>
-            <UserItem props ={item}/>
+            <UserItem userData ={item}/>
     )
 
     return (

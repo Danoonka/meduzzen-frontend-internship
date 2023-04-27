@@ -15,7 +15,7 @@ const CompanyList = () => {
         {id: 6,  "company_name": "string", "company_avatar": aboutPageCompanyImg,  "company_city": "string"},
     ]
     const companies = companyList.map((item) =>
-       <CompanyItem props ={item}/>
+       <CompanyItem companyData ={item}/>
     )
 
     return (
