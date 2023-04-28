@@ -15,7 +15,7 @@ interface CompanyItemProps {
 const CompanyItem: React.FC<CompanyItemProps> = ({companyData}) => {
 
     return (
-        <Link to='/companyProfile' key={companyData.id} state={{data: companyData.id}}>
+        <Link to='/companyProfile'  state={{data: companyData.id}}>
             <div className="user-item-container">
                 <img src={companyData.company_avatar} alt="company avatar"/>
                 <div>
