@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import MainPage from "./pages/MainPage";
 import Mock from "./components/Mock";
@@ -11,8 +11,15 @@ import UserAuthorization from "./pages/UserAuthorization";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import NotFound from "./pages/NotFound";
+import {HealthCheck} from "./api/api";
+import ToastNotify from "./components/ToastNotify";
+
 
 function App() {
+
+    useEffect(()=> {
+        HealthCheck()
+    }, [])
    
   return (
 
@@ -30,6 +37,7 @@ function App() {
               <Route path="/*" element={ <Navigate to="/404"/>}/>
 
           </Routes>
+
       </Mock>
   );
 }

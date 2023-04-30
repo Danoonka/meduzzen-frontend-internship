@@ -16,20 +16,18 @@ const NavBar = () => {
                 <li><Link to="/userList">User List</Link></li>
                 <li><Link to="/companyList">Company List</Link></li>
             </ul>
-            {!isAuth &&
-            <div>
-                <Link to='/userRegistration'>
-                    <Button>Sign up</Button>
+            {isAuth
+                ?   <Link to='/userProfile' state={{data: user}}>
+                    <Button>User Name</Button>
                 </Link>
-
-                <Link to='/userAuthorization'>
-                    <Button>Login in </Button>
-                </Link>
-            </div> }
-            {isAuth &&
-            <Link to='/userProfile' state={{data: user}}>
-                <Button>User Name</Button>
-            </Link>
+                :   <div>
+                    <Link to='/userRegistration'>
+                        <Button>Sign up</Button>
+                    </Link>
+                    <Link to='/userAuthorization'>
+                        <Button>Login in </Button>
+                    </Link>
+                </div>
             }
         </nav>
     );
