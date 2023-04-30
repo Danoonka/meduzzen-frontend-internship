@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './MainPage.css'
 import Main from "../components/Main";
 import Button from "../utils/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../store/actions";
+import {HealthCheck} from "../api/api";
 
 
 interface RootState {
