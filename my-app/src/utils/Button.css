@@ -1,0 +1,18 @@
+.universal-button{
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.universal-button:hover {
+    background-color: white;
+    color: #42a5f5;
+}

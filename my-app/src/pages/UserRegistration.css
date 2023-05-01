@@ -1,0 +1,41 @@
+.input-container{
+    margin: 50px auto;
+    border: 1px solid #42a5f5;
+    width: 500px;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.input-container h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    text-align: center;
+    font-size: 2rem;
+    color:#42a5f5;
+}
+
+.input-container label{
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    text-align: center;
+    font-size: 1rem;
+    color:#42a5f5;
+}
+
+input[type=submit] {
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    margin: 10px 200px;
+}
+
+.input:hover {
+    background-color: white;
+    color: #42a5f5;
+}
