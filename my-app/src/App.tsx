@@ -11,32 +11,37 @@ import UserAuthorization from "./pages/UserAuthorization";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import NotFound from "./pages/NotFound";
-import {HealthCheck} from "./api/api";
-import ToastNotify from "./components/ToastNotify";
+import {useSelector} from "react-redux";
 
+export interface RootState {
+    serverStatus: true;
+    testNumber: 0
+}
 
 function App() {
+    const serverStatus = useSelector((state: RootState) => state.serverStatus);
 
-    useEffect(()=> {
-        HealthCheck()
-    }, [])
-   
-  return (
+
+
+    return (
 
       <Mock>
-          <Routes>
-              <Route path="/meduzzen-demo" element={<MainPage />}/>
-              <Route path="/about" element={ <About/>}/>
-              <Route path="/userList" element={ <UserList/>}/>
-              <Route path="/userProfile" element={ <UserProfile/>}/>
-              <Route path="/companyList" element={ <CompanyList/>}/>
-              <Route path="/companyProfile" element={ <CompanyProfile/>}/>
-              <Route path="/userRegistration" element={ <UserRegistration/>}/>
-              <Route path="/userAuthorization" element={ <UserAuthorization/>}/>
-              <Route path="/404" element={ <NotFound/>}/>
-              <Route path="/*" element={ <Navigate to="/404"/>}/>
+          {serverStatus
+          ? <Routes>
+                  <Route path="/meduzzen-demo" element={<MainPage />}/>
+                  <Route path="/about" element={ <About/>}/>
+                  <Route path="/userList" element={ <UserList/>}/>
+                  <Route path="/userProfile" element={ <UserProfile/>}/>
+                  <Route path="/companyList" element={ <CompanyList/>}/>
+                  <Route path="/companyProfile" element={ <CompanyProfile/>}/>
+                  <Route path="/userRegistration" element={ <UserRegistration/>}/>
+                  <Route path="/userAuthorization" element={ <UserAuthorization/>}/>
+                  <Route path="/404" element={ <NotFound/>}/>
+                  <Route path="/*" element={ <Navigate to="/404"/>}/>
+              </Routes>
+              :  <p className="server-error">Server is not available</p>
+          }
 
-          </Routes>
 
       </Mock>
   );

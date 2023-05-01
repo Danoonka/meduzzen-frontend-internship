@@ -6,8 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
-import {ToastContainer} from "react-toastify";
-import ToastNotify from "./components/ToastNotify";
 
 
 const root = ReactDOM.createRoot(
@@ -17,7 +15,6 @@ root.render(
     <Provider store={store}>
           <BrowserRouter>
               <App />
-              <ToastNotify/>
           </BrowserRouter>
     </Provider>
 );

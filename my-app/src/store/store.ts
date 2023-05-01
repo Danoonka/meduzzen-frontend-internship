@@ -1,15 +1,18 @@
-import { createStore } from 'redux';
+import {applyMiddleware, createStore} from 'redux';
+import thunk from "redux-thunk";
+import {Action} from "./actions";
 
-interface State {
+
+
+export interface State {
     testNumber: number;
+    serverStatus: boolean;
 }
 
-const initialState: State = {
-    testNumber: 0
+export const initialState: State = {
+    testNumber: 0,
+    serverStatus: true,
 };
-
-
-type Action = { type: 'INCREMENT' } | { type: 'DECREMENT' };
 
 
 const reducer = (state: State = initialState, action: Action) => {
@@ -18,9 +21,13 @@ const reducer = (state: State = initialState, action: Action) => {
             return { ...state, testNumber: state.testNumber + 1 };
         case 'DECREMENT':
             return { ...state, testNumber: state.testNumber - 1 };
+        case 'SERVER_OK':
+            return {...state, serverStatus: action.payload};
+        case 'SERVER_FAIL':
+            return {...state, serverStatus: action.payload}
         default:
             return state;
     }
 };
 
-export const store = createStore(reducer);
+export const store = createStore(reducer, applyMiddleware(thunk));

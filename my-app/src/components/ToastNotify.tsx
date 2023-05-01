@@ -4,9 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ToastNotify = () => {
     return (
-        <div>
             <ToastContainer/>
-        </div>
     );
 };
 
