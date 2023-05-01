@@ -6,7 +6,7 @@ const UserRegistration = () => {
     const registrationFields = ["Email", "Password", "Repeat Password", "First Name", "Last Name"]
 
     const fields = registrationFields.map(item =>
-        <Input name={item} label={item}/>
+        <Input name={item} key={item} label={item}/>
     )
     return (
         <div className="input-container">

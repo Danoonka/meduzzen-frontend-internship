@@ -4,7 +4,7 @@ import Input from "../utils/Input";
 const UserAuthorization = () => {
     const authorisationFields = ["Email", "Password"]
     const fields = authorisationFields.map(item =>
-        <Input name={item} label={item}/>
+        <Input name={item} key={item} label={item}/>
     )
     return (
         <div className="input-container">

@@ -27,3 +27,11 @@
 .main-page-wave{
     margin-bottom: -10px;
 }
+
+.button-click{
+    display: flex;
+    width: 400px;
+    margin: 30px auto;
+    align-items: center;
+    justify-content: space-between;
+}
