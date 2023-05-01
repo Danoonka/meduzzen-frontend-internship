@@ -17,7 +17,7 @@ interface UserItemProps {
 const UserItem : React.FC<UserItemProps>= ({userData}) => {
 
     return (
-        <Link to='/userProfile'  state={{data: userData.id}}>
+        <Link to='/userProfile' state={{data: userData.id}}>
             <div className="user-item-container">
                 <img src={userData.user_avatar} alt="user avatar"/>
                 <div>
