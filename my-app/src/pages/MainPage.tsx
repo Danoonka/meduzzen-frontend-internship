@@ -4,11 +4,10 @@ import Main from "../components/Main";
 import Button from "../utils/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../store/actions";
+import {RootState} from "../App";
 
 
-interface RootState {
-    testNumber: number;
-}
+
 
 const MainPage = () => {
 
@@ -24,7 +23,7 @@ const MainPage = () => {
                 <Button onClick={() => dispatch(increment())}>Increment</Button>
                 <Button onClick={() => dispatch(decrement())}>Decrement</Button>
             </div>
-            <p>Test Number: {testNumber}</p>
+            <h2>Test Number: {testNumber}</h2>
         </Main>
 
 
