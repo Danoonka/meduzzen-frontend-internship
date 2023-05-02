@@ -14,7 +14,8 @@ export const decrement = (): Action => ({ type: 'DECREMENT' });
 
 export const checkHealth = (): ThunkAction<void, State, unknown, Action> => {
     return (dispatch: Dispatch) => {
-        instance.get('/')
+        instance
+            .get('/')
             .then(function (response) {
                 dispatch({
                     type: 'SERVER_OK',

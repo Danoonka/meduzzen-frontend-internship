@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import MainPage from "./pages/MainPage";
 import Mock from "./components/Mock";
@@ -21,13 +21,10 @@ export interface RootState {
 function App() {
     const serverStatus = useSelector((state: RootState) => state.serverStatus);
 
-
-
     return (
-
-      <Mock>
+        <Mock>
           {serverStatus
-          ? <Routes>
+              ? <Routes>
                   <Route path="/meduzzen-demo" element={<MainPage />}/>
                   <Route path="/about" element={ <About/>}/>
                   <Route path="/userList" element={ <UserList/>}/>
@@ -41,10 +38,7 @@ function App() {
               </Routes>
               :  <p className="server-error">Server is not available</p>
           }
-
-
-      </Mock>
-  );
+      </Mock>);
 }
 
 export default App;
