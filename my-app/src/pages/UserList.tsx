@@ -1,6 +1,5 @@
 import React from 'react';
 import aboutPageCompanyImg from '../assets/about-page-company-img.png'
-import {Link} from "react-router-dom";
 import './UserList.css'
 import UserItem from "../components/UserItem";
 
