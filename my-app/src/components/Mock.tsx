@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 
 const Mock = ({ children }: { children: React.ReactNode }) => {
+
     return (
         <div>
             <NavBar/>

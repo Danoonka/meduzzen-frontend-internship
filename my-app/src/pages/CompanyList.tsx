@@ -1,6 +1,5 @@
 import React from 'react';
 import aboutPageCompanyImg from "../assets/about-page-company-img.png";
-import CompanyContainer from "../components/CompanyContainer";
 import CompanyItem from "../components/CompanyItem";
 
 
