@@ -6,7 +6,6 @@ import {store} from "../store/store";
 
 const UserProfile: React.FC = () => {
     const {serverData: currentUserdata} = store.getState().currentUser
-    console.log(currentUserdata)
     return (
         <div>
             {currentUserdata && <UserContainer userData={currentUserdata}/>}

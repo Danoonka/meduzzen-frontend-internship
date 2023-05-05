@@ -4,7 +4,12 @@ import {toast} from "react-toastify";
 import Button from "../utils/Button";
 import {useAuth0} from '@auth0/auth0-react';
 import {authTrue, checkAuth, logInUser} from "../store/actions";
-import {getTokenFromLocalStorage, isEmailValid} from "../utils/authorizaton";
+import {
+    getTokenFromLocalStorage,
+    isEmailValid,
+    validUserAuthorization,
+    validUserRegistration
+} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
@@ -30,8 +35,6 @@ const UserAuthorization: React.FC = () => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        const objTg = (authorisationFields.find(obj => obj.id === event.target.id))!
-        event.target.name = objTg.name
         setUser({...user, [event.target.name]: value});
     }
 
@@ -66,14 +69,10 @@ const UserAuthorization: React.FC = () => {
 
     const logIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (!isEmailValid(user.user_email)) {
-            toast.error('Email Invalid!')
-            return
-        }
-        if (!await logInUser(user.user_email, user.user_password)) {
-            return
-        }
-        if (!await checkAuth(getTokenFromLocalStorage())) {
+        if (! await validUserAuthorization(user)){
+            toast.error('Authorisation failed!', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
             return
         }
         toast.success('Welcome!', {

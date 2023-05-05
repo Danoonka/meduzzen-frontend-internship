@@ -43,7 +43,6 @@ function App() {
 
     afterUpdate()
 
-    console.log(isAuthenticatedLog)
     return (
 
         <Mock >

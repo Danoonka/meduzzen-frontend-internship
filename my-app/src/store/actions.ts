@@ -60,7 +60,6 @@ export const checkAuth = async (tokenStr: string | null) => {
             return true;
         })
         .catch(function (error) {
-            console.log(error)
             // toast.error("Failed to authenticate!", {
             //     position: toast.POSITION.BOTTOM_RIGHT
             // })

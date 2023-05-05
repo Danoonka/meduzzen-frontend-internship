@@ -16,7 +16,6 @@ const NavBar: React.FC = () => {
         localStorage.removeItem('accessToken');
     }
 
-    console.log("user email: " + user_email)
     return (
         <nav className="nav">
             <Link to="/meduzzen-demo" className="nav-title">INK</Link>

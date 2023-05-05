@@ -16,7 +16,7 @@ const Input: FC<InputProps> = ({name, label, value, id, type, onChange, ...rest}
     return (
         <>
             <label htmlFor={name}>{label}</label>
-            <input id={id} className="default-input" onChange={onChange} {...rest}/>
+            <input id={id} className="default-input" onChange={onChange} name={name} {...rest}/>
         </>
     );
 };

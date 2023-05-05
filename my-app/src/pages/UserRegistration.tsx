@@ -4,8 +4,8 @@ import './UserRegistration.css';
 import Button from '../utils/Button';
 import {toast} from "react-toastify";
 import {useAuth0} from '@auth0/auth0-react';
-import {addUser, authTrue, checkAuth, logInUser} from "../store/actions";
-import {formValidation, getTokenFromLocalStorage} from "../utils/authorizaton";
+import {addUser, authTrue, checkAuth} from "../store/actions";
+import {formValidation, getTokenFromLocalStorage, validUserRegistration} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
@@ -37,8 +37,6 @@ const UserRegistration: React.FC = () => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        const objTg = (registrationFields.find(obj => obj.id === event.target.id))!
-        event.target.name = objTg.name
         setNewUser({...newUser, [event.target.name]: value});
     }
 
@@ -96,16 +94,10 @@ const UserRegistration: React.FC = () => {
 
     const register = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (!formValidation(newUser)) {
-            return
-        }
-        if (!await addUser(newUser)) {
-            return
-        }
-        if (!await logInUser(newUser.user_email, newUser.user_password)) {
-            return
-        }
-        if (!await checkAuth(getTokenFromLocalStorage())) {
+        if (! await validUserRegistration(newUser)){
+            toast.error('Registration failed!', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
             return
         }
         toast.success('Registration done', {

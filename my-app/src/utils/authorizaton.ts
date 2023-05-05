@@ -1,5 +1,7 @@
 import {toast} from "react-toastify";
 import {NewUser} from "../pages/UserRegistration";
+import {addUser, checkAuth, logInUser} from "../store/actions";
+import {User} from "@auth0/auth0-react";
 
 export const getTokenFromLocalStorage = (): string | null => {
     return localStorage.getItem('accessToken');
@@ -24,5 +26,37 @@ export const formValidation = (newUser: NewUser) => {
             position: toast.POSITION.BOTTOM_RIGHT
         })
     }
+}
+
+export const validUserRegistration = async(newUser : NewUser)=>{
+    if (!formValidation(newUser)) {
+        return false
+    }
+    if (!await addUser(newUser)) {
+        return false
+    }
+    if (!await logInUser(newUser.user_email, newUser.user_password)) {
+        return false
+    }
+    if (!await checkAuth(getTokenFromLocalStorage())) {
+        return false
+    }
+
+    return true
+}
+
+export const validUserAuthorization = async (user: User) =>{
+    if (!isEmailValid(user.user_email)) {
+        toast.error('Email Invalid!')
+        return false
+    }
+    if (!await logInUser(user.user_email, user.user_password)) {
+        return false
+    }
+    if (!await checkAuth(getTokenFromLocalStorage())) {
+        return false
+    }
+
+    return true
 }
 
