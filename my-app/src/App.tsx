@@ -22,6 +22,7 @@ import {useDispatch} from "react-redux";
 function App() {
     const {isAuthenticated} = useAuth0()
     const [isAuthenticatedLog, setIsAuthenticatedLog] = useState(store.getState().isAuthorised.isAuthorised);
+    const dispatch = useDispatch()
     useEffect(() => {
         const unsubscribe = store.subscribe(() => {
             setIsAuthenticatedLog(store.getState().isAuthorised.isAuthorised);
@@ -36,6 +37,7 @@ function App() {
         const token = getTokenFromLocalStorage()
         if (token){
             await checkAuth(token)
+            store.dispatch(authTrue())
         }
     }
 

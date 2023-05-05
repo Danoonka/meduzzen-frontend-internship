@@ -57,13 +57,13 @@ export const checkAuth = async (tokenStr: string | null) => {
                 type: 'RECEIVE_CURRENT_USER',
                 payload: response.data.result
             })
-
             return true;
         })
         .catch(function (error) {
-            toast.error("Failed to authenticate!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+            console.log(error)
+            // toast.error("Failed to authenticate!", {
+            //     position: toast.POSITION.BOTTOM_RIGHT
+            // })
             return false;
         });
 
