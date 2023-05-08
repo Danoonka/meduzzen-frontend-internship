@@ -1,29 +1,18 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {CurrentUserState} from "../store/reducers/currentUserReducer";
 
-interface UserData {
-    id: number;
-    user_avatar: string;
-    user_firstname: string;
-    user_lastname: string;
-    user_status: string;
-    user_city: string;
+interface CurrentUserProps {
+    currentUser: CurrentUserState;
 }
 
-interface UserItemProps {
-    userData: UserData;
-}
-
-const UserItem : React.FC<UserItemProps>= ({userData}) => {
-
+const UserItem: React.FC<CurrentUserProps> = ({currentUser}: CurrentUserProps) => {
     return (
-        <Link to='/userProfile' state={{data: userData.id}}>
+        <Link to='/userProfile' state={{user_id: currentUser.user_id}}>
             <div className="user-item-container">
-                <img src={userData.user_avatar} alt="user avatar"/>
+                <img src={currentUser.user_avatar} alt="user avatar"/>
                 <div>
-                    <h4>{userData.user_firstname} {userData.user_lastname}</h4>
-                    <p>Status: {userData.user_status}</p>
-                    <p>Location: {userData.user_city}</p>
+                    <h4>{currentUser.user_firstname} {currentUser.user_lastname}</h4>
                 </div>
             </div>
         </Link>

@@ -3,12 +3,10 @@ import Input from "../utils/Input";
 import {toast} from "react-toastify";
 import Button from "../utils/Button";
 import {useAuth0} from '@auth0/auth0-react';
-import {authTrue, checkAuth, logInUser} from "../store/actions";
+import {authTrue, checkAuth} from "../store/actions";
 import {
     getTokenFromLocalStorage,
-    isEmailValid,
     validUserAuthorization,
-    validUserRegistration
 } from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";

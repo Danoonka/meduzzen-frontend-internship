@@ -4,8 +4,8 @@ import './UserRegistration.css';
 import Button from '../utils/Button';
 import {toast} from "react-toastify";
 import {useAuth0} from '@auth0/auth0-react';
-import {addUser, authTrue, checkAuth} from "../store/actions";
-import {formValidation, getTokenFromLocalStorage, validUserRegistration} from "../utils/authorizaton";
+import {authTrue, checkAuth} from "../store/actions";
+import {getTokenFromLocalStorage, validUserRegistration} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
@@ -94,7 +94,7 @@ const UserRegistration: React.FC = () => {
 
     const register = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (! await validUserRegistration(newUser)){
+        if (!await validUserRegistration(newUser)) {
             toast.error('Registration failed!', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })

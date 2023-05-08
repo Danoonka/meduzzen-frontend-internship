@@ -10,8 +10,9 @@ const NavBar: React.FC = () => {
 
     const isAuthenticatedLog = store.getState().isAuthorised.isAuthorised
 
-    const {serverData: {user_email, user_firstname}} = store.getState().currentUser
-    const LogOut =()=>{
+    const user_email = store.getState().currentUser.user_email
+    const user_firstname = store.getState().currentUser.user_firstname
+    const LogOut = () => {
         logout()
         localStorage.removeItem('accessToken');
     }
@@ -31,7 +32,7 @@ const NavBar: React.FC = () => {
                         <Button>Email: {user_email}<br/>
                             name: {user_firstname}</Button>
                     </Link>
-                    <Button onClick={()=>LogOut()}>Log out</Button>
+                    <Button onClick={() => LogOut()}>Log out</Button>
                 </>
 
                 : <div>

@@ -1,15 +1,24 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from "redux-thunk";
-import {authReducer} from "./reducers/authReducer";
-import {currentUserReducer} from "./reducers/currentUserReducer";
-import {counterReducer} from "./reducers/counterReducer";
-import {serverReducer} from "./reducers/serverReducer";
+import {authReducer, IsUserAuthorisedState} from "./reducers/authReducer";
+import {currentUserReducer, CurrentUserState} from "./reducers/currentUserReducer";
+import {allUsersReducer, AllUsersState} from "./reducers/allUsersReducer";
+import {userByIdReducer} from "./reducers/userByIdReducer";
+import {totalUserCountReducer, TotalUserCountState} from "./reducers/totalUserCountReducer";
+
+export interface RootState {
+    currentUser: CurrentUserState,
+    isAuthorised: IsUserAuthorisedState,
+    allUser: AllUsersState,
+    totalUserCount: TotalUserCountState
+}
 
 export const rootReducer = combineReducers({
-    server: serverReducer,
-    counter: counterReducer,
     currentUser: currentUserReducer,
-    isAuthorised: authReducer
+    isAuthorised: authReducer,
+    allUser: allUsersReducer,
+    userById: userByIdReducer,
+    totalUserCount: totalUserCountReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
