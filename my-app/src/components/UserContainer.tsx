@@ -36,51 +36,28 @@ const UserContainer = ({user}: UserProps) => {
         navigate('/editUser', {state: user})
     }
 
-
     return (
-        <>
-            {isOwner
-                ?
-                <div className="user-profile-container">
-                    <div className="user-profile-image-container">
-                        <img src={user.user_avatar} alt="user avatar"/>
-                        <form onSubmit={handleFormSubmit}>
-                            <input type="file" onChange={handleFileChange}/>
-                            <Button type="submit">Upload</Button>
-                        </form>
-                    </div>
-                    <div className="user-profile-info-container">
-                        <h2>{user.user_firstname} {user.user_lastname}</h2>
-                        <p>Email: {user.user_email}</p>
-                        <p>Status: {user.user_status}</p>
-                        <p>Location: {user.user_city}</p>
-                        <p>Contacts: {user.user_phone}</p>
-                        {(user.user_links !== null) &&
-                        <div><p>Links:</p> {user.user_links.map(item => <p key={Math.random()}>{item}</p>)}</div>
-                        }
-                        <Button onClick={goToEditUser}>Edit Info</Button>
-                    </div>
-
-                </div>
-                :
-                <div className="user-profile-container">
-                    <img src={user.user_avatar} alt="user avatar"/>
-                    <div>
-                        <h2>{user.user_firstname} {user.user_lastname}</h2>
-                        <p>Email: {user.user_email}</p>
-                        <p>Status: {user.user_status}</p>
-                        <p>Location: {user.user_city}</p>
-                        <p>Contacts: {user.user_phone}</p>
-                        {(user.user_links !== null) &&
-                        <div><p>Links:</p > {user.user_links.map(item => <p key={Math.random()}>{item}</p>)}</div>
-                        }
-
-                    </div>
-                </div>
-            }
-        </>
-
-
+        <div className="user-profile-container">
+            <div className="user-profile-image-container">
+                <img src={user.user_avatar} alt="user avatar"/>
+                {isOwner &&
+                <form onSubmit={handleFormSubmit}>
+                    <input type="file" onChange={handleFileChange}/>
+                    <Button type="submit">Upload</Button>
+                </form>}
+            </div>
+            <div>
+                <h2>{user.user_firstname} {user.user_lastname}</h2>
+                <p>Email: {user.user_email}</p>
+                <p>Status: {user.user_status}</p>
+                <p>Location: {user.user_city}</p>
+                <p>Contacts: {user.user_phone}</p>
+                {(user.user_links !== null) &&
+                <div><p>Links:</p> {user.user_links.map(item => <p key={Math.random()}>{item}</p>)}</div>
+                }
+                {isOwner && <Button onClick={goToEditUser}>Edit Info</Button>}
+            </div>
+        </div>
     );
 };
 

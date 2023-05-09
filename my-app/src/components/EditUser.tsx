@@ -7,6 +7,7 @@ import {deleteUser, updateUserInfo, updateUserPassword} from "../store/actions";
 import {getTokenFromLocalStorage} from "../utils/authorizaton";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
+import {toast} from "react-toastify";
 
 const EditUser = () => {
     const token = getTokenFromLocalStorage()
@@ -58,11 +59,18 @@ const EditUser = () => {
         event.preventDefault();
         await updateUserInfo(token, user.user_id, updateUser)
         navigate('/userProfile')
+        toast.success("User info updated", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        })
     }
 
     const updateUserPasswordOnClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        navigate('/userProfile')
         await updateUserPassword(token, user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
+        toast.success("Password updated!", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        })
     }
 
     const deleteUserById = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -117,7 +125,7 @@ const EditUser = () => {
         }
     ];
 
-    const passwordFields =[
+    const passwordFields = [
         {
             name: 'user_password',
             id: '6',
@@ -164,7 +172,6 @@ const EditUser = () => {
                 {fields}
                 <Button onClick={saveChanges}>Save Changes</Button>
             </div>
-
             <div className="section_update_user_password">
                 <h2>Change Password</h2>
                 {passwdFields}
@@ -172,10 +179,7 @@ const EditUser = () => {
                     <Button onClick={updateUserPasswordOnClick}>Update Password</Button>
                     <Button className="delete-button" onClick={deleteUserById}>Delete user</Button>
                 </div>
-
             </div>
-
-
         </form>
     );
 };
