@@ -1,28 +1,51 @@
 import React from 'react';
-import aboutPageCompanyImg from '../assets/about-page-company-img.png'
 import './UserList.css'
 import UserItem from "../components/UserItem";
+import {useSelector} from "react-redux";
+import {CurrentUserState} from "../store/reducers/currentUserReducer";
+import {RootState} from "../store/store";
+import {Pagination} from "@mui/material";
+import {pagination} from "../api/api";
+
+interface PaginationInfo {
+    current_page: number,
+    total_page: number,
+    total_results: number
+}
+
+let paginationInfo: PaginationInfo = {
+    current_page: 1,
+    total_page: 1,
+    total_results: -1
+}
+
+const usersPerPage = 15
 
 const UserList = () => {
-    const userList = [
-        {id: 0, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 1, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 2, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 3, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 4, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 5, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
-        {id: 6, "user_firstname": "string", "user_lastname": "string", "user_avatar": aboutPageCompanyImg, "user_status": "string", "user_city": "string"},
+    if(paginationInfo.total_results === -1) {
+        pagination(paginationInfo.current_page, usersPerPage).then(res => paginationInfo = res)
+    }
 
-    ]
-    const users = userList.map((item) =>
-            <UserItem userData ={item} key={item.id}/>
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        paginationInfo.current_page = value
+        pagination(paginationInfo.current_page, usersPerPage).then(res => paginationInfo = res)
+    };
+
+    const allUsers = useSelector((state: RootState) => state.allUser.users);
+
+    const users = (allUsers).map((item: CurrentUserState) =>
+        <UserItem currentUser={item} key={item.user_id}/>
     )
 
     return (
-        <div>
+        <div className='container'>
             <h3 className="user-list-heading">User List</h3>
             <div className="user-list-container">
                 {users}
+            </div>
+            <div className="user-list-container">
+                <Pagination className="user-pagination" count={paginationInfo.total_page}
+                            page={paginationInfo.current_page} onChange={handleChange}/>
             </div>
         </div>
 

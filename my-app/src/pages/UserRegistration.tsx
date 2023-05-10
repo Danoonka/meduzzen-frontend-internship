@@ -4,10 +4,11 @@ import './UserRegistration.css';
 import Button from '../utils/Button';
 import {toast} from "react-toastify";
 import {useAuth0} from '@auth0/auth0-react';
-import {addUser, authTrue, checkAuth} from "../store/actions";
-import {formValidation, getTokenFromLocalStorage, validUserRegistration} from "../utils/authorizaton";
+import {validUserRegistration} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {store} from "../store/store";
+import {authTrue} from "../store/userActionCreators";
+import {checkAuth} from "../api/api";
 
 export interface NewUser {
     user_password: string,
@@ -28,7 +29,6 @@ const UserRegistration: React.FC = () => {
 
     })
     const navigate = useNavigate();
-    const dispatch = useDispatch()
 
     const setTokenAuth = async () => {
         const accessToken = await getAccessTokenSilently();
@@ -43,37 +43,42 @@ const UserRegistration: React.FC = () => {
 
     const registrationFields = [
         {
+            label: 'Email',
             name: 'user_email',
             id: '0',
-            value: 'email',
+            value: newUser.user_email,
             fun: handleInputChange,
             type: 'email'
         },
         {
+            label: 'Password',
             name: 'user_password',
             id: '1',
-            value: 'password',
+            value: newUser.user_password,
             fun: handleInputChange,
             type: 'password',
         },
         {
+            label: 'Repeat password',
             name: 'user_password_repeat',
             id: '2',
-            value: 'repeat password',
+            value: newUser.user_password_repeat,
             fun: handleInputChange,
             type: 'password',
         },
         {
+            label: 'Firstname',
             name: 'user_firstname',
             id: '3',
-            value: 'first name',
+            value: newUser.user_firstname,
             fun: handleInputChange,
             type: 'text',
         },
         {
+            label: 'Lastname',
             name: 'user_lastname',
             id: '4',
-            value: 'last name',
+            value: newUser.user_lastname,
             fun: handleInputChange,
             type: 'text',
         },
@@ -83,7 +88,7 @@ const UserRegistration: React.FC = () => {
         <Input
             name={item.name}
             key={item.id}
-            label={item.value}
+            label={item.label}
             value={item.value}
             onChange={item.fun}
             id={item.id}
@@ -94,7 +99,7 @@ const UserRegistration: React.FC = () => {
 
     const register = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (! await validUserRegistration(newUser)){
+        if (!await validUserRegistration(newUser)) {
             toast.error('Registration failed!', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
@@ -103,7 +108,7 @@ const UserRegistration: React.FC = () => {
         toast.success('Registration done', {
             position: toast.POSITION.BOTTOM_RIGHT
         })
-        await dispatch(authTrue())
+        store.dispatch(authTrue())
         await navigate("/userProfile",)
     }
 
@@ -111,8 +116,10 @@ const UserRegistration: React.FC = () => {
         event.preventDefault();
         await loginWithPopup({authorizationParams: {screen_hint: 'signup'}});
         await setTokenAuth();
-        if (!await checkAuth(getTokenFromLocalStorage())) {
+        if (!await checkAuth()) {
             return;
+        }else{
+            store.dispatch(authTrue())
         }
         await navigate("/userProfile")
     }

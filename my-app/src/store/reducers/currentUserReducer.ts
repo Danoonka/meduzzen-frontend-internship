@@ -1,43 +1,43 @@
-import {ReceiveServerDataAction} from "../actions";
+import {Action} from "../actions";
 
 export interface CurrentUserState {
-    serverData: {
-        "user_id": 0,
-        "user_email": string,
-        "user_firstname": string,
-        "user_lastname": string,
-        "user_avatar": string,
-        "user_status": string,
-        "user_city": string,
-        "user_phone": string,
-        "user_links": [
-            string
-        ],
-    }
+    "user_id": number,
+    "user_email": string,
+    "user_firstname": string,
+    "user_lastname": string,
+    "user_avatar": string,
+    "user_status": string,
+    "user_city": string,
+    "user_phone": string,
+    "user_links": string[],
 }
 
 export const initialCurrentUserState: CurrentUserState = {
-    serverData: {
-        user_id: 0,
-        user_email: '',
-        user_firstname: '',
-        user_lastname: '',
-        user_avatar: '',
-        user_status: '',
-        user_city: '',
-        user_phone: '',
-        user_links: [
-            ''
-        ]
-
-    }
+    user_id: -1,
+    user_email: '',
+    user_firstname: '',
+    user_lastname: '',
+    user_avatar: '',
+    user_status: '',
+    user_city: '',
+    user_phone: '',
+    user_links: [
+        ''
+    ]
 };
 
 
-export function currentUserReducer(state = initialCurrentUserState, action: ReceiveServerDataAction) {
+export function currentUserReducer(state = initialCurrentUserState, action: Action) {
     switch (action.type) {
         case 'RECEIVE_CURRENT_USER':
-            return {...state, serverData: action.payload};
+            return action.payload
+        case 'CHANGE_USER_AVATAR' :
+            return {
+                ...state,
+                user_avatar: action.payload.user_avatar,
+            }
+        case 'UPDATE_USER_INFO' :
+            return action.payload
         default:
             return state;
     }

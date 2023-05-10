@@ -4,7 +4,7 @@ import './Input.css'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     name: string;
     label: string;
-    value: string;
+    value: string | string[];
     type: string;
     id: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +16,7 @@ const Input: FC<InputProps> = ({name, label, value, id, type, onChange, ...rest}
     return (
         <>
             <label htmlFor={name}>{label}</label>
-            <input id={id} className="default-input" onChange={onChange} name={name} {...rest}/>
+            <input id={id} className="default-input" onChange={onChange} name={name} value = {value} {...rest} />
         </>
     );
 };

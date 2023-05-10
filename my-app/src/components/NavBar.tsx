@@ -3,17 +3,18 @@ import './NavBar.css'
 import Button from "../utils/Button";
 import {Link} from "react-router-dom";
 import {useAuth0} from '@auth0/auth0-react';
-import {store} from "../store/store";
+import {RootState, store} from "../store/store";
+import {useSelector} from "react-redux";
+import {authFalse} from "../store/userActionCreators";
 
 const NavBar: React.FC = () => {
-    const {isAuthenticated, logout} = useAuth0()
-
-    const isAuthenticatedLog = store.getState().isAuthorised.isAuthorised
-
-    const {serverData: {user_email, user_firstname}} = store.getState().currentUser
-    const LogOut =()=>{
+    const{logout} = useAuth0()
+    const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
+    const { user_email, user_firstname } = useSelector((state: RootState) => state.currentUser);
+    const LogOut = async () => {
         logout()
         localStorage.removeItem('accessToken');
+        store.dispatch(authFalse())
     }
 
     return (
@@ -24,14 +25,14 @@ const NavBar: React.FC = () => {
                 <li><Link to="/userList">User List</Link></li>
                 <li><Link to="/companyList">Company List</Link></li>
             </ul>
-            {isAuthenticated || isAuthenticatedLog
+            {isAuthenticated
                 ?
                 <>
                     <Link to='/userProfile'>
                         <Button>Email: {user_email}<br/>
                             name: {user_firstname}</Button>
                     </Link>
-                    <Button onClick={()=>LogOut()}>Log out</Button>
+                    <Button onClick={() => LogOut()}>Log out</Button>
                 </>
 
                 : <div>

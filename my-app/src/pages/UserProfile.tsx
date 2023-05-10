@@ -1,14 +1,18 @@
 import React from 'react';
 import './UserProfile.css'
+import {RootState} from "../store/store";
+import {useLocation} from "react-router-dom";
 import UserContainer from "../components/UserContainer";
-import {store} from "../store/store";
-
+import {useSelector} from "react-redux";
 
 const UserProfile: React.FC = () => {
-    const {serverData: currentUserdata} = store.getState().currentUser
+    const { user_id: stateUserId } = useLocation().state || {};
+    const currentUser = useSelector((state: RootState) => state.currentUser);
+    const userId = stateUserId || currentUser.user_id;
+
     return (
         <div>
-            {currentUserdata && <UserContainer userData={currentUserdata}/>}
+            <UserContainer user_id={userId}/>
         </div>
     )
 

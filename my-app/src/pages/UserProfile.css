@@ -2,6 +2,7 @@
     width: 80%;
     margin: 50px auto;
     display: flex;
+    justify-content: space-around;
     min-height: 300px
 }
 
@@ -17,8 +18,9 @@
     color:#42a5f5;
 }
 
+
 .user-profile-container p{
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color:#42a5f5;
 }

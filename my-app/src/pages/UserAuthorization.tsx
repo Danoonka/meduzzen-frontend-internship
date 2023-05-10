@@ -3,15 +3,11 @@ import Input from "../utils/Input";
 import {toast} from "react-toastify";
 import Button from "../utils/Button";
 import {useAuth0} from '@auth0/auth0-react';
-import {authTrue, checkAuth, logInUser} from "../store/actions";
-import {
-    getTokenFromLocalStorage,
-    isEmailValid,
-    validUserAuthorization,
-    validUserRegistration
-} from "../utils/authorizaton";
+import {validUserAuthorization} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {store} from "../store/store";
+import {authTrue} from "../store/userActionCreators";
+import {checkAuth} from "../api/api";
 
 interface User {
     user_email: string;
@@ -26,7 +22,6 @@ const UserAuthorization: React.FC = () => {
         }
     )
     const navigate = useNavigate();
-    const dispatch = useDispatch()
 
     const setTokenAuth = async () => {
         const accessToken = await getAccessTokenSilently();
@@ -40,16 +35,18 @@ const UserAuthorization: React.FC = () => {
 
     const authorisationFields = [
         {
+            label: 'Email',
             name: 'user_email',
             id: '0',
-            value: 'email',
+            value: user.user_email,
             fun: handleInputChange,
             type: 'email'
         },
         {
+            label: 'Password',
             name: 'user_password',
             id: '1',
-            value: 'password',
+            value: user.user_password,
             fun: handleInputChange,
             type: 'password',
         }]
@@ -59,7 +56,7 @@ const UserAuthorization: React.FC = () => {
         <Input
             name={item.name}
             key={item.id}
-            label={item.value}
+            label={item.label}
             value={item.value}
             onChange={item.fun}
             id={item.id}
@@ -75,10 +72,11 @@ const UserAuthorization: React.FC = () => {
             })
             return
         }
+
         toast.success('Welcome!', {
             position: toast.POSITION.BOTTOM_RIGHT
         })
-        dispatch(authTrue())
+        store.dispatch(authTrue())
         navigate("/userProfile")
     };
 
@@ -86,8 +84,10 @@ const UserAuthorization: React.FC = () => {
         event.preventDefault();
         await loginWithPopup();
         await setTokenAuth();
-        if (!await checkAuth(getTokenFromLocalStorage())) {
+        if (!await checkAuth()) {
             return;
+        }else{
+            store.dispatch(authTrue())
         }
         navigate("/userProfile")
         toast.success('Welcome!', {
