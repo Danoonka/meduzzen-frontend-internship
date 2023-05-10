@@ -116,12 +116,13 @@ const UserRegistration: React.FC = () => {
         event.preventDefault();
         await loginWithPopup({authorizationParams: {screen_hint: 'signup'}});
         await setTokenAuth();
-        if (!await checkAuth()) {
-            return;
-        }else{
+        if (await checkAuth()) {
             store.dispatch(authTrue())
+            await navigate("/userProfile")
+            toast.success('Welcome!', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
         }
-        await navigate("/userProfile")
     }
 
 

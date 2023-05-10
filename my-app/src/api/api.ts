@@ -2,13 +2,14 @@ import axios from "axios";
 import {store} from "../store/store";
 import {
     changeUserAvatarAction,
+    receiveAllCompaniesAction,
     receiveAllUsersAction,
     receiveCurrentUserAction,
     updateUserInfoAction
-} from "../store/userActionCreators";
+} from '../store/userActionCreators'
 import {NewUser} from "../pages/UserRegistration";
 import {toast} from "react-toastify";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
+import {CompanyState, CurrentUserState} from "../types";
 
 export const instance = axios.create({
         baseURL: 'http://3.75.186.163',
@@ -78,7 +79,6 @@ export const logInUser = async (email: string, password: string) => {
             return false;
         });
 }
-
 
 export const getUserById = async (id: number) => {
     return await instance
@@ -153,19 +153,112 @@ export const deleteUser = async (id: number) => {
         })
 }
 
-export const pagination = async (page: number, size: number) => {
+export const pagination = async (item: string, page: number, size: number) => {
     return await instance
-        .get(`/users/?page=${page}&page_size=${size}`)
+        .get(`/${item}/?page=${page}&page_size=${size}`)
         .then(function (response) {
-            store.dispatch(receiveAllUsersAction(response.data.result.users))
+            if (item === 'users') {
+                store.dispatch(receiveAllUsersAction(response.data.result.users))
+            } else if (item === 'companies') {
+                store.dispatch(receiveAllCompaniesAction(response.data.result.companies))
+            }
             return response.data.result.pagination
         })
         .catch(function (error) {
-            toast.error("Failed to get user in this page", {
+            toast.error("Failed to get items in this page", {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
         })
 }
+
+
+export const createCompany = async (company: CompanyState) => {
+    return await instance
+        .post('/company/',
+            {
+                company_name: company.company_name,
+                is_visible: company.is_visible
+            })
+        .then(function (response) {
+            return response.data.result.company_id
+        })
+        .catch(function (error) {
+            toast.error("Failed to create company", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            return -1
+        })
+}
+
+export const updateCompanyInfo = async (id: number, company: CompanyState) => {
+    return await instance
+        .put(`/company/${id}/update_info/`,
+            {
+                company_name: company.company_name,
+                company_title: company.company_title,
+                company_description: company.company_description,
+                company_city: company.company_city,
+                company_phone: company.company_phone,
+                company_links: company.company_links
+            })
+        .catch(function (error) {
+            toast.error("Failed to update company info", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const updateCompanyVisible = async (id: number, is_visible: boolean) => {
+    return await instance
+        .put(`/company/${id}/update_visible/`, {is_visible: is_visible})
+        .catch(function (error) {
+            toast.error("Failed to update visibility", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const updateCompanyAvatar = async (id: number, file: File) => {
+    let formData = new FormData();
+    formData.append("file", file);
+    return await instance
+        .put(`/company/${id}/update_avatar/`, formData, {
+            headers: {
+                'Content-Type': "multipart/form-data",
+            }
+        })
+        .catch(function (error) {
+            toast.error("Failed to update company avatar", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const deleteCompany = async (id: number) => {
+    return await instance
+        .delete(`/company/${id}/`)
+        .catch(function (error) {
+            toast.error("Failed to delete company", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getCompanyById = async (id: number) => {
+    return await instance
+        .get(`/company/${id}/`)
+        .then(function (response) {
+            return response.data.result
+        })
+        .catch(function (error) {
+            toast.error("Failed to get company", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+
+
 
 
 

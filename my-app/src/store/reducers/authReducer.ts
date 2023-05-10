@@ -1,12 +1,6 @@
 import {Action} from "../actions";
+import {initialIsUserAuthorisedState, IsUserAuthorisedState} from "../../types";
 
-export interface IsUserAuthorisedState {
-    isAuthorised: boolean
-}
-
-export const initialIsUserAuthorisedState: IsUserAuthorisedState = {
-    isAuthorised: false
-}
 
 
 export const authReducer =  (state:IsUserAuthorisedState = initialIsUserAuthorisedState, action: Action) => {

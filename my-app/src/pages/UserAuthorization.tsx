@@ -84,15 +84,13 @@ const UserAuthorization: React.FC = () => {
         event.preventDefault();
         await loginWithPopup();
         await setTokenAuth();
-        if (!await checkAuth()) {
-            return;
-        }else{
+        if (await checkAuth()) {
             store.dispatch(authTrue())
+            await navigate("/userProfile")
+            toast.success('Welcome!', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
         }
-        navigate("/userProfile")
-        toast.success('Welcome!', {
-            position: toast.POSITION.BOTTOM_RIGHT
-        })
     }
 
 

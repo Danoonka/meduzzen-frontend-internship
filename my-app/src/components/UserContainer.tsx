@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {CurrentUserState, initialCurrentUserState} from "../store/reducers/currentUserReducer";
 import {RootState} from "../store/store";
 import Button from "../utils/Button";
 import '../utils/Input.css'
@@ -7,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import './UserContainer.css'
 import {useSelector} from "react-redux";
 import {changeUserAvatar, getUserById} from "../api/api";
+import {CurrentUserState, initialCurrentUserState} from "../types";
 
 interface UserProps {
     user_id: number;

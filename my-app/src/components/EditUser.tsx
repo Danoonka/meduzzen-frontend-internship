@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import Button from "../utils/Button";
 import Input from "../utils/Input";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
 import {toast} from "react-toastify";
 import {deleteUser, updateUserInfo, updateUserPassword} from "../api/api";
+import {CurrentUserState} from "../types";
 
 const EditUser = () => {
     const location = useLocation();
@@ -37,9 +37,9 @@ const EditUser = () => {
         if (updateUser.user_links === null) {
             updatedLinks = []
         } else {
-            updatedLinks = [...user.user_links];
+            updatedLinks = [...updateUser.user_links];
+            updatedLinks = (value.split(','))
         }
-        updatedLinks.push(value)
         await setUpdateUser({...updateUser, user_links: updatedLinks});
     }
 
@@ -77,8 +77,7 @@ const EditUser = () => {
         logout()
         localStorage.removeItem('accessToken');
     }
-
-    //TODO: fix links
+    
     const editingFields = [
         {
             label: 'Firstname',
@@ -124,7 +123,7 @@ const EditUser = () => {
             label: 'Links',
             name: 'user_links',
             id: '5',
-            value: (updateUser.user_links ? user.user_links : ''),
+            value: (updateUser.user_links ? updateUser.user_links : ''),
             fun: handleLinkInput,
             type: 'text',
         }

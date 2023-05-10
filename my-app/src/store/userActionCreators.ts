@@ -1,19 +1,20 @@
-import {CurrentUserState} from "./reducers/currentUserReducer";
 import {Action} from "./actions";
-import {AllUsersState} from "./reducers/allUsersReducer";
-
+import {AllCompaniesState, AllUsersState, CurrentUserState} from "../types";
 
 export const receiveCurrentUserAction = (payload: CurrentUserState): Action => ({
     type: 'RECEIVE_CURRENT_USER',
     payload,
 });
 
-
 export const receiveAllUsersAction = (payload: AllUsersState): Action => ({
     type: 'RECEIVE_ALL_USERS',
     payload,
 });
 
+export const receiveAllCompaniesAction = (payload: AllCompaniesState): Action => ({
+    type: 'RECEIVE_ALL_COMPANIES',
+    payload,
+});
 
 export const changeUserAvatarAction = (user_avatar: string): Action => ({
     type: 'CHANGE_USER_AVATAR',
