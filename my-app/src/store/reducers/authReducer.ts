@@ -13,6 +13,8 @@ export const authReducer =  (state:IsUserAuthorisedState = initialIsUserAuthoris
     switch (action.type) {
         case 'IS_AUTHORISED_TRUE':
             return {...state, isAuthorised: true}
+        case 'IS_AUTHORISED_FALSE':
+            return  {...state, isAuthorised: false}
         default:
             return state;
     }

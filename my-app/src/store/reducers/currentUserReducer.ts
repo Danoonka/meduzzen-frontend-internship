@@ -1,4 +1,4 @@
-import {ReceiveServerDataAction, ReceiveUserAvatar, UpdateUserInfo} from "../actions";
+import {Action} from "../actions";
 
 export interface CurrentUserState {
     "user_id": number,
@@ -27,11 +27,7 @@ export const initialCurrentUserState: CurrentUserState = {
 };
 
 
-export function currentUserReducer(state = initialCurrentUserState,
-                                   action:
-                                       | ReceiveServerDataAction
-                                       | ReceiveUserAvatar
-                                       | UpdateUserInfo) {
+export function currentUserReducer(state = initialCurrentUserState, action: Action) {
     switch (action.type) {
         case 'RECEIVE_CURRENT_USER':
             return action.payload

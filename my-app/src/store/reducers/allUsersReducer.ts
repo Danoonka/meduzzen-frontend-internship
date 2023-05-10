@@ -1,4 +1,4 @@
-import {ReceiveAllUsers, ReceiveServerDataAction} from "../actions";
+import {Action} from "../actions";
 import {CurrentUserState, initialCurrentUserState} from "./currentUserReducer";
 
 export interface AllUsersState {
@@ -12,7 +12,7 @@ export const initialAllUsersState: AllUsersState = {
 };
 
 
-export function allUsersReducer(state = initialAllUsersState, action: ReceiveAllUsers) {
+export function allUsersReducer(state = initialAllUsersState, action: Action) {
     switch (action.type) {
         case 'RECEIVE_ALL_USERS':
             return {...state, users: action.payload};

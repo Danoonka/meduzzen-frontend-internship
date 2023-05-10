@@ -3,14 +3,12 @@ import Button from "../utils/Button";
 import Input from "../utils/Input";
 import {CurrentUserState} from "../store/reducers/currentUserReducer";
 import {useLocation, useNavigate} from "react-router-dom";
-import {deleteUser, updateUserInfo, updateUserPassword} from "../store/actions";
-import {getTokenFromLocalStorage} from "../utils/authorizaton";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
 import {toast} from "react-toastify";
+import {deleteUser, updateUserInfo, updateUserPassword} from "../api/api";
 
 const EditUser = () => {
-    const token = getTokenFromLocalStorage()
     const location = useLocation();
     const user = location.state
     const [updateUser, setUpdateUser] = useState<CurrentUserState>({
@@ -36,7 +34,7 @@ const EditUser = () => {
     const handleLinkInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         let updatedLinks: string[]
-        if (user.user_links === null) {
+        if (updateUser.user_links === null) {
             updatedLinks = []
         } else {
             updatedLinks = [...user.user_links];
@@ -57,7 +55,7 @@ const EditUser = () => {
 
     const saveChanges = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await updateUserInfo(token, user.user_id, updateUser)
+        await updateUserInfo(user.user_id, updateUser)
         navigate('/userProfile')
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
@@ -67,7 +65,7 @@ const EditUser = () => {
     const updateUserPasswordOnClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         navigate('/userProfile')
-        await updateUserPassword(token, user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
+        await updateUserPassword(user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
         toast.success("Password updated!", {
             position: toast.POSITION.BOTTOM_RIGHT
         })
@@ -75,51 +73,58 @@ const EditUser = () => {
 
     const deleteUserById = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await deleteUser(token, user.user_id)
+        await deleteUser(user.user_id)
         logout()
         localStorage.removeItem('accessToken');
     }
 
+    //TODO: fix links
     const editingFields = [
         {
+            label: 'Firstname',
             name: 'user_firstname',
             id: '0',
-            value: 'user firstname',
+            value: updateUser.user_firstname,
             fun: handleInputChange,
             type: 'text'
         },
         {
+            label: 'Lastname',
             name: 'user_lastname',
             id: '1',
-            value: 'user lastname',
+            value: updateUser.user_lastname,
             fun: handleInputChange,
             type: 'text',
         },
         {
+            label: 'Status',
             name: 'user_status',
             id: '2',
-            value: 'user status',
+            value: (updateUser.user_status ? updateUser.user_status : ''),
             fun: handleInputChange,
             type: 'text',
         },
         {
+            label: 'City',
             name: 'user_city',
             id: '3',
-            value: 'user city',
+            value: (updateUser.user_city ? updateUser.user_city : ''),
             fun: handleInputChange,
             type: 'text',
         },
         {
+            label: 'Phone',
             name: 'user_phone',
             id: '4',
-            value: 'user phone',
+            value: (updateUser.user_phone ? updateUser.user_phone : ''),
             fun: handleInputChange,
             type: 'text',
         },
         {
+            label: 'Links',
             name: 'user_links',
             id: '5',
-            value: 'user links',
+            value: (updateUser.user_links ? user.user_links : ''),
             fun: handleLinkInput,
             type: 'text',
         }
@@ -127,16 +132,18 @@ const EditUser = () => {
 
     const passwordFields = [
         {
+            label: 'Password',
             name: 'user_password',
             id: '6',
-            value: 'user password',
+            value: updatePassword.user_password,
             fun: handlePasswordChange,
             type: 'password',
         },
         {
+            label: 'Repeat Password',
             name: 'user_password_repeat',
             id: '7',
-            value: 'user password repeat',
+            value: updatePassword.user_password_repeat,
             fun: handlePasswordChange,
             type: 'password',
         }
@@ -146,7 +153,7 @@ const EditUser = () => {
         <Input
             name={item.name}
             key={item.id}
-            label={item.value}
+            label={item.label}
             value={item.value}
             onChange={item.fun}
             id={item.id}
@@ -158,7 +165,7 @@ const EditUser = () => {
         <Input
             name={item.name}
             key={item.id}
-            label={item.value}
+            label={item.label}
             value={item.value}
             onChange={item.fun}
             id={item.id}
