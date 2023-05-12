@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import {CompanyState} from "../types";
-import {deleteCompany, updateCompanyInfo, updateCompanyVisible} from "../api/api";
 import {toast} from "react-toastify";
 import Input from "../utils/Input";
 import Button from "../utils/Button";
 import {Switch} from "@mui/material";
+import {deleteCompanyThunk, updateCompanyInfoThunk, updateCompanyVisibleThunk} from "../store/reduxThunk";
+import {useSelector} from "react-redux";
+import {RootState} from "../store/store";
 
 const EditCompany = () => {
-    const location = useLocation();
-    const company = location.state
+    const company = useSelector((state: RootState) => state.company);
     const navigate = useNavigate()
 
     const [updateCompany, setUpdateCompany] = useState<CompanyState>({
@@ -44,8 +45,8 @@ const EditCompany = () => {
 
     const saveChanges = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await updateCompanyInfo(company.company_id, updateCompany)
-        await updateCompanyVisible(company.company_id, updateCompany.is_visible)
+        await updateCompanyInfoThunk(company.company_id, updateCompany)
+        await updateCompanyVisibleThunk(company.company_id, updateCompany.is_visible)
         navigate('/companyProfile', {state: {company_id: company.company_id}})
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
@@ -54,8 +55,8 @@ const EditCompany = () => {
 
     const deleteCompanyById = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await deleteCompany(company.company_id)
-        window.location.reload()
+        await deleteCompanyThunk(company.company_id)
+        navigate('/companyList')
     }
 
     const handleChangeSwitch = async () => {

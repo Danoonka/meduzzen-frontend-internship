@@ -1,42 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import CompanyItem from "../components/CompanyItem";
-import {pagination} from "../api/api";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {Pagination} from "@mui/material";
-import {CompanyState} from "../types";
+import {AllCompaniesState, CompanyState} from "../types";
 import Button from "../utils/Button";
-import Modal from "../components/Modal";
-import useModal from "../components/useModal";
+import {paginationThunk} from "../store/reduxThunk";
+import CreateCompanyModal from "../components/CreateCompanyModal";
 
-interface PaginationInfo {
-    current_page: number,
-    total_page: number,
-    total_results: number
-}
 
-let paginationInfo: PaginationInfo = {
-    current_page: 1,
-    total_page: 1,
-    total_results: -1
-}
-
-const companiesPerPage = 15;
+export const companiesPerPage = 15;
 
 const CompanyList = () => {
-    const { isOpen, toggle } = useModal();
-    if(paginationInfo.total_results === -1) {
-        pagination('companies', paginationInfo.current_page, companiesPerPage).then(res => paginationInfo = res)
-    }
-
-    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        paginationInfo.current_page = value
-        pagination('companies', paginationInfo.current_page, companiesPerPage).then(res => paginationInfo = res)
+    const [isOpen, setIsOpen] = useState(false);
+    const pagInfo = useSelector((state: RootState) => state.paginationInfo)
+    const toggle = () => {
+        setIsOpen(!isOpen);
     };
 
-    const allCompanies = useSelector((state: RootState) => state.allCompanies.companies);
+    useEffect(() => {
+        paginationThunk('companies', pagInfo.current_page, companiesPerPage)
+    }, [pagInfo.current_page])
 
-    const companies = (allCompanies).map((item: CompanyState) =>
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        pagInfo.current_page = value
+        paginationThunk('companies', pagInfo.current_page, companiesPerPage)
+
+    };
+
+    const allCompanies = useSelector((state: RootState) => state.allCompanies as AllCompaniesState);
+    const companies = (allCompanies.companies).map((item: CompanyState) =>
         <CompanyItem companyData={item} key={item.company_id}/>
     )
 
@@ -45,13 +38,13 @@ const CompanyList = () => {
         <div>
             <h3 className="user-list-heading">Companies List</h3>
             <Button className='button-create-company universal-button' onClick={toggle}>Create Company</Button>
-            <Modal isOpen={isOpen} toggle={toggle}/>
+            <CreateCompanyModal isOpen={isOpen} toggle={toggle}/>
             <div className="user-list-container">
                 {companies}
             </div>
             <div className="user-list-container">
-                <Pagination className="user-pagination" count={paginationInfo.total_page}
-                            page={paginationInfo.current_page} onChange={handleChange}/>
+                <Pagination className="user-pagination" count={pagInfo.total_page}
+                            page={pagInfo.current_page} onChange={handleChange}/>
             </div>
         </div>
 

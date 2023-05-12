@@ -8,7 +8,7 @@ import {validUserRegistration} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
-import {checkAuth} from "../api/api";
+import {checkAuthThunk} from "../store/reduxThunk";
 
 export interface NewUser {
     user_password: string,
@@ -116,7 +116,7 @@ const UserRegistration: React.FC = () => {
         event.preventDefault();
         await loginWithPopup({authorizationParams: {screen_hint: 'signup'}});
         await setTokenAuth();
-        if (await checkAuth()) {
+        if (await checkAuthThunk()) {
             store.dispatch(authTrue())
             await navigate("/userProfile")
             toast.success('Welcome!', {

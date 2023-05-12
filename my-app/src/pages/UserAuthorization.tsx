@@ -7,7 +7,7 @@ import {validUserAuthorization} from "../utils/authorizaton";
 import {useNavigate} from "react-router-dom";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
-import {checkAuth} from "../api/api";
+import {checkAuthThunk} from "../store/reduxThunk";
 
 interface User {
     user_email: string;
@@ -84,7 +84,7 @@ const UserAuthorization: React.FC = () => {
         event.preventDefault();
         await loginWithPopup();
         await setTokenAuth();
-        if (await checkAuth()) {
+        if (await checkAuthThunk()) {
             store.dispatch(authTrue())
             await navigate("/userProfile")
             toast.success('Welcome!', {

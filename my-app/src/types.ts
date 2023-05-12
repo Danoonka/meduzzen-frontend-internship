@@ -82,3 +82,16 @@ export interface IsUserAuthorisedState {
 export const initialIsUserAuthorisedState: IsUserAuthorisedState = {
     isAuthorised: false
 }
+
+export interface PaginationInfoState {
+    current_page: number,
+    total_page: number,
+    total_results: number
+}
+
+export const initialPaginationInfoState: PaginationInfoState = {
+    current_page: 1,
+    total_page: 1,
+    total_results: -1
+}
+

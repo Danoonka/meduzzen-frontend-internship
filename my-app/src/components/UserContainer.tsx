@@ -5,8 +5,8 @@ import '../utils/Input.css'
 import {useNavigate} from "react-router-dom";
 import './UserContainer.css'
 import {useSelector} from "react-redux";
-import {changeUserAvatar, getUserById} from "../api/api";
 import {CurrentUserState, initialCurrentUserState} from "../types";
+import {changeUserAvatarThunk, getUserByIdThunk} from "../store/reduxThunk";
 
 interface UserProps {
     user_id: number;
@@ -14,16 +14,11 @@ interface UserProps {
 
 const UserContainer = ({user_id}: UserProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
-    const [user, setUser] = useState<CurrentUserState>(initialCurrentUserState);
+    const user = useSelector((state: RootState) => state.userById);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
+    getUserByIdThunk(user_id)
 
-
-    useEffect(() => {
-        getUserById(user_id).then(response => {
-            setUser(response);
-        })
-    }, [user_id]);
 
     const isOwner = user.user_id === currentUser.user_id
 
@@ -37,13 +32,13 @@ const UserContainer = ({user_id}: UserProps) => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (selectedFile) {
-            await changeUserAvatar(user.user_id, selectedFile)
+            await changeUserAvatarThunk(user.user_id, selectedFile)
         }
         window.location.reload();
     };
 
     const goToEditUser = () => {
-        navigate('/editUser', {state: user})
+        navigate('/editUser')
     }
 
     return (

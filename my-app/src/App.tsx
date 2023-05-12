@@ -15,16 +15,16 @@ import {Navigate} from "react-router-dom";
 import EditUser from "./components/EditUser";
 import NotFound from "./pages/NotFound";
 import {authTrue} from "./store/userActionCreators";
-import {checkAuth} from "./api/api";
 import {useSelector} from "react-redux";
 import EditCompany from "./components/EditCompany";
+import {checkAuthThunk} from "./store/reduxThunk";
 
 
 function App() {
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
 
     const afterUpdate = async () =>{
-        if (await checkAuth()){
+        if (await checkAuthThunk()){
             store.dispatch(authTrue())
         }
     }

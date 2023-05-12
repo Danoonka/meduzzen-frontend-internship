@@ -3,8 +3,9 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {CompanyState, initialCompanyState} from "../types";
 import {useNavigate} from "react-router-dom";
-import {getCompanyById, updateCompanyAvatar} from "../api/api";
+import {getCompanyById} from "../api/api";
 import Button from "../utils/Button";
+import {getCompanyByIdThunk, updateCompanyAvatarThunk} from "../store/reduxThunk";
 
 
 interface CompanyProps {
@@ -13,15 +14,10 @@ interface CompanyProps {
 
 const CompanyContainer: React.FC<CompanyProps> = ({company_id}: CompanyProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
-    const [company, setCompany] = useState<CompanyState>(initialCompanyState);
+    const company = useSelector((state: RootState) => state.company);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        getCompanyById(company_id).then(response => {
-            setCompany(response);
-        })
-    }, [company_id]);
+    getCompanyByIdThunk(company_id)
 
     const isOwner = company.company_owner.user_id === currentUser.user_id
 
@@ -34,13 +30,13 @@ const CompanyContainer: React.FC<CompanyProps> = ({company_id}: CompanyProps) =>
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (selectedFile) {
-            await updateCompanyAvatar(company.company_id, selectedFile)
+            await updateCompanyAvatarThunk(company.company_id, selectedFile)
         }
         window.location.reload()
     };
 
     const goToEditCompany = () => {
-        navigate('/editCompany', {state: company})
+        navigate('/editCompany')
     }
 
     return (

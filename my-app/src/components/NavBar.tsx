@@ -7,6 +7,7 @@ import {RootState, store} from "../store/store";
 import {useSelector} from "react-redux";
 import {authFalse} from "../store/userActionCreators";
 
+
 const NavBar: React.FC = () => {
     const{logout} = useAuth0()
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
@@ -25,7 +26,7 @@ const NavBar: React.FC = () => {
                 {isAuthenticated &&
                     <>
                         <li><Link to="/userList">User List</Link></li>
-                        <li><Link to="/companyList">Company List</Link></li></>
+                        <li><Link to="/companyList" >Company List</Link></li></>
                 }
             </ul>
             {isAuthenticated

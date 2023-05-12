@@ -3,22 +3,22 @@ import thunk from "redux-thunk";
 import {currentUserReducer} from "./reducers/currentUserReducer";
 import {allUsersReducer} from "./reducers/allUsersReducer";
 import {authReducer} from "./reducers/authReducer";
-import {AllCompaniesState, AllUsersState, CompanyState, CurrentUserState, IsUserAuthorisedState} from "../types";
 import {allCompaniesReducer} from "./reducers/allCompaniesReducer";
+import {CompanyByIdReducer} from "./reducers/CompanyByIdReducer";
+import {userByIdReducer} from "./reducers/userByIdReducer";
+import {paginationReducer} from "./reducers/paginationReducer";
 
-export interface RootState {
-    currentUser: CurrentUserState,
-    allUser: AllUsersState,
-    isAuthorised: IsUserAuthorisedState,
-    company : CompanyState,
-    allCompanies : AllCompaniesState
-}
 
 export const rootReducer = combineReducers({
     currentUser: currentUserReducer,
+    userById: userByIdReducer,
     isAuthorised: authReducer,
     allUser: allUsersReducer,
-    allCompanies: allCompaniesReducer
+    allCompanies: allCompaniesReducer,
+    company: CompanyByIdReducer,
+    paginationInfo: paginationReducer
 });
+
+export type RootState = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
