@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import Button from "../utils/Button";
 import Input from "../utils/Input";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
 import {toast} from "react-toastify";
-import {deleteUser, updateUserInfo, updateUserPassword} from "../api/api";
+import {CurrentUserState} from "../types";
+import {deleteUserThunk, updateUserInfoThunk, updateUserPasswordThunk} from "../store/reduxThunk";
+import {useSelector} from "react-redux";
+import {RootState} from "../store/store";
 
 const EditUser = () => {
-    const location = useLocation();
-    const user = location.state
+    const user = useSelector((state: RootState) => state.currentUser);
     const [updateUser, setUpdateUser] = useState<CurrentUserState>({
         user_id: user.user_id,
         user_email: user.user_email,
@@ -37,9 +38,9 @@ const EditUser = () => {
         if (updateUser.user_links === null) {
             updatedLinks = []
         } else {
-            updatedLinks = [...user.user_links];
+            updatedLinks = [...updateUser.user_links];
+            updatedLinks = (value.split(','))
         }
-        updatedLinks.push(value)
         await setUpdateUser({...updateUser, user_links: updatedLinks});
     }
 
@@ -55,7 +56,7 @@ const EditUser = () => {
 
     const saveChanges = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await updateUserInfo(user.user_id, updateUser)
+        await updateUserInfoThunk(user.user_id, updateUser)
         navigate('/userProfile')
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
@@ -65,7 +66,7 @@ const EditUser = () => {
     const updateUserPasswordOnClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         navigate('/userProfile')
-        await updateUserPassword(user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
+        await updateUserPasswordThunk(user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
         toast.success("Password updated!", {
             position: toast.POSITION.BOTTOM_RIGHT
         })
@@ -73,12 +74,11 @@ const EditUser = () => {
 
     const deleteUserById = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await deleteUser(user.user_id)
+        await deleteUserThunk(user.user_id)
         logout()
         localStorage.removeItem('accessToken');
     }
 
-    //TODO: fix links
     const editingFields = [
         {
             label: 'Firstname',
@@ -124,7 +124,7 @@ const EditUser = () => {
             label: 'Links',
             name: 'user_links',
             id: '5',
-            value: (updateUser.user_links ? user.user_links : ''),
+            value: (updateUser.user_links ? updateUser.user_links : ''),
             fun: handleLinkInput,
             type: 'text',
         }

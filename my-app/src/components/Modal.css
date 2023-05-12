@@ -1,0 +1,37 @@
+.modal-overlay {
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    display: block;
+    background: white;
+    width: 30%;
+    height: 30%;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+    text-align: center;
+    font-size: 1.5rem;
+    color:#42a5f5;
+}
+
+.company-create-button {
+    display: block;
+
+}
+
+.company-create-button Button {
+    display: block;
+    margin: 20px auto;
+}

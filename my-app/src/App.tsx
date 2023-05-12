@@ -15,15 +15,16 @@ import {Navigate} from "react-router-dom";
 import EditUser from "./components/EditUser";
 import NotFound from "./pages/NotFound";
 import {authTrue} from "./store/userActionCreators";
-import {checkAuth} from "./api/api";
 import {useSelector} from "react-redux";
+import EditCompany from "./components/EditCompany";
+import {checkAuthThunk} from "./store/reduxThunk";
 
 
 function App() {
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
 
     const afterUpdate = async () =>{
-        if (await checkAuth()){
+        if (await checkAuthThunk()){
             store.dispatch(authTrue())
         }
     }
@@ -44,7 +45,7 @@ function App() {
                     <Route path="/companyList" element={<CompanyList/>}/>
                     <Route path="/companyProfile" element={<CompanyProfile/>}/>
                     <Route path="/editUser" element={<EditUser/>}/>
-                    <Route path="/editUser" element={<EditUser/>}/>
+                    <Route path="/editCompany" element={<EditCompany/>}/>
                     <Route path="/404" element={<NotFound/>}/>
                     <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
                 </Routes>)
@@ -55,7 +56,7 @@ function App() {
                     <Route path="/userRegistration" element={<UserRegistration/>}/>
                     <Route path="/userAuthorization" element={<UserAuthorization/>}/>
                     <Route path="/404" element={<NotFound/>}/>
-                    <Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>
+                    {/*<Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>*/}
                     <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
                 </Routes>)
             }

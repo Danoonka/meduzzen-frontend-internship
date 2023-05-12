@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
+import {CurrentUserState} from "../types";
 
 interface CurrentUserProps {
     currentUser: CurrentUserState;

@@ -1,14 +1,6 @@
 import axios from "axios";
-import {store} from "../store/store";
-import {
-    changeUserAvatarAction,
-    receiveAllUsersAction,
-    receiveCurrentUserAction,
-    updateUserInfoAction
-} from "../store/userActionCreators";
 import {NewUser} from "../pages/UserRegistration";
-import {toast} from "react-toastify";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
+import {CompanyState, CurrentUserState} from "../types";
 
 export const instance = axios.create({
         baseURL: 'http://3.75.186.163',
@@ -27,22 +19,16 @@ instance.interceptors.request.use(
     error => Promise.reject(error)
 );
 
-export const checkAuth = async () => {
-    return await instance
+export const checkAuth = () => {
+    return instance
         .get('/auth/me/')
         .then(function (response) {
-            store.dispatch(receiveCurrentUserAction(response.data.result))
-            return true
+            return response
         })
-        .catch(function (error) {
-            localStorage.removeItem('accessToken')
-            return false
-        });
-
 }
 
-export const addUser = async (user: NewUser) => {
-    return await instance
+export const addUser = (user: NewUser) => {
+    return instance
         .post("/user/", {
             user_password: user.user_password,
             user_password_repeat: user.user_password_repeat,
@@ -51,52 +37,31 @@ export const addUser = async (user: NewUser) => {
             user_lastname: user.user_lastname
         })
         .then(function (response) {
-            return true;
+            return response
         })
-        .catch(function (error) {
-            toast.error("Invalid data!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-            return false;
-        });
 }
 
-export const logInUser = async (email: string, password: string) => {
-    return await instance
+export const logInUser = (email: string, password: string) => {
+    return instance
         .post('/auth/login/', {
             user_email: email,
             user_password: password
         })
         .then(function (response) {
-            localStorage.setItem('accessToken', response.data.result.access_token);
-            return true;
+            return response
         })
-        .catch(function (error) {
-            toast.error("Invalid Email or Password!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-            return false;
-        });
 }
 
-
-export const getUserById = async (id: number) => {
-    return await instance
+export const getUserById = (id: number) => {
+    return instance
         .get(`/user/${id}/`)
         .then(function (response) {
-            return response.data.result
-        })
-        .catch(function (error) {
-            toast.error("Failed to get user by ID", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+            return response
         })
 }
 
-export const changeUserAvatar = async (id: number, file: File) => {
-    let formData = new FormData();
-    formData.append("file", file);
-    return await instance
+export const changeUserAvatar = (id: number, formData: FormData) => {
+    return instance
         .put(`/user/${id}/update_avatar/`, formData,
             {
                 headers: {
@@ -105,67 +70,122 @@ export const changeUserAvatar = async (id: number, file: File) => {
             }
         )
         .then(function (response) {
-            store.dispatch(changeUserAvatarAction(response.data.result))
-        })
-        .catch(function (error) {
-            toast.error("Failed to set user avatar", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+            return response
         })
 }
 
-export const updateUserInfo = async (id: number, user: CurrentUserState) => {
-    return await instance
+export const updateUserInfo = (id: number, user: CurrentUserState) => {
+    return instance
         .put(`/user/${id}/update_info/`, user)
         .then(function (response) {
-            store.dispatch(updateUserInfoAction(user))
-        })
-        .catch(function (error) {
-            toast.error("Failed to update user info", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+            return response
         })
 }
 
-export const updateUserPassword = async (id: number,
-                                         user_password: string,
-                                         user_password_repeat: string) => {
-    return await instance
+export const updateUserPassword = (id: number,
+                                   user_password: string,
+                                   user_password_repeat: string) => {
+    return instance
         .put(`/user/${id}/update_password/`,
             {
                 "user_password": user_password,
                 "user_password_repeat": user_password_repeat
             })
-        .catch(function (error) {
-            toast.error("Failed to update user password", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+        .then(response => {
+            return response
         })
 }
 
-export const deleteUser = async (id: number) => {
-    return await instance
+export const deleteUser = (id: number) => {
+    return instance
         .delete(`/user/${id}/`)
-        .catch(function (error) {
-            toast.error("Failed to delete user", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+        .then(response => {
+            return response
         })
 }
 
-export const pagination = async (page: number, size: number) => {
-    return await instance
-        .get(`/users/?page=${page}&page_size=${size}`)
-        .then(function (response) {
-            store.dispatch(receiveAllUsersAction(response.data.result.users))
-            return response.data.result.pagination
+export const pagination = (item: string, page: number, size: number) => {
+    return instance
+        .get(`/${item}/`, {
+            params: {
+                page: page,
+                page_size: size
+            }
         })
-        .catch(function (error) {
-            toast.error("Failed to get user in this page", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
+        .then(response => {
+            return response
         })
 }
+
+
+export const createCompany = (company: CompanyState) => {
+    return instance
+        .post('/company/',
+            {
+                company_name: company.company_name,
+                is_visible: company.is_visible
+            })
+        .then(function (response) {
+            return response
+        })
+}
+
+export const updateCompanyInfo = (id: number, company: CompanyState) => {
+    return instance
+        .put(`/company/${id}/update_info/`,
+            {
+                company_name: company.company_name,
+                company_title: company.company_title,
+                company_description: company.company_description,
+                company_city: company.company_city,
+                company_phone: company.company_phone,
+                company_links: company.company_links
+            })
+        .then(response => {
+            return response
+        })
+
+}
+
+export const updateCompanyVisible = (id: number, is_visible: boolean) => {
+    return instance
+        .put(`/company/${id}/update_visible/`, {is_visible: is_visible})
+        .then(response => {
+            return response
+        })
+}
+
+export const updateCompanyAvatar = (id: number, formData: FormData) => {
+    return instance
+        .put(`/company/${id}/update_avatar/`, formData, {
+            headers: {
+                'Content-Type': "multipart/form-data",
+            }
+        })
+        .then(res => {
+            return res
+        })
+}
+
+export const deleteCompany = (id: number) => {
+    return instance
+        .delete(`/company/${id}/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const getCompanyById = (id: number) => {
+    return instance
+        .get(`/company/${id}/`)
+        .then(function (response) {
+            return response
+        })
+
+}
+
+
+
 
 
 

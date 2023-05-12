@@ -2,10 +2,10 @@ import React from 'react';
 import './UserList.css'
 import UserItem from "../components/UserItem";
 import {useSelector} from "react-redux";
-import {CurrentUserState} from "../store/reducers/currentUserReducer";
 import {RootState} from "../store/store";
 import {Pagination} from "@mui/material";
-import {pagination} from "../api/api";
+import {AllUsersState, CurrentUserState} from "../types";
+import {paginationThunk} from "../store/reduxThunk";
 
 interface PaginationInfo {
     current_page: number,
@@ -19,21 +19,23 @@ let paginationInfo: PaginationInfo = {
     total_results: -1
 }
 
-const usersPerPage = 15
+const usersPerPage = 15;
 
 const UserList = () => {
     if(paginationInfo.total_results === -1) {
-        pagination(paginationInfo.current_page, usersPerPage).then(res => paginationInfo = res)
+        paginationThunk('users', paginationInfo.current_page, usersPerPage)
+            .then(res => paginationInfo = res)
     }
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         paginationInfo.current_page = value
-        pagination(paginationInfo.current_page, usersPerPage).then(res => paginationInfo = res)
+        paginationThunk('users', paginationInfo.current_page, usersPerPage)
+            .then(res => paginationInfo = res)
     };
 
-    const allUsers = useSelector((state: RootState) => state.allUser.users);
+    const allUsers = useSelector((state: RootState) => state.allUser as AllUsersState);
 
-    const users = (allUsers).map((item: CurrentUserState) =>
+    const users = (allUsers.users).map((item: CurrentUserState) =>
         <UserItem currentUser={item} key={item.user_id}/>
     )
 

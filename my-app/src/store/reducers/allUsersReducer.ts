@@ -1,16 +1,5 @@
 import {Action} from "../actions";
-import {CurrentUserState, initialCurrentUserState} from "./currentUserReducer";
-
-export interface AllUsersState {
-    users: [
-        CurrentUserState
-    ]
-}
-
-export const initialAllUsersState: AllUsersState = {
-    users: [initialCurrentUserState]
-};
-
+import {initialAllUsersState} from "../../types";
 
 export function allUsersReducer(state = initialAllUsersState, action: Action) {
     switch (action.type) {
