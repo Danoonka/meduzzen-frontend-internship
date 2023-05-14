@@ -6,7 +6,7 @@ import {Pagination} from "@mui/material";
 import {AllCompaniesState, CompanyState} from "../types";
 import Button from "../utils/Button";
 import {paginationThunk} from "../store/reduxThunk";
-import CreateCompanyModal from "../components/CreateCompanyModal";
+import CreateCompanyModal from "../components/modalWindows/CreateCompanyModal";
 
 
 export const companiesPerPage = 15;

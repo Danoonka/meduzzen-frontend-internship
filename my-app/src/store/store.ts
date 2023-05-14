@@ -6,7 +6,7 @@ import {authReducer} from "./reducers/authReducer";
 import {allCompaniesReducer} from "./reducers/allCompaniesReducer";
 import {CompanyByIdReducer} from "./reducers/CompanyByIdReducer";
 import {userByIdReducer} from "./reducers/userByIdReducer";
-import {paginationReducer} from "./reducers/paginationReducer";
+import {paginationReducer, paginationUserReducer} from "./reducers/paginationReducer";
 
 
 export const rootReducer = combineReducers({
@@ -16,7 +16,8 @@ export const rootReducer = combineReducers({
     allUser: allUsersReducer,
     allCompanies: allCompaniesReducer,
     company: CompanyByIdReducer,
-    paginationInfo: paginationReducer
+    paginationInfo: paginationReducer,
+    paginationUserInfo: paginationUserReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>

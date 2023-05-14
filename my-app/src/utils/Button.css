@@ -16,3 +16,10 @@
     background-color: white;
     color: #42a5f5;
 }
+
+.universal-button[disabled]{
+    background-color:white;
+    color:  #42a5f5;
+    border: 1px solid #42a5f5;
+    cursor: not-allowed;
+}

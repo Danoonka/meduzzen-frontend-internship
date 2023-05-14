@@ -38,8 +38,13 @@ export const updateUserInfoAction = (payload: CurrentUserState): Action => ({
     payload,
 });
 
-export const receivePaginationInfo = (payload: PaginationInfoState) :Action => ({
+export const receivePaginationInfo = (payload: PaginationInfoState): Action => ({
     type: 'SET_PAGINATION_COMPANY',
+    payload
+})
+
+export const receivePaginationUserInfo = (payload: PaginationInfoState): Action => ({
+    type: 'SET_PAGINATION_USER',
     payload
 })
 

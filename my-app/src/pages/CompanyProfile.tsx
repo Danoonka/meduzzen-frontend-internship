@@ -1,11 +1,11 @@
 import React from 'react';
 import {useLocation} from "react-router-dom";
-import CompanyContainer from "../components/CompanyContainer";
+import CompanyContainer from "../components/companyProfile/CompanyContainer";
 
 
 const CompanyProfile = () => {
 
-    const { company_id: stateCompanyId } = useLocation().state
+    const {company_id: stateCompanyId} = useLocation().state
     return (
         <>
             <CompanyContainer company_id={stateCompanyId}/>

@@ -2,7 +2,7 @@ import React from 'react';
 import './UserProfile.css'
 import {RootState} from "../store/store";
 import {useLocation} from "react-router-dom";
-import UserContainer from "../components/UserContainer";
+import UserContainer from "../components/UserProfile/UserContainer";
 import {useSelector} from "react-redux";
 
 const UserProfile: React.FC = () => {

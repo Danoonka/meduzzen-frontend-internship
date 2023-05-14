@@ -12,19 +12,19 @@ import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import {RootState, store} from "./store/store";
 import {Navigate} from "react-router-dom";
-import EditUser from "./components/EditUser";
 import NotFound from "./pages/NotFound";
 import {authTrue} from "./store/userActionCreators";
 import {useSelector} from "react-redux";
-import EditCompany from "./components/EditCompany";
 import {checkAuthThunk} from "./store/reduxThunk";
+import EditUser from "./components/UserProfile/EditUser";
+import EditCompany from "./components/companyProfile/EditCompany";
 
 
 function App() {
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
 
-    const afterUpdate = async () =>{
-        if (await checkAuthThunk()){
+    const afterUpdate = async () => {
+        if (await checkAuthThunk()) {
             store.dispatch(authTrue())
         }
     }

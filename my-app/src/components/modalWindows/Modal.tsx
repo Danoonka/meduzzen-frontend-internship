@@ -7,7 +7,6 @@ interface ModalType {
     toggle: () => void;
 }
 
-
 const Modal = (props: ModalType) => {
     return (
         <>

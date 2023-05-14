@@ -1,14 +1,20 @@
 import {
-    addUser,
+    acceptInvite,
+    acceptRequest, addToBlackList,
+    addUser, BlackList,
     changeUserAvatar,
     checkAuth,
     createCompany,
+    createInvite,
+    createRequest,
+    declineAction,
     deleteCompany,
     deleteUser,
+    fireLeaveMember,
     getCompanyById,
-    getUserById,
-    logInUser,
-    pagination,
+    getUserById, invitesList, invitesListCompany,
+    logInUser, membersListCompany, myCompanyList,
+    pagination, removeFromBlackList, requestList, requestListCompany,
     updateCompanyAvatar,
     updateCompanyInfo,
     updateCompanyVisible,
@@ -19,7 +25,7 @@ import {store} from "./store";
 import {
     changeUserAvatarAction, receiveAllCompaniesAction,
     receiveAllUsersAction, receiveCompanyByIdAction,
-    receiveCurrentUserAction, receivePaginationInfo, receiveUserByIdAction,
+    receiveCurrentUserAction, receivePaginationInfo, receivePaginationUserInfo, receiveUserByIdAction,
     updateUserInfoAction
 } from "./userActionCreators";
 import {NewUser} from "../pages/UserRegistration";
@@ -32,7 +38,7 @@ export const checkAuthThunk = async () => {
             store.dispatch(receiveCurrentUserAction(res.data.result))
             return true
         })
-        .catch(function (error) {
+        .catch(function () {
             localStorage.removeItem('accessToken')
             return false
         });
@@ -122,12 +128,12 @@ export const updateUserPasswordThunk = async (id: number,
         })
 }
 
-export const paginationThunk = async (item: string, page: number, size: number) => {
-
+export const paginationThunk = async (item: string, page?: number, size?: number) => {
     return await pagination(item, page, size)
         .then(res => {
             if (item === 'users') {
                 store.dispatch(receiveAllUsersAction(res.data.result.users))
+                store.dispatch(receivePaginationUserInfo(res.data.result.pagination))
             } else if (item === 'companies') {
                 store.dispatch(receiveAllCompaniesAction(res.data.result.companies))
                 store.dispatch(receivePaginationInfo(res.data.result.pagination))
@@ -135,7 +141,6 @@ export const paginationThunk = async (item: string, page: number, size: number) 
             return res.data.result.pagination
         })
         .catch(function (error) {
-            console.log(error)
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
@@ -204,4 +209,158 @@ export const getCompanyByIdThunk = async (id: number) => {
             })
         })
 }
+
+export const createInviteThunk = async (user_id: number, company_id: number) => {
+    return await createInvite(user_id, company_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const declineActionThunk = async (action_id: number) => {
+    return await declineAction(action_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const acceptInviteThunk = async (action_id: number) => {
+    return await acceptInvite(action_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const createRequestThunk = async (company_id: number) => {
+    return await createRequest(company_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const acceptRequestThunk = async (action_id: number) => {
+    return await acceptRequest(action_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const fireLeaveMemberThunk = async (action_id: number) => {
+    return await fireLeaveMember(action_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const requestListThunk = async (user_id: number) => {
+    return await requestList(user_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const invitesListThunk = async (user_id: number) => {
+    return await invitesList(user_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const invitesListCompanyThunk = async (company_id: number) => {
+    return await invitesListCompany(company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const membersListCompanyThunk = async (company_id: number) => {
+    return await membersListCompany(company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const myCompanyListThunk = async (user_id: number) => {
+    return await myCompanyList(user_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+
+export const requestListCompanyThunk = async (company_id: number) => {
+    return await requestListCompany(company_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const BlackListThunk = async (company_id: number) => {
+    return await BlackList(company_id)
+        .then(res => (res))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const removeFromBlackListThunk = async (action_id: number) => {
+    return removeFromBlackList(action_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const addToBlackListThunk = async (action_id: number) => {
+    return addToBlackList(action_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+
+
 

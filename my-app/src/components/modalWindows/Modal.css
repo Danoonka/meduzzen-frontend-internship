@@ -13,8 +13,8 @@
 .modal-box {
     display: block;
     background: white;
-    width: 30%;
-    height: 30%;
+    width: fit-content;
+    height: fit-content;
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -23,7 +23,7 @@ h2 {
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     text-align: center;
     font-size: 1.5rem;
-    color:#42a5f5;
+    color: #42a5f5;
 }
 
 .company-create-button {
