@@ -10,7 +10,6 @@ import UserRows from "./UserRows";
 
 
 const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
-
     const [blockList, setBlockList] = useState<AllActionUsersState>(initialActionAllUsersState)
 
     useEffect(() => {
@@ -18,12 +17,19 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
             .then((res) => {
                 setBlockList(res?.data.result)
             })
-
-    }, [blockList])
+    }, [])
 
     const onClickRemove = (action_id: number) => {
         removeFromBlackListThunk(action_id)
+            .then(() => BlackListThunk(companyData.company_id)
+                .then((res) => {
+                    setBlockList(res?.data.result)
+                })
+            )
     }
+
+    useEffect(() => {
+    }, [JSON.stringify(blockList.users)])
 
     const blackList = (blockList.users).map((item: ActionUserState) =>
         <UserRows currentUser={item} key={item.user_id}

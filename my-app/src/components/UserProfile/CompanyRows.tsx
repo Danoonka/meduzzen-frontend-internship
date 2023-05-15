@@ -19,7 +19,7 @@ const CompanyRows: React.FC<CompanyItemProps> = ({companyData, children}: Compan
                 src={companyData.company_avatar === null ? userAvatar : companyData.company_avatar}
                 alt="company avatar"/>
             <div>
-                <Link to='/companyProfile' state={{company_id: companyData.company_id}}>
+                <Link to={`/companyProfile/${companyData.company_id}`} state={{company_id: companyData.company_id}}>
                     <h4>{companyData.company_name}</h4>
                 </Link>
             </div>

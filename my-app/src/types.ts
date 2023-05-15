@@ -147,13 +147,13 @@ export const initialActionCompanyState: ActionCompanyState = {
     action: ''
 }
 
-export interface AllActionCCompaniesState {
+export interface AllActionCompaniesState {
     companies: [
         ActionCompanyState
     ]
 }
 
-export const initialAllActionCompaniesState: AllActionCCompaniesState = {
+export const initialAllActionCompaniesState: AllActionCompaniesState = {
     companies: [initialActionCompanyState]
 };
 
@@ -178,6 +178,7 @@ export interface CheckModalProps {
     isOpen: boolean,
     toggle: () => void;
     action_id: number
+    callback: () => void;
 }
 
 export interface UserProps {

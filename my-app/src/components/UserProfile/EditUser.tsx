@@ -57,7 +57,7 @@ const EditUser = () => {
     const saveChanges = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         await updateUserInfoThunk(user.user_id, updateUser)
-        navigate('/userProfile')
+        navigate(`/userProfile/${user.user_id}`)
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
         })
@@ -65,7 +65,7 @@ const EditUser = () => {
 
     const updateUserPasswordOnClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        navigate('/userProfile')
+        navigate(`/userProfile/${user.user_id}`)
         await updateUserPasswordThunk(user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
         toast.success("Password updated!", {
             position: toast.POSITION.BOTTOM_RIGHT

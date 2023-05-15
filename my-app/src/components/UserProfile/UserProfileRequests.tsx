@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
     ActionCompanyState,
-    AllActionCCompaniesState,
+    AllActionCompaniesState,
     initialAllActionCompaniesState, UserProps,
 } from "../../types";
 import {requestListThunk} from "../../store/reduxThunk";
@@ -11,7 +11,7 @@ import CheckModal from "../modalWindows/CheckModal";
 
 
 const UserProfileRequests = ({user_id}: UserProps) => {
-    const [requestList, setRequestList] = useState<AllActionCCompaniesState>(initialAllActionCompaniesState)
+    const [requestList, setRequestList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(0);
 
@@ -20,14 +20,18 @@ const UserProfileRequests = ({user_id}: UserProps) => {
         setIsOpen(!isOpen);
     }
 
+
+
     useEffect(() => {
         requestListThunk(user_id)
             .then((res) => {
                 setRequestList(res?.data.result)
             })
 
-    }, [requestList, user_id])
+    }, [])
 
+    useEffect(() => {
+    }, [JSON.stringify(requestList.companies)])
 
     const requests = (requestList.companies).map((item: ActionCompanyState) =>
         <CompanyRows companyData={item}
@@ -41,7 +45,9 @@ const UserProfileRequests = ({user_id}: UserProps) => {
     return (
         <div>
             {requests}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
+                        callback={()=> requestListThunk(user_id)
+                            .then((res) => setRequestList(res?.data.result))}/>
         </div>
     );
 };

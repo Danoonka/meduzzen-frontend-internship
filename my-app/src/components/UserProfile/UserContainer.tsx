@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {RootState} from "../../store/store";
 import Button from "../../utils/Button";
 import '../../utils/Input.css'
@@ -18,7 +18,9 @@ const UserContainer = ({user_id}: UserProps) => {
     const user = useSelector((state: RootState) => state.userById);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
-    getUserByIdThunk(user_id)
+    useEffect(()=>{
+        getUserByIdThunk(user_id)
+    }, [])
     const [currentElement, setCurrentElement] = useState<ReactNode>(<></>)
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {

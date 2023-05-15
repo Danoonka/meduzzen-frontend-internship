@@ -28,7 +28,7 @@ const CreateCompanyModal = ({ toggle, isOpen }: CreateCompanyModalProps) => {
     const createCompanyOnClick = () =>{
         createCompanyThunk(company).then(res => {
             if (res !== -1){
-                navigate('/companyProfile', {state: {company_id: res}})
+                navigate(`/companyProfile/${res}`, {state: {company_id: res}})
             }else{
                 toast.error('Failed to create company!',{
                     position: toast.POSITION.BOTTOM_RIGHT

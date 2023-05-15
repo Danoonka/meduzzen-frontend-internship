@@ -41,13 +41,14 @@ function App() {
                     <Route path="/meduzzen-demo" element={<MainPage/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/userList" element={<UserList/>}/>
-                    <Route path="/userProfile" element={<UserProfile/>}/>
+                    <Route path="/userProfile/:userId" element={<UserProfile/>}/>
                     <Route path="/companyList" element={<CompanyList/>}/>
-                    <Route path="/companyProfile" element={<CompanyProfile/>}/>
+                    <Route path="/companyProfile/:companyId" element={<CompanyProfile/>}/>
                     <Route path="/editUser" element={<EditUser/>}/>
                     <Route path="/editCompany" element={<EditCompany/>}/>
                     <Route path="/404" element={<NotFound/>}/>
                     <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
+                    <Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>
                 </Routes>)
                 :
                 (<Routes>

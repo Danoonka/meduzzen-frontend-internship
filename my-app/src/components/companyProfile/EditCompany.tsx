@@ -47,7 +47,7 @@ const EditCompany = () => {
         event.preventDefault();
         await updateCompanyInfoThunk(company.company_id, updateCompany)
         await updateCompanyVisibleThunk(company.company_id, updateCompany.is_visible)
-        navigate('/companyProfile', {state: {company_id: company.company_id}})
+        navigate(`/companyProfile/${company.company_id}`, {state: {company_id: company.company_id}})
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
         })

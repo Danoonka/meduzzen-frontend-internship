@@ -13,19 +13,21 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(0);
 
-    const onClickDecline = (action_id: number) => {
-        setModalData(action_id)
-        setIsOpen(!isOpen);
-    }
-
     useEffect(() => {
         invitesListCompanyThunk(companyData.company_id)
             .then((res) => {
                 setInviteList(res?.data.result)
             })
 
-    }, [inviteList, companyData.company_id])
+    }, [])
 
+    const onClickDecline = (action_id: number) => {
+        setModalData(action_id)
+        setIsOpen(!isOpen);
+    }
+
+    useEffect(() => {
+    }, [JSON.stringify(inviteList.users)])
 
     const invites = (inviteList.users).map((item: ActionUserState) =>
         <UserRows currentUser={item} key={item.user_id} children={<>
@@ -33,10 +35,15 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
         </>}/>
     )
     return (
-        <div>
-            {invites}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}/>
-        </div>
+        <>
+            <div>
+                {invites}
+            </div>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
+                        callback={() => invitesListCompanyThunk(companyData.company_id)
+                            .then((res) => setInviteList(res?.data.result))}/>
+        </>
+
     );
 };
 

@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {
-    ActionCompanyState, AllActionCCompaniesState, initialAllActionCompaniesState, UserProps,
+    ActionCompanyState, AllActionCompaniesState, initialAllActionCompaniesState, UserProps,
 } from "../../types";
-import {acceptInviteThunk, invitesListThunk} from "../../store/reduxThunk";
+import {acceptInviteThunk, invitesListThunk, requestListThunk} from "../../store/reduxThunk";
 import CompanyRows from "./CompanyRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
 
 
 const UserProfileInvites = ({user_id}: UserProps) => {
-
-    const [inviteList, setInviteList] = useState<AllActionCCompaniesState>(initialAllActionCompaniesState)
+    const [inviteList, setInviteList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(0);
 
@@ -24,12 +23,17 @@ const UserProfileInvites = ({user_id}: UserProps) => {
             .then((res) => {
                 setInviteList(res?.data.result)
             })
+    }, [])
 
-    }, [inviteList, user_id])
-
+    useEffect(() => {
+    }, [JSON.stringify(inviteList.companies)])
 
     const onClickAcceptInvite = (action_id: number) => {
         acceptInviteThunk(action_id)
+            .then(() => invitesListThunk(user_id)
+                .then((res) => {
+                    setInviteList(res?.data.result)
+                }))
     }
 
 
@@ -46,7 +50,9 @@ const UserProfileInvites = ({user_id}: UserProps) => {
     return (
         <div>
             {invites}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
+                        callback={() => invitesListThunk(user_id)
+                            .then((res) => setInviteList(res?.data.result))}/>
         </div>
     );
 };

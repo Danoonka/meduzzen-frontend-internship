@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import CompanyRows from "../UserProfile/CompanyRows";
 import Input from "../../utils/Input";
 import Button from "../../utils/Button";
+import {toast} from "react-toastify";
 
 
 const SendRequestModal = ({toggle, isOpen}: ModalProps) => {

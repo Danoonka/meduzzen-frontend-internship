@@ -109,7 +109,6 @@ const UserRegistration: React.FC = () => {
             position: toast.POSITION.BOTTOM_RIGHT
         })
         store.dispatch(authTrue())
-        await navigate("/userProfile",)
     }
 
     const logInAuth0 = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -118,7 +117,6 @@ const UserRegistration: React.FC = () => {
         await setTokenAuth();
         if (await checkAuthThunk()) {
             store.dispatch(authTrue())
-            await navigate("/userProfile")
             toast.success('Welcome!', {
                 position: toast.POSITION.BOTTOM_RIGHT
             })

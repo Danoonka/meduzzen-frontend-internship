@@ -17,14 +17,25 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
                 setMembersList(res?.data.result)
             })
 
-    }, [membersList, companyData.company_id])
+    }, [])
 
     const onClickFire = (action_id: number) => {
         fireLeaveMemberThunk(action_id)
+            .then(() => membersListCompanyThunk(companyData.company_id)
+                .then((res) => {
+                    setMembersList(res?.data.result)
+                }))
     }
+
+    useEffect(() => {
+    }, [JSON.stringify(membersList.users)])
 
     const onClickBlockUser = (action_id: number) => {
         addToBlackListThunk(action_id)
+            .then(() => membersListCompanyThunk(companyData.company_id)
+                .then((res) => {
+                    setMembersList(res?.data.result)
+                }))
     }
 
     const members = (membersList.users).map((item: ActionUserState) => {

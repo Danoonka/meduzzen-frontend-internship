@@ -11,7 +11,7 @@ import {authFalse} from "../store/userActionCreators";
 const NavBar: React.FC = () => {
     const{logout} = useAuth0()
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
-    const { user_email, user_firstname } = useSelector((state: RootState) => state.currentUser);
+    const { user_email, user_firstname, user_id } = useSelector((state: RootState) => state.currentUser);
     const LogOut = async () => {
         logout()
         localStorage.removeItem('accessToken');
@@ -32,7 +32,7 @@ const NavBar: React.FC = () => {
             {isAuthenticated
                 ?
                 <>
-                    <Link to='/userProfile'>
+                    <Link to={`/userProfile/${user_id}`}>
                         <Button>Email: {user_email}<br/>
                             name: {user_firstname}</Button>
                     </Link>

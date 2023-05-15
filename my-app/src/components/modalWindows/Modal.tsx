@@ -5,6 +5,7 @@ interface ModalType {
     children: ReactNode;
     isOpen: boolean;
     toggle: () => void;
+    callback?: () => void
 }
 
 const Modal = (props: ModalType) => {

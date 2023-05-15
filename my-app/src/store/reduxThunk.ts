@@ -212,7 +212,13 @@ export const getCompanyByIdThunk = async (id: number) => {
 
 export const createInviteThunk = async (user_id: number, company_id: number) => {
     return await createInvite(user_id, company_id)
-        .then(res => (res))
+        .then(res => {
+                toast.success('Successfully invited', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -232,7 +238,13 @@ export const declineActionThunk = async (action_id: number) => {
 
 export const acceptInviteThunk = async (action_id: number) => {
     return await acceptInvite(action_id)
-        .then(res => (res))
+        .then(res => {
+                toast.success('Successfully accepted', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -242,7 +254,13 @@ export const acceptInviteThunk = async (action_id: number) => {
 
 export const createRequestThunk = async (company_id: number) => {
     return await createRequest(company_id)
-        .then(res => (res))
+        .then(res => {
+                toast.success('Successfully requested', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -252,7 +270,13 @@ export const createRequestThunk = async (company_id: number) => {
 
 export const acceptRequestThunk = async (action_id: number) => {
     return await acceptRequest(action_id)
-        .then(res => (res))
+        .then(res => {
+                toast.success('Successfully accepted', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -262,7 +286,13 @@ export const acceptRequestThunk = async (action_id: number) => {
 
 export const fireLeaveMemberThunk = async (action_id: number) => {
     return await fireLeaveMember(action_id)
-        .then(res => (res))
+        .then(res => {
+                toast.success('Successfully left', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -343,7 +373,13 @@ export const BlackListThunk = async (company_id: number) => {
 
 export const removeFromBlackListThunk = async (action_id: number) => {
     return removeFromBlackList(action_id)
-        .then(res => res)
+        .then(res => {
+                toast.success('Removed from black list', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -353,7 +389,13 @@ export const removeFromBlackListThunk = async (action_id: number) => {
 
 export const addToBlackListThunk = async (action_id: number) => {
     return addToBlackList(action_id)
-        .then(res => res)
+        .then(res => {
+                toast.success('Added to black list', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT

@@ -6,7 +6,7 @@ import {
 } from "../../types";
 import {
     acceptRequestThunk,
-    requestListCompanyThunk
+    requestListCompanyThunk, requestListThunk
 } from "../../store/reduxThunk";
 import Button from "../../utils/Button";
 import UserRows from "./UserRows";
@@ -24,17 +24,22 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     }
 
     useEffect(() => {
+    }, [JSON.stringify(requestList.users)])
+
+    useEffect(() => {
         requestListCompanyThunk(companyData.company_id)
             .then((res) => {
                 setRequestList(res?.data.result)
             })
-
-    }, [requestList, companyData.company_id])
+    }, [])
 
     const onClickAcceptRequest = (action_id: number) => {
         acceptRequestThunk(action_id)
+            .then(() => requestListCompanyThunk(companyData.company_id)
+                .then((res) => {
+                    setRequestList(res?.data.result)
+                }))
     }
-
 
     const request = (requestList.users).map((item: ActionUserState) =>
         <UserRows
@@ -48,7 +53,9 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     return (
         <div>
             {request}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
+                        callback={() => requestListCompanyThunk(companyData.company_id)
+                            .then((res) => setRequestList(res?.data.result))}/>
         </div>
     );
 };

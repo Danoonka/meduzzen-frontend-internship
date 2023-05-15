@@ -1,29 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {
     ActionCompanyState,
-    AllActionCCompaniesState,
+    AllActionCompaniesState,
     initialAllActionCompaniesState, UserProps
 } from "../../types";
-import {fireLeaveMemberThunk, membersListCompanyThunk, myCompanyListThunk} from "../../store/reduxThunk";
+import {fireLeaveMemberThunk, myCompanyListThunk} from "../../store/reduxThunk";
 import CompanyRows from "./CompanyRows";
 import Button from "../../utils/Button";
 
 
 const UserProfileCompanyList = ({user_id}: UserProps) => {
-    const [companyList, setCompanyList] = useState<AllActionCCompaniesState>(initialAllActionCompaniesState)
+    const [companyList, setCompanyList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
 
     useEffect(() => {
         myCompanyListThunk(user_id)
             .then((res) => {
                 setCompanyList(res?.data.result)
             })
-
-    }, [companyList, user_id])
-
-
-    const onClickLeave = (action_id: number) => {
-        fireLeaveMemberThunk(action_id)
-    }
+    }, [])
 
     const companies = (companyList.companies).map((item: ActionCompanyState) => {
             const isOwner = item.action === 'owner';
@@ -34,6 +28,20 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
                                       disabled={isOwner}>Leave company</Button>}/>)
         }
     )
+
+    useEffect(() => {
+    }, [JSON.stringify(companyList.companies)])
+
+
+    const onClickLeave = (action_id: number) => {
+        fireLeaveMemberThunk(action_id).then(res =>
+            myCompanyListThunk(user_id)
+                .then((res) => {
+                    setCompanyList(res?.data.result)
+                })
+        )
+    }
+
     return (
         <div>
             {companies}
