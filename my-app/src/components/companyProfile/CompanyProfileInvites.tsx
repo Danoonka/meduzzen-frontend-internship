@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
     ActionUserState, AllActionUsersState, CompanyItemProps, initialActionAllUsersState,
 } from "../../types";
-import {invitesListCompanyThunk} from "../../store/reduxThunk";
+import {declineActionThunk, invitesListCompanyThunk} from "../../store/reduxThunk";
 import UserRows from "./UserRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
@@ -37,9 +37,10 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
             <div>
                 {invites}
             </div>
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
-                        callback={() => invitesListCompanyThunk(companyData.company_id)
-                            .then((res) => setInviteList(res?.data.result))}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
+                        callback={() => declineActionThunk(modalData)
+                            .then(() => invitesListCompanyThunk(companyData.company_id)
+                                .then((res) => setInviteList(res?.data.result)))}/>
         </>
 
     );

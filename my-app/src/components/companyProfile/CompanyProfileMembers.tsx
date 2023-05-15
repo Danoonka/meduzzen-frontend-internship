@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {
     addToBlackListThunk,
-    fireLeaveMemberThunk,
+    fireLeaveMemberThunk,  makeMemberAdminThunk,
     membersListCompanyThunk,
 } from "../../store/reduxThunk";
 import {ActionUserState, AllActionUsersState, CompanyItemProps, initialActionAllUsersState} from "../../types";
 import UserRows from "./UserRows";
 import Button from "../../utils/Button";
+import CheckModal from "../modalWindows/CheckModal";
 
 const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
     const [membersList, setMembersList] = useState<AllActionUsersState>(initialActionAllUsersState)
+    const [isOpen, setIsOpen] = useState(false);
+    const [modalData, setModalData] = useState(0);
 
     useEffect(() => {
         membersListCompanyThunk(companyData.company_id)
@@ -36,8 +39,14 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
                 }))
     }
 
+    const onClickAddToAdmin = (action_id: number) => {
+        setModalData(action_id)
+        setIsOpen(!isOpen);
+    }
+
     const members = (membersList.users).map((item: ActionUserState) => {
         const isOwner = item.action === 'owner';
+        const isAdmin = item.action === 'admin';
         return (
             <UserRows
                 currentUser={item}
@@ -49,6 +58,9 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
                             disabled={isOwner}>Fire</Button>
                         <Button onClick={() => onClickBlockUser(item.action_id)}
                                 disabled={isOwner}>Block Member</Button>
+                        {!(isOwner || isAdmin) &&
+                        <Button onClick={() => onClickAddToAdmin(item.action_id)}>Add to Admin</Button>
+                        }
                     </>}
             />)
     })
@@ -56,6 +68,10 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
     return (
         <div>
             {members}
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
+                        callback={() => makeMemberAdminThunk(modalData)
+                            .then(() => membersListCompanyThunk(companyData.company_id)
+                                .then((res) => setMembersList(res?.data.result)))}/>
         </div>
     );
 };

@@ -177,7 +177,6 @@ export interface CurrentUserProps {
 export interface CheckModalProps {
     isOpen: boolean,
     toggle: () => void;
-    action_id: number
     callback: () => void;
 }
 
