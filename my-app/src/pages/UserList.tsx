@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './UserList.css'
 import UserItem from "../components/UserItem";
 import {useSelector} from "react-redux";
@@ -7,34 +7,22 @@ import {Pagination} from "@mui/material";
 import {AllUsersState, CurrentUserState} from "../types";
 import {paginationThunk} from "../store/reduxThunk";
 
-interface PaginationInfo {
-    current_page: number,
-    total_page: number,
-    total_results: number
-}
-
-let paginationInfo: PaginationInfo = {
-    current_page: 1,
-    total_page: 1,
-    total_results: -1
-}
 
 const usersPerPage = 15;
 
 const UserList = () => {
-    if(paginationInfo.total_results === -1) {
-        paginationThunk('users', paginationInfo.current_page, usersPerPage)
-            .then(res => paginationInfo = res)
-    }
+    const pagInfo = useSelector((state: RootState) => state.paginationUserInfo)
+
+    useEffect(() => {
+        paginationThunk('users', pagInfo.current_page, usersPerPage)
+    }, [pagInfo.current_page])
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        paginationInfo.current_page = value
-        paginationThunk('users', paginationInfo.current_page, usersPerPage)
-            .then(res => paginationInfo = res)
+        pagInfo.current_page = value
+        paginationThunk('users', pagInfo.current_page, usersPerPage)
     };
 
     const allUsers = useSelector((state: RootState) => state.allUser as AllUsersState);
-
     const users = (allUsers.users).map((item: CurrentUserState) =>
         <UserItem currentUser={item} key={item.user_id}/>
     )
@@ -46,8 +34,8 @@ const UserList = () => {
                 {users}
             </div>
             <div className="user-list-container">
-                <Pagination className="user-pagination" count={paginationInfo.total_page}
-                            page={paginationInfo.current_page} onChange={handleChange}/>
+                <Pagination className="user-pagination" count={pagInfo.total_page}
+                            page={pagInfo.current_page} onChange={handleChange}/>
             </div>
         </div>
 

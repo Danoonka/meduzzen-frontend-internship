@@ -104,7 +104,7 @@ export const deleteUser = (id: number) => {
         })
 }
 
-export const pagination = (item: string, page: number, size: number) => {
+export const pagination = (item: string, page?: number, size?: number) => {
     return instance
         .get(`/${item}/`, {
             params: {
@@ -183,6 +183,123 @@ export const getCompanyById = (id: number) => {
         })
 
 }
+
+export const createInvite = (user_id: number, company_id: number) => {
+    return instance
+        .get(`/action/create_from_company/${company_id}/user/${user_id}/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const declineAction = (action_id: number) => {
+    return instance
+        .get(`/action/${action_id}/decline_action/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const acceptInvite = (action_id: number) => {
+    return instance
+        .get(`/action/${action_id}/accept_invite/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const createRequest = (company_id:number)=>{
+    return instance
+        .get(`/action/create_from_user/company/${company_id}/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const acceptRequest =  (action_id: number) => {
+    return instance
+        .get(`/action/${action_id}/accept_request/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const fireLeaveMember = (action_id: number) => {
+    return instance
+        .get(`/action/${action_id}/leave_company/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const requestList = (user_id: number) => {
+    return instance
+        .get(`/user/${user_id}/requests_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const invitesList = (user_id: number) => {
+    return instance
+        .get(`/user/${user_id}/invites_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const invitesListCompany = (company_id: number) => {
+    return instance
+        .get(`/company/${company_id}/invites_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const requestListCompany = (company_id: number) => {
+    return instance
+        .get(`/company/${company_id}/requests_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const membersListCompany = (company_id: number) => {
+    return instance
+        .get(`/company/${company_id}/members_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const myCompanyList = (user_id: number) => {
+    return instance
+        .get(`user/${user_id}/companies_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const BlackList = (company_id: number) => {
+    return instance
+        .get(`/company/${company_id}/blocked_list/`)
+        .then(res => {
+            return res
+        })
+}
+
+export const removeFromBlackList = (action_id: number) => {
+    return instance
+        .get(`/action/${action_id}/remove_from_block/`)
+        .then(res=>res)
+}
+
+export const addToBlackList = (action_id: number) =>{
+    return instance
+        .get(`/action/${action_id}/add_to_block/`)
+        .then((res=>res))
+}
+
 
 
 

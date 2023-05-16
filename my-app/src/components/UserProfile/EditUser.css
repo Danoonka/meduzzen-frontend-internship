@@ -1,35 +1,37 @@
-.edit-form{
+.edit-form {
     width: 800px;
     margin: 50px auto;
 }
 
-label{
+label {
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     text-align: center;
     font-size: 1.2rem;
-    color:#42a5f5;
+    color: #42a5f5;
 }
-.edit-form h2{
+
+.edit-form h2 {
     font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
     text-align: center;
     font-size: 2rem;
-    color:#42a5f5;
+    color: #42a5f5;
 }
 
 .section_update_user_info Button {
     margin-top: 20px;
 }
-.section_update_user_password{
+
+.section_update_user_password {
     margin-top: 50px;
 }
 
-.section_update_user_password-buttons{
+.section_update_user_password-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
 }
 
-.delete-button{
+.delete-button {
     color: white;
     border: none;
     border-radius: 5px;

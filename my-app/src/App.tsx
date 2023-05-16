@@ -12,19 +12,19 @@ import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import {RootState, store} from "./store/store";
 import {Navigate} from "react-router-dom";
-import EditUser from "./components/EditUser";
 import NotFound from "./pages/NotFound";
 import {authTrue} from "./store/userActionCreators";
 import {useSelector} from "react-redux";
-import EditCompany from "./components/EditCompany";
 import {checkAuthThunk} from "./store/reduxThunk";
+import EditUser from "./components/UserProfile/EditUser";
+import EditCompany from "./components/companyProfile/EditCompany";
 
 
 function App() {
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
 
-    const afterUpdate = async () =>{
-        if (await checkAuthThunk()){
+    const afterUpdate = async () => {
+        if (await checkAuthThunk()) {
             store.dispatch(authTrue())
         }
     }
@@ -41,13 +41,14 @@ function App() {
                     <Route path="/meduzzen-demo" element={<MainPage/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/userList" element={<UserList/>}/>
-                    <Route path="/userProfile" element={<UserProfile/>}/>
+                    <Route path="/userProfile/:userId" element={<UserProfile/>}/>
                     <Route path="/companyList" element={<CompanyList/>}/>
-                    <Route path="/companyProfile" element={<CompanyProfile/>}/>
+                    <Route path="/companyProfile/:companyId" element={<CompanyProfile/>}/>
                     <Route path="/editUser" element={<EditUser/>}/>
                     <Route path="/editCompany" element={<EditCompany/>}/>
                     <Route path="/404" element={<NotFound/>}/>
                     <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
+                    <Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>
                 </Routes>)
                 :
                 (<Routes>

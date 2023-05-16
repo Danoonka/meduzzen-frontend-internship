@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import Button from "../utils/Button";
-import Input from "../utils/Input";
+import Button from "../../utils/Button";
+import Input from "../../utils/Input";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
 import {toast} from "react-toastify";
-import {CurrentUserState} from "../types";
-import {deleteUserThunk, updateUserInfoThunk, updateUserPasswordThunk} from "../store/reduxThunk";
+import {CurrentUserState} from "../../types";
+import {deleteUserThunk, updateUserInfoThunk, updateUserPasswordThunk} from "../../store/reduxThunk";
 import {useSelector} from "react-redux";
-import {RootState} from "../store/store";
+import {RootState} from "../../store/store";
 
 const EditUser = () => {
     const user = useSelector((state: RootState) => state.currentUser);
@@ -57,7 +57,7 @@ const EditUser = () => {
     const saveChanges = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         await updateUserInfoThunk(user.user_id, updateUser)
-        navigate('/userProfile')
+        navigate(`/userProfile/${user.user_id}`)
         toast.success("User info updated", {
             position: toast.POSITION.BOTTOM_RIGHT
         })
@@ -65,7 +65,7 @@ const EditUser = () => {
 
     const updateUserPasswordOnClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        navigate('/userProfile')
+        navigate(`/userProfile/${user.user_id}`)
         await updateUserPasswordThunk(user.user_id, updatePassword.user_password, updatePassword.user_password_repeat)
         toast.success("Password updated!", {
             position: toast.POSITION.BOTTOM_RIGHT

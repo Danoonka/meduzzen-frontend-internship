@@ -1,0 +1,13 @@
+.scrollable {
+    margin: 10px auto;
+    width: 600px;
+    height: 450px;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.modal-box {
+    width: fit-content;
+    height: fit-content;
+}

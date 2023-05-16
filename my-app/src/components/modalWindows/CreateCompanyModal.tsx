@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
-import {CompanyState, initialCompanyState} from "../types";
+import {CompanyState, initialCompanyState} from "../../types";
 import {useNavigate} from "react-router-dom";
-import {createCompanyThunk} from "../store/reduxThunk";
+import {createCompanyThunk} from "../../store/reduxThunk";
 import {toast} from "react-toastify";
-import Input from "../utils/Input";
+import Input from "../../utils/Input";
 import {Switch} from "@mui/material";
-import Button from "../utils/Button";
+import Button from "../../utils/Button";
 import Modal from "./Modal";
 
 interface CreateCompanyModalProps {
     isOpen: boolean,
     toggle: () => void;
 }
-
 
 const CreateCompanyModal = ({ toggle, isOpen }: CreateCompanyModalProps) => {
     const [company, setCompany] = useState<CompanyState>(initialCompanyState)
@@ -29,7 +28,7 @@ const CreateCompanyModal = ({ toggle, isOpen }: CreateCompanyModalProps) => {
     const createCompanyOnClick = () =>{
         createCompanyThunk(company).then(res => {
             if (res !== -1){
-                navigate('/companyProfile', {state: {company_id: res}})
+                navigate(`/companyProfile/${res}`, {state: {company_id: res}})
             }else{
                 toast.error('Failed to create company!',{
                     position: toast.POSITION.BOTTOM_RIGHT

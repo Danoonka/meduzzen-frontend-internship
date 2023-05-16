@@ -1,16 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {CurrentUserState} from "../types";
+import {CurrentUserProps} from "../types";
+import userAvatar from "../assets/ffa09aec412db3f54deadf1b3781de2a.png";
 
-interface CurrentUserProps {
-    currentUser: CurrentUserState;
-}
 
-const UserItem: React.FC<CurrentUserProps> = ({currentUser}: CurrentUserProps) => {
+const UserItem = ({currentUser}: CurrentUserProps) => {
     return (
-        <Link to='/userProfile' state={{user_id: currentUser.user_id}}>
+        <Link to={`/userProfile/${currentUser.user_id}`} state={{user_id: currentUser.user_id}}>
             <div className="user-item-container">
-                <img src={currentUser.user_avatar} alt="user avatar"/>
+                <img src={currentUser.user_avatar === null ? userAvatar : currentUser.user_avatar} alt="user avatar"/>
                 <div>
                     <h4>{currentUser.user_firstname} {currentUser.user_lastname}</h4>
                 </div>
