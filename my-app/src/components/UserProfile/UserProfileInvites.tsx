@@ -47,7 +47,7 @@ const UserProfileInvites = ({user_id}: UserProps) => {
 
     const onCallBack = () => {
         declineActionThunk(modalData)
-            .then(()=>invitesListThunk(user_id)
+            .then(() => invitesListThunk(user_id)
                 .then((res) => setInviteList(res?.data.result)))
     }
 

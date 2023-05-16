@@ -19,16 +19,13 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
                 setAdminsList({users: admins})
             })
 
-    }, [])
+    }, [adminsList.users.length])
 
     const onClickRemoveAdmin = (action_id: number) => {
         setModalData(action_id)
         setIsOpen(!isOpen);
     }
 
-
-    useEffect(() => {
-    }, [JSON.stringify(adminsList.users)])
 
     const adminRows = (adminsList.users).map((item: ActionUserState) => {
         return (
