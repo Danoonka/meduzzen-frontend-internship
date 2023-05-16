@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ActionUserState, AllActionUsersState, CompanyItemProps, initialActionAllUsersState} from "../../types";
-import {makeMemberAdminThunk, membersListCompanyThunk, removeAdminThunk} from "../../store/reduxThunk";
+import {membersListCompanyThunk, removeAdminThunk} from "../../store/reduxThunk";
 import UserRows from "./UserRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
@@ -37,19 +37,23 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
             }/>
         )
     })
+
+    const onCallBack = () => {
+        removeAdminThunk(modalData)
+            .then(() => membersListCompanyThunk(companyData.company_id)
+                .then((res) => {
+                    const admins = (res?.data.result.users)
+                        .filter(function (el: ActionUserState) {
+                            return el.action === 'admin'
+                        })
+                    setAdminsList({users: admins})
+                }))
+    }
     return (
         <div>
             {adminRows}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
-                        callback={() => removeAdminThunk(modalData)
-                            .then(() => membersListCompanyThunk(companyData.company_id)
-                                .then((res) => {
-                                    const admins = (res?.data.result.users)
-                                        .filter(function (el: ActionUserState) {
-                                            return el.action === 'admin'
-                                        })
-                                    setAdminsList({users: admins})
-                                }))}/>
+                        callback={() => onCallBack()}/>
         </div>
     );
 };

@@ -164,6 +164,7 @@ export interface CompanyItemProps {
 export interface ModalProps {
     isOpen: boolean,
     toggle: () => void;
+    className?: string;
 }
 
 export interface CompanyProps {

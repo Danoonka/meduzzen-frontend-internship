@@ -47,7 +47,7 @@ const SendInviteModal = ({toggle, isOpen}: SendInviteModalProps) => {
     );
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} classNM="send-inv-modal">
             <div className="send-invite-container">
                 <h2>Send invite</h2>
                 <Input id='0' type="text" name="Search" label="Find User" value={searchQuery}

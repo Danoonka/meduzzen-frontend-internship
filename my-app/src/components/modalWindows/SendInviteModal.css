@@ -7,7 +7,14 @@
     box-sizing: border-box;
 }
 
-.modal-box {
+.send-inv-modal{
+    display: block;
+    background: white;
+    position: absolute;
+    top: 5vw;
+    left: 30vw;
     width: fit-content;
     height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
 }

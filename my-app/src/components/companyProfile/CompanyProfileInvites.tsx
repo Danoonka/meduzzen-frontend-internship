@@ -32,15 +32,18 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
             <Button onClick={() => onClickDecline(item.action_id)}>Decline Invite</Button>
         </>}/>
     )
+
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(() => invitesListCompanyThunk(companyData.company_id)
+                .then((res) => setInviteList(res?.data.result)))
+    }
     return (
         <>
             <div>
                 {invites}
             </div>
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
-                        callback={() => declineActionThunk(modalData)
-                            .then(() => invitesListCompanyThunk(companyData.company_id)
-                                .then((res) => setInviteList(res?.data.result)))}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={() => onCallBack()}/>
         </>
 
     );

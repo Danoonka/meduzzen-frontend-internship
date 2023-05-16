@@ -40,13 +40,17 @@ const UserProfileRequests = ({user_id}: UserProps) => {
                          </>
                      }/>
     )
+
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(() => requestListThunk(user_id)
+                .then((res) => setRequestList(res?.data.result)))
+    }
     return (
         <div>
             {requests}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
-                        callback={() => declineActionThunk(modalData)
-                            .then(() => requestListThunk(user_id)
-                                .then((res) => setRequestList(res?.data.result)))}/>
+                        callback={() => onCallBack()}/>
         </div>
     );
 };

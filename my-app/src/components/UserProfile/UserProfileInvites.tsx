@@ -45,13 +45,17 @@ const UserProfileInvites = ({user_id}: UserProps) => {
         />
     )
 
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(()=>invitesListThunk(user_id)
+                .then((res) => setInviteList(res?.data.result)))
+    }
+
     return (
         <div>
             {invites}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
-                        callback={() => declineActionThunk(modalData)
-                            .then(()=>invitesListThunk(user_id)
-                                .then((res) => setInviteList(res?.data.result)))}/>
+                        callback={() => onCallBack()}/>
         </div>
     );
 };

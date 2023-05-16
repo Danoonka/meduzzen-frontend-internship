@@ -39,7 +39,7 @@ const SendRequestModal = ({toggle, isOpen}: ModalProps) => {
     );
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} classNM="send-inv-modal">
             <h2>Send request</h2>
             <Input id='0' type="text" name="Search" label="Find Company" value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}/>
