@@ -50,7 +50,7 @@ const UserProfileRequests = ({user_id}: UserProps) => {
         <div>
             {requests}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
-                        callback={() => onCallBack()}/>
+                        callback={() => onCallBack}/>
         </div>
     );
 };
