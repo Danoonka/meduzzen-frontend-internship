@@ -17,7 +17,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
             .then((res) => {
                 setBlockList(res?.data.result)
             })
-    }, [])
+    }, [blockList.users.length])
 
     const onClickRemove = (action_id: number) => {
         removeFromBlackListThunk(action_id)
@@ -28,8 +28,6 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
             )
     }
 
-    useEffect(() => {
-    }, [JSON.stringify(blockList.users)])
 
     const blackList = (blockList.users).map((item: ActionUserState) =>
         <UserRows currentUser={item} key={item.user_id}

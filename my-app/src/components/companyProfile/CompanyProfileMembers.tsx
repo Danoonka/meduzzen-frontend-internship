@@ -17,7 +17,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
                 setMembersList(res?.data.result)
             })
 
-    }, [])
+    }, [membersList.users.length])
 
     const onClickFire = (action_id: number) => {
         fireLeaveMemberThunk(action_id)
@@ -27,8 +27,6 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
                 }))
     }
 
-    useEffect(() => {
-    }, [JSON.stringify(membersList.users)])
 
     const onClickBlockUser = (action_id: number) => {
         addToBlackListThunk(action_id)

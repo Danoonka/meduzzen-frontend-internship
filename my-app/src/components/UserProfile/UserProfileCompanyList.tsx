@@ -17,7 +17,7 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
             .then((res) => {
                 setCompanyList(res?.data.result)
             })
-    }, [])
+    }, [companyList.companies.length])
 
     const companies = (companyList.companies).map((item: ActionCompanyState) => {
             const isOwner = item.action === 'owner';
@@ -28,9 +28,6 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
                                       disabled={isOwner}>Leave company</Button>}/>)
         }
     )
-
-    useEffect(() => {
-    }, [JSON.stringify(companyList.companies)])
 
 
     const onClickLeave = (action_id: number) => {

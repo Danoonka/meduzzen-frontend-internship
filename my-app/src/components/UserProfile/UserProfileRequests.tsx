@@ -21,17 +21,14 @@ const UserProfileRequests = ({user_id}: UserProps) => {
     }
 
 
-
     useEffect(() => {
         requestListThunk(user_id)
             .then((res) => {
                 setRequestList(res?.data.result)
             })
 
-    }, [])
+    }, [requestList.companies.length])
 
-    useEffect(() => {
-    }, [JSON.stringify(requestList.companies)])
 
     const requests = (requestList.companies).map((item: ActionCompanyState) =>
         <CompanyRows companyData={item}
@@ -46,7 +43,7 @@ const UserProfileRequests = ({user_id}: UserProps) => {
         <div>
             {requests}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
-                        callback={()=> requestListThunk(user_id)
+                        callback={() => requestListThunk(user_id)
                             .then((res) => setRequestList(res?.data.result))}/>
         </div>
     );

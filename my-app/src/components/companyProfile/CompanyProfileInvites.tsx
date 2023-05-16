@@ -19,15 +19,13 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
                 setInviteList(res?.data.result)
             })
 
-    }, [])
+    }, [inviteList.users.length])
 
     const onClickDecline = (action_id: number) => {
         setModalData(action_id)
         setIsOpen(!isOpen);
     }
 
-    useEffect(() => {
-    }, [JSON.stringify(inviteList.users)])
 
     const invites = (inviteList.users).map((item: ActionUserState) =>
         <UserRows currentUser={item} key={item.user_id} children={<>

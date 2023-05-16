@@ -23,10 +23,8 @@ const UserProfileInvites = ({user_id}: UserProps) => {
             .then((res) => {
                 setInviteList(res?.data.result)
             })
-    }, [])
+    }, [inviteList.companies.length])
 
-    useEffect(() => {
-    }, [JSON.stringify(inviteList.companies)])
 
     const onClickAcceptInvite = (action_id: number) => {
         acceptInviteThunk(action_id)

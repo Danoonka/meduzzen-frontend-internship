@@ -6,7 +6,7 @@ import {
 } from "../../types";
 import {
     acceptRequestThunk,
-    requestListCompanyThunk, requestListThunk
+    requestListCompanyThunk,
 } from "../../store/reduxThunk";
 import Button from "../../utils/Button";
 import UserRows from "./UserRows";
@@ -23,15 +23,13 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
         setIsOpen(!isOpen);
     }
 
-    useEffect(() => {
-    }, [JSON.stringify(requestList.users)])
 
     useEffect(() => {
         requestListCompanyThunk(companyData.company_id)
             .then((res) => {
                 setRequestList(res?.data.result)
             })
-    }, [])
+    }, [requestList.users.length])
 
     const onClickAcceptRequest = (action_id: number) => {
         acceptRequestThunk(action_id)
