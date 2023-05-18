@@ -16,7 +16,6 @@ const UserProfileRequests = ({user_id}: UserProps) => {
     const [modalData, setModalData] = useState(0);
 
     const onClickDecline = (action_id: number) => {
-        console.log(action_id)
         setModalData(action_id)
         setIsOpen(!isOpen);
     }
