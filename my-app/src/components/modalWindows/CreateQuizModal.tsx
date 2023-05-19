@@ -91,7 +91,7 @@ const CreateQuizModal = ({toggle, isOpen, callback, company_id}: CheckModalProps
 
     const onClickSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        questionTextFields.forEach((el, index) => {
+        questionTextFields.map((el, index) => {
             let newQuestion: QuestionState = {
                 question_id: index, question_text: el.question_text,
                 question_correct_answer: el.question_correct_answer, question_answers: el.question_answers

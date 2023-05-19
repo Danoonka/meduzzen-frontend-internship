@@ -5,7 +5,6 @@ import {
     CurrentUserState,
     EditQuestionState,
     EditQuizState,
-    GetQuizByIdState,
     NewQuizState,
     QuestionState
 } from "../types";
@@ -299,43 +298,57 @@ export const BlackList = (company_id: number) => {
 export const removeFromBlackList = (action_id: number) => {
     return instance
         .get(`/action/${action_id}/remove_from_block/`)
-        .then(res => res)
+        .then(res => {
+            return res
+        })
 }
 
 export const addToBlackList = (action_id: number) => {
     return instance
         .get(`/action/${action_id}/add_to_block/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const makeMemberAdmin = (action_id: number) => {
     return instance
         .get(`/action/${action_id}/add_to_admin/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const removeAdmin = (action_id: number) => {
     return instance
         .get(`/action/${action_id}/remove_from_admin/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const getQuizById = (quiz_id: number) => {
     return instance
         .get(`/quiz/${quiz_id}/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const getQuizList = (company_id: number) => {
     return instance
         .get(`/company/${company_id}/quizzes_list/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const deleteQuiz = (quiz_id: number) => {
     return instance
         .delete(`/quiz/${quiz_id}/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 
@@ -348,7 +361,9 @@ export const createQuiz = (quiz: NewQuizState, company_id: number) => {
                 company_id: company_id,
                 questions_list: quiz.questions_list
             })
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const updateQuiz = (quiz_id: number, quiz: EditQuizState) => {
@@ -360,7 +375,9 @@ export const updateQuiz = (quiz_id: number, quiz: EditQuizState) => {
                 quiz_description: quiz.quiz_description,
                 quiz_frequency: quiz.quiz_frequency
             })
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const addQuestionForQuiz = (question: QuestionState, quiz_id: number) => {
@@ -370,16 +387,19 @@ export const addQuestionForQuiz = (question: QuestionState, quiz_id: number) => 
             question_answers: question.question_answers,
             question_correct_answer: question.question_correct_answer
         })
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 export const deleteQuestion = (question_id: number) => {
     return instance
         .delete(`/question/${question_id}/`)
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
-//TODO type
 
 export const updateQuestion = (question_id: number, question: EditQuestionState) => {
     return instance
@@ -388,7 +408,9 @@ export const updateQuestion = (question_id: number, question: EditQuestionState)
             question_answers: question.question_answers,
             question_correct_answer: question.question_correct_answer
         })
-        .then((res => res))
+        .then(res => {
+            return res
+        })
 }
 
 
