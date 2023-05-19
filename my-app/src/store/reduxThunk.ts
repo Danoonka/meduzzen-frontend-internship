@@ -13,8 +13,8 @@ import {
     fireLeaveMember,
     getCompanyById,
     getUserById, invitesList, invitesListCompany,
-    logInUser, membersListCompany, myCompanyList,
-    pagination, removeFromBlackList, requestList, requestListCompany,
+    logInUser, makeMemberAdmin, membersListCompany, myCompanyList,
+    pagination, removeAdmin, removeFromBlackList, requestList, requestListCompany,
     updateCompanyAvatar,
     updateCompanyInfo,
     updateCompanyVisible,
@@ -391,6 +391,38 @@ export const addToBlackListThunk = async (action_id: number) => {
     return addToBlackList(action_id)
         .then(res => {
                 toast.success('Added to black list', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const  makeMemberAdminThunk = async (action_id: number) => {
+    return makeMemberAdmin(action_id)
+        .then(res => {
+                toast.success('Added to admin', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const  removeAdminThunk = async (action_id: number) => {
+    return removeAdmin(action_id)
+        .then(res => {
+                toast.success('Remove admin', {
                     position: toast.POSITION.BOTTOM_RIGHT
                 })
                 return res

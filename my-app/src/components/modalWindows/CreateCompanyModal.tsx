@@ -39,7 +39,7 @@ const CreateCompanyModal = ({ toggle, isOpen }: CreateCompanyModalProps) => {
 
     const label = { inputProps: { 'aria-label': 'Color switch demo' } };
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} classNM='modal-box'>
             <h2>Create Company</h2>
             <Input
                 name='company_name'

@@ -1,3 +1,15 @@
 .checkModal{
     margin-left: -210px;
 }
+
+.check-modal-box{
+    display: block;
+    background: white;
+    position: absolute;
+    top: 25vw;
+    left: 50vw;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+}

@@ -4,7 +4,7 @@ import {
     AllActionCompaniesState,
     initialAllActionCompaniesState, UserProps,
 } from "../../types";
-import {requestListThunk} from "../../store/reduxThunk";
+import {declineActionThunk, requestListThunk} from "../../store/reduxThunk";
 import CompanyRows from "./CompanyRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
@@ -39,12 +39,17 @@ const UserProfileRequests = ({user_id}: UserProps) => {
                          </>
                      }/>
     )
+
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(() => requestListThunk(user_id)
+                .then((res) => setRequestList(res?.data.result)))
+    }
     return (
         <div>
             {requests}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
-                        callback={() => requestListThunk(user_id)
-                            .then((res) => setRequestList(res?.data.result))}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
+                        callback={() => onCallBack}/>
         </div>
     );
 };

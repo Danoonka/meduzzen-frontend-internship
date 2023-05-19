@@ -5,8 +5,8 @@ import {
     initialActionAllUsersState,
 } from "../../types";
 import {
-    acceptRequestThunk,
-    requestListCompanyThunk,
+    acceptRequestThunk, declineActionThunk,
+    requestListCompanyThunk
 } from "../../store/reduxThunk";
 import Button from "../../utils/Button";
 import UserRows from "./UserRows";
@@ -48,12 +48,17 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
                 <Button onClick={() => onClickDecline(item.action_id)}>Decline Request</Button>
             </>}/>
     )
+
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(() => requestListCompanyThunk(companyData.company_id)
+                .then((res) => setRequestList(res?.data.result)))
+    }
     return (
         <div>
             {request}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
-                        callback={() => requestListCompanyThunk(companyData.company_id)
-                            .then((res) => setRequestList(res?.data.result))}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
+                        callback={() => onCallBack()}/>
         </div>
     );
 };

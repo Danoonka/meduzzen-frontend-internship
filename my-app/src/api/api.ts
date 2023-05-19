@@ -300,6 +300,20 @@ export const addToBlackList = (action_id: number) =>{
         .then((res=>res))
 }
 
+export const makeMemberAdmin = (action_id: number) =>{
+    return instance
+        .get(`/action/${action_id}/add_to_admin/`)
+        .then((res=>res))
+}
+
+export const removeAdmin = (action_id: number) =>{
+    return instance
+        .get(`/action/${action_id}/remove_from_admin/`)
+        .then((res=>res))
+}
+
+
+
 
 
 

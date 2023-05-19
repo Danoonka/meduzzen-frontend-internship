@@ -6,6 +6,7 @@ interface ModalType {
     isOpen: boolean;
     toggle: () => void;
     callback?: () => void
+    classNM?: string;
 }
 
 const Modal = (props: ModalType) => {
@@ -13,7 +14,7 @@ const Modal = (props: ModalType) => {
         <>
             {props.isOpen && (
                 <div className="modal-overlay" onClick={props.toggle}>
-                    <div onClick={(e) => e.stopPropagation()} className="modal-box">
+                    <div onClick={(e) => e.stopPropagation()} className={props.classNM}>
                         {props.children}
                     </div>
                 </div>

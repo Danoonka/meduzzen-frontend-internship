@@ -164,6 +164,7 @@ export interface CompanyItemProps {
 export interface ModalProps {
     isOpen: boolean,
     toggle: () => void;
+    className?: string;
 }
 
 export interface CompanyProps {
@@ -177,7 +178,6 @@ export interface CurrentUserProps {
 export interface CheckModalProps {
     isOpen: boolean,
     toggle: () => void;
-    action_id: number
     callback: () => void;
 }
 

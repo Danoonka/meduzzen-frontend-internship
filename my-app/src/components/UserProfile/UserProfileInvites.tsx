@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
     ActionCompanyState, AllActionCompaniesState, initialAllActionCompaniesState, UserProps,
 } from "../../types";
-import {acceptInviteThunk, invitesListThunk, requestListThunk} from "../../store/reduxThunk";
+import {acceptInviteThunk, declineActionThunk, invitesListThunk, requestListThunk} from "../../store/reduxThunk";
 import CompanyRows from "./CompanyRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
@@ -45,12 +45,17 @@ const UserProfileInvites = ({user_id}: UserProps) => {
         />
     )
 
+    const onCallBack = () => {
+        declineActionThunk(modalData)
+            .then(() => invitesListThunk(user_id)
+                .then((res) => setInviteList(res?.data.result)))
+    }
+
     return (
         <div>
             {invites}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} action_id={modalData}
-                        callback={() => invitesListThunk(user_id)
-                            .then((res) => setInviteList(res?.data.result))}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
+                        callback={() => onCallBack()}/>
         </div>
     );
 };

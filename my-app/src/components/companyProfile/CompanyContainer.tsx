@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {useNavigate} from "react-router-dom";
@@ -10,6 +10,7 @@ import CompanyProfileRequests from "./CompanyProfileRequests";
 import CompanyProfileBlockList from "./CompanyProfileBlockList";
 import SendInviteModal from "../modalWindows/SendInviteModal";
 import {CompanyProps} from "../../types";
+import CompanyProfileAdmins from "./CompanyProfileAdmins";
 
 
 const CompanyContainer = ({company_id}: CompanyProps) => {
@@ -17,7 +18,10 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
     const company = useSelector((state: RootState) => state.company);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
-    getCompanyByIdThunk(company_id)
+    useEffect(()=>{
+        getCompanyByIdThunk(company_id)
+    }, [])
+
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {
         setIsOpen(!isOpen);
@@ -61,6 +65,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                 return
             case 'blockList' :
                 setCurrentElement(<CompanyProfileBlockList companyData={company}/>)
+                return
+            case 'admins' :
+                setCurrentElement(<CompanyProfileAdmins companyData={company}/>)
         }
     }
     return (
@@ -100,6 +107,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                         <Button onClick={menuHandler} name='invites'>Invites</Button>
                         <Button onClick={menuHandler} name='requests'>Requests</Button>
                         <Button onClick={menuHandler} name='blockList'>Block List</Button>
+                        <Button onClick={menuHandler} name='admins'>Admins</Button>
                         <div>
                             {currentElement}
                         </div>
