@@ -3,22 +3,41 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {useNavigate} from "react-router-dom";
 import Button from "../../utils/Button";
-import {getCompanyByIdThunk, updateCompanyAvatarThunk} from "../../store/reduxThunk";
+import {
+    getCompanyByIdThunk,
+    myCompanyListThunk,
+    updateCompanyAvatarThunk
+} from "../../store/reduxThunk";
 import CompanyProfileMembers from "./CompanyProfileMembers";
 import CompanyProfileInvites from "./CompanyProfileInvites";
 import CompanyProfileRequests from "./CompanyProfileRequests";
 import CompanyProfileBlockList from "./CompanyProfileBlockList";
 import SendInviteModal from "../modalWindows/SendInviteModal";
-import {CompanyProps} from "../../types";
+import {
+    AllActionCompaniesState,
+    CompanyProps,
+    initialAllActionCompaniesState
+} from "../../types";
 import CompanyProfileAdmins from "./CompanyProfileAdmins";
+import CompanyProfileQuizzes from "./CompanyProfileQuizzes";
 
 
 const CompanyContainer = ({company_id}: CompanyProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
-    const company = useSelector((state: RootState) => state.company);
+    const company = useSelector((state: RootState) => state.company)
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
-    useEffect(()=>{
+
+    const [companyList, setCompanyList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
+
+    useEffect(() => {
+        myCompanyListThunk(currentUser.user_id)
+            .then((res) => {
+                setCompanyList(res?.data.result)
+            })
+    }, [companyList.companies.length])
+
+    useEffect(() => {
         getCompanyByIdThunk(company_id)
     }, [])
 
@@ -27,7 +46,12 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
         setIsOpen(!isOpen);
     };
 
+    function isCompanyInList(companyList: AllActionCompaniesState, companyId: number): boolean {
+        return companyList.companies.some(company => company.company_id === companyId);
+    }
+
     const isOwner = company.company_owner.user_id === currentUser.user_id
+    const isMember = isCompanyInList(companyList, company.company_id)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -68,6 +92,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                 return
             case 'admins' :
                 setCurrentElement(<CompanyProfileAdmins companyData={company}/>)
+                return
+            case 'quizzes':
+                setCurrentElement(<CompanyProfileQuizzes companyData={company}/>)
         }
     }
     return (
@@ -99,15 +126,20 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                     }
                 </div>
             </div>
-            {isOwner &&
+            {(isOwner || isMember) &&
             <>
                 <div className='parent'>
                     <div>
                         <Button onClick={menuHandler} name='members'>Members</Button>
-                        <Button onClick={menuHandler} name='invites'>Invites</Button>
-                        <Button onClick={menuHandler} name='requests'>Requests</Button>
-                        <Button onClick={menuHandler} name='blockList'>Block List</Button>
-                        <Button onClick={menuHandler} name='admins'>Admins</Button>
+                        {isOwner &&
+                        <>
+                            <Button onClick={menuHandler} name='invites'>Invites</Button>
+                            <Button onClick={menuHandler} name='requests'>Requests</Button>
+                            <Button onClick={menuHandler} name='blockList'>Block List</Button>
+                            <Button onClick={menuHandler} name='admins'>Admins</Button>
+                        </>
+                        }
+                        <Button onClick={menuHandler} name='quizzes'>Quizzes</Button>
                         <div>
                             {currentElement}
                         </div>

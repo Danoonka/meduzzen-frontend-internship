@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
     ActionCompanyState, AllActionCompaniesState, initialAllActionCompaniesState, UserProps,
 } from "../../types";
-import {acceptInviteThunk, declineActionThunk, invitesListThunk, requestListThunk} from "../../store/reduxThunk";
+import {acceptInviteThunk, declineActionThunk, invitesListThunk} from "../../store/reduxThunk";
 import CompanyRows from "./CompanyRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";

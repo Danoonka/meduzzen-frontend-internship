@@ -4,7 +4,6 @@ import {toast} from "react-toastify";
 import Button from "../utils/Button";
 import {useAuth0} from '@auth0/auth0-react';
 import {validUserAuthorization} from "../utils/authorizaton";
-import {useNavigate} from "react-router-dom";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
 import {checkAuthThunk} from "../store/reduxThunk";
@@ -21,7 +20,6 @@ const UserAuthorization: React.FC = () => {
             user_password: '',
         }
     )
-    const navigate = useNavigate();
 
     const setTokenAuth = async () => {
         const accessToken = await getAccessTokenSilently();
