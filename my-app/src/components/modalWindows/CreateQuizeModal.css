@@ -52,3 +52,13 @@
     padding: 1rem;
     border-radius: 1rem;
 }
+
+.take-quiz-container {
+    width: 800px;
+    margin: 50px auto;
+}
+
+.take-quiz-container p, .take-quiz-container h3 {
+    color: #42a5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}

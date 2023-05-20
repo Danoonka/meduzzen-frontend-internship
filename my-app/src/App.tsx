@@ -18,6 +18,7 @@ import {useSelector} from "react-redux";
 import {checkAuthThunk} from "./store/reduxThunk";
 import EditUser from "./components/UserProfile/EditUser";
 import EditCompany from "./components/companyProfile/EditCompany";
+import TakeQuiz from "./pages/TakeQuiz";
 
 
 function App() {
@@ -48,7 +49,8 @@ function App() {
                     <Route path="/editCompany" element={<EditCompany/>}/>
                     <Route path="/404" element={<NotFound/>}/>
                     <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
-                    <Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>
+                    <Route path="/*" element={<Navigate to="/meduzzen-demo"/>}/>
+                    <Route path="/takeQuiz" element={<TakeQuiz/>}/>
                 </Routes>)
                 :
                 (<Routes>

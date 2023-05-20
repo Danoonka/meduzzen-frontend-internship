@@ -11,6 +11,7 @@ import CreateQuizModal from "../modalWindows/CreateQuizModal";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import EditQuizModal from "../modalWindows/EditQuizModal";
+import {useNavigate} from "react-router-dom";
 
 const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
@@ -58,6 +59,7 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
 
     const isAdminOrIsOwner = isAdmin(companyList, companyData.company_id)
 
+    const navigate = useNavigate()
     const quiz = (quizzesList.quizzes).map((item: QuizForListState) => {
         return (
             <QuizRows
@@ -65,7 +67,9 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
                 key={item.quiz_id}
                 children={
                     <>
-                        <Button>Take quiz</Button>
+                        <Button onClick={() =>
+                            navigate(`/takeQuiz`, {state: {quiz_id: item.quiz_id}})
+                        }>Take quiz</Button>
                         {isAdminOrIsOwner &&
                         <>
                             <Button onClick={() => onClickEditQuiz(item.quiz_id)}>Edit quiz</Button>

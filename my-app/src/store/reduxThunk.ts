@@ -14,7 +14,7 @@ import {
     getCompanyById, getQuizById, getQuizList,
     getUserById, invitesList, invitesListCompany,
     logInUser, makeMemberAdmin, membersListCompany, myCompanyList,
-    pagination, removeAdmin, removeFromBlackList, requestList, requestListCompany,
+    pagination, removeAdmin, removeFromBlackList, requestList, requestListCompany, takeQuiz,
     updateCompanyAvatar,
     updateCompanyInfo,
     updateCompanyVisible, updateQuestion, updateQuiz,
@@ -533,6 +533,21 @@ export const updateQuestionThunk = async (question_id: number, question: EditQue
     return await updateQuestion(question_id, question)
         .then(res => {
             toast.success('Question updated', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            return res
+        })
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const takeQuizThunk = async (quiz_id: number, answers: { [key: string]: string }) => {
+    return await takeQuiz(quiz_id, answers)
+        .then(res => {
+            toast.success(`You result is ${res.data.result.result_score}`, {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             return res

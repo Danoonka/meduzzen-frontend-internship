@@ -236,7 +236,17 @@ export interface GetQuizByIdState {
     quiz_description: string,
     quiz_frequency: number,
     created_by: CurrentUserState,
-    questions_list: []
+    questions_list: QuestionState[]
+}
+
+export const initialGetQuizByIdState:GetQuizByIdState= {
+    quiz_id: -1,
+    quiz_name: '',
+    quiz_title: '',
+    quiz_description: '',
+    quiz_frequency: 0,
+    created_by: initialCurrentUserState,
+    questions_list: [InitialQuestionState]
 }
 
 
