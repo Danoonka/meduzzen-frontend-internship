@@ -4,6 +4,7 @@ import {GetQuizByIdState, initialGetQuizByIdState} from "../types";
 import {getQuizByIdThunk, takeQuizThunk} from "../store/reduxThunk";
 import Button from "../utils/Button";
 import '../components/modalWindows/CreateQuizeModal.css'
+import TakeQuestionList from "../components/TakeQuestionList";
 
 const TakeQuiz = () => {
     const {quiz_id} = useLocation().state
@@ -42,28 +43,9 @@ const TakeQuiz = () => {
             <h2>{quiz.quiz_name}</h2>
             <h2>{quiz.quiz_title}</h2>
             <p>{quiz.quiz_description}</p>
-            {quiz.questions_list.map((item, index) => {
-                return (
-                    <div className='question-component-container'>
-                        <h3>{item.question_text}</h3>
-                        <form>
-                            {item.question_answers.map((el, id) => {
-                                return (
-                                    <div key={index} className="input-answer">
-                                        <input
-                                            type="radio"
-                                            name='question_correct_answer'
-                                            value={id}
-                                            onChange={() => handleRadioChange(item.question_id, el)}
-                                        />
-                                        <p>{el}</p>
-                                    </div>
-                                )
-                            })
-                            }
-                        </form>
-                    </div>)
-            })}
+            {quiz.questions_list.map((item, index) =>
+                <TakeQuestionList handleRadioChange={handleRadioChange} index={index} item={item}/>
+            )}
             <Button onClick={() => onClickSubmit()}>Submit</Button>
         </div>
     );

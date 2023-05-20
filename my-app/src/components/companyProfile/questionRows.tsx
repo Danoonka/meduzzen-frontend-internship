@@ -1,16 +1,15 @@
 import React, {ReactNode} from 'react';
-import {QuestionState} from "../../../types";
 
 interface QuestionRowsProps {
-    question: QuestionState;
     children: ReactNode;
+    heading: string;
 }
 
-const QuestionRows = ({question, children}: QuestionRowsProps) => {
+const QuestionRows = ({children, heading}: QuestionRowsProps) => {
     return (
         <div className="user-row-container">
             <div>
-                <h4 className='user-row-container-heading'>{question.question_text}</h4>
+                <h4 className='user-row-container-heading'>{heading}</h4>
             </div>
             <div>
                 {children}

@@ -4,7 +4,7 @@ import {
     EditQuizState,
     initialEditQuestionState,
     initialEditQuizState,
-    InitialQuestionState, NewQuizState,
+    InitialQuestionState,
     QuestionState
 } from "../../types";
 import Modal from "./Modal";
@@ -17,7 +17,7 @@ import {
     updateQuizThunk
 } from "../../store/reduxThunk";
 import Button from "../../utils/Button";
-import QuestionRows from "../companyProfile/quiz/questionRows";
+import QuestionRows from "../companyProfile/questionRows";
 import EditQuestionModal from "./EditQuestionModal";
 import './CreateQuizeModal.css'
 import AddQuestionModal from "./AddQuestionModal";
@@ -174,7 +174,7 @@ const EditQuizModal = ({toggle, isOpen, callback, quiz_id}: CheckModalProps,) =>
     const questions = quizQuestion.map((item, index) => {
         return (
             <QuestionRows
-                question={item}
+                heading={item.question_text}
                 key={index}
                 children=
                     {<>

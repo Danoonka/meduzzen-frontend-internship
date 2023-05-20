@@ -6,12 +6,12 @@ import {
     initialAllQuizForListState, QuizForListState
 } from "../../types";
 import {deleteQuizThunk, getQuizListThunk, myCompanyListThunk} from "../../store/reduxThunk";
-import QuizRows from "./quiz/quizRows";
 import CreateQuizModal from "../modalWindows/CreateQuizModal";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import EditQuizModal from "../modalWindows/EditQuizModal";
 import {useNavigate} from "react-router-dom";
+import QuestionRows from "./questionRows";
 
 const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
@@ -62,8 +62,8 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     const navigate = useNavigate()
     const quiz = (quizzesList.quizzes).map((item: QuizForListState) => {
         return (
-            <QuizRows
-                quiz={item}
+            <QuestionRows
+                heading = {item.quiz_name}
                 key={item.quiz_id}
                 children={
                     <>
