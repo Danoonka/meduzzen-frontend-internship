@@ -24,14 +24,14 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         myCompanyListThunk(currentUser.user_id)
             .then((res) => {
-                setCompanyList(res?.data.result)
+                setCompanyList(res.result)
             })
     }, [companyList.companies.length])
 
     const updateQuizList = () => {
         getQuizListThunk(companyData.company_id)
             .then((res) => {
-                setQuizzesList(res?.data.result)
+                setQuizzesList(res.result)
             })
     }
 

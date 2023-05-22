@@ -30,13 +30,7 @@ export const checkAuth = () => {
 };
 
 export const addUser = (user: NewUser) => {
-    return instance.post("/user/", {
-        user_password: user.user_password,
-        user_password_repeat: user.user_password_repeat,
-        user_email: user.user_email,
-        user_firstname: user.user_firstname,
-        user_lastname: user.user_lastname
-    });
+    return instance.post("/user/", {...user});
 };
 
 export const logInUser = (email: string, password: string) => {
@@ -64,8 +58,8 @@ export const updateUserInfo = (id: number, user: CurrentUserState) => {
 
 export const updateUserPassword = (id: number, user_password: string, user_password_repeat: string) => {
     return instance.put(`/user/${id}/update_password/`, {
-        "user_password": user_password,
-        "user_password_repeat": user_password_repeat
+        user_password: user_password,
+        user_password_repeat: user_password_repeat
     });
 };
 
@@ -83,21 +77,11 @@ export const pagination = (item: string, page?: number, size?: number) => {
 };
 
 export const createCompany = (company: CompanyState) => {
-    return instance.post('/company/', {
-        company_name: company.company_name,
-        is_visible: company.is_visible
-    });
+    return instance.post('/company/', {...company});
 };
 
 export const updateCompanyInfo = (id: number, company: CompanyState) => {
-    return instance.put(`/company/${id}/update_info/`, {
-        company_name: company.company_name,
-        company_title: company.company_title,
-        company_description: company.company_description,
-        company_city: company.company_city,
-        company_phone: company.company_phone,
-        company_links: company.company_links
-    });
+    return instance.put(`/company/${id}/update_info/`, {...company});
 };
 
 export const updateCompanyVisible = (id: number, is_visible: boolean) => {
@@ -201,29 +185,15 @@ export const deleteQuiz = (quiz_id: number) => {
 };
 
 export const createQuiz = (quiz: NewQuizState, company_id: number) => {
-    return instance.post('/quiz/', {
-        quiz_name: quiz.quiz_name,
-        quiz_frequency: quiz.quiz_frequency,
-        company_id: company_id,
-        questions_list: quiz.questions_list
-    });
+    return instance.post('/quiz/', {...quiz});
 };
 
 export const updateQuiz = (quiz_id: number, quiz: EditQuizState) => {
-    return instance.put(`/quiz/${quiz_id}/update_info/`, {
-        quiz_name: quiz.quiz_name,
-        quiz_title: quiz.quiz_title,
-        quiz_description: quiz.quiz_description,
-        quiz_frequency: quiz.quiz_frequency
-    });
+    return instance.put(`/quiz/${quiz_id}/update_info/`, {...quiz});
 };
 
 export const addQuestionForQuiz = (question: QuestionState, quiz_id: number) => {
-    return instance.post(`/quiz/${quiz_id}/add_question/`, {
-        question_text: question.question_text,
-        question_answers: question.question_answers,
-        question_correct_answer: question.question_correct_answer
-    });
+    return instance.post(`/quiz/${quiz_id}/add_question/`, {...question});
 };
 
 export const deleteQuestion = (question_id: number) => {
@@ -231,11 +201,7 @@ export const deleteQuestion = (question_id: number) => {
 };
 
 export const updateQuestion = (question_id: number, question: EditQuestionState) => {
-    return instance.put(`/question/${question_id}/update_info/`, {
-        question_text: question.question_text,
-        question_answers: question.question_answers,
-        question_correct_answer: question.question_correct_answer
-    });
+    return instance.put(`/question/${question_id}/update_info/`, {...question});
 };
 
 export const takeQuiz = (quiz_id: number, answers: { [key: string]: string }) => {

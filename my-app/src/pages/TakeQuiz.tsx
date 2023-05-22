@@ -15,7 +15,7 @@ const TakeQuiz = () => {
         if (quiz_id) {
             getQuizByIdThunk(quiz_id)
                 .then(res => {
-                    setQuiz(res?.data.result)
+                    setQuiz(res.result)
                 })
         }
     }, [JSON.stringify(quiz), quiz_id])

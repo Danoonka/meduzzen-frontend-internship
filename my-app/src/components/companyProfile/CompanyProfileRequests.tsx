@@ -27,7 +27,7 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         requestListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setRequestList(res?.data.result)
+                setRequestList(res.result)
             })
     }, [requestList.users.length])
 
@@ -35,7 +35,7 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
         acceptRequestThunk(action_id)
             .then(() => requestListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setRequestList(res?.data.result)
+                    setRequestList(res.result)
                 }))
     }
 
@@ -52,7 +52,7 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => requestListCompanyThunk(companyData.company_id)
-                .then((res) => setRequestList(res?.data.result)))
+                .then((res) => setRequestList(res.result)))
     }
     return (
         <div>

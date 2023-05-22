@@ -16,7 +16,7 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         invitesListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setInviteList(res?.data.result)
+                setInviteList(res.result)
             })
 
     }, [inviteList.users.length])
@@ -36,7 +36,7 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => invitesListCompanyThunk(companyData.company_id)
-                .then((res) => setInviteList(res?.data.result)))
+                .then((res) => setInviteList(res.result)))
     }
     return (
         <>
