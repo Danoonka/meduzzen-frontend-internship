@@ -25,8 +25,7 @@ const UserContainer = ({user_id}: UserProps) => {
     useEffect(() => {
         const fetchData = async () => {
             await getUserByIdThunk(user_id);
-            const res = await getGlobalRatingThunk(user_id);
-            setStarsCount(res?.data.result.rating);
+            getGlobalRatingThunk(user_id).then(res => setStarsCount(res.result.rating))
         };
 
         fetchData();
@@ -107,7 +106,7 @@ const UserContainer = ({user_id}: UserProps) => {
                     <div><p>Links:</p> {user.user_links.map((item, idx) => <p key={idx}>{item}</p>)}</div>
                     }
                     <div>
-                         <p> {stars} {starsCount + `%`}</p>
+                        <p> {stars} {starsCount + `%`}</p>
                     </div>
                     {isOwner &&
                     <>

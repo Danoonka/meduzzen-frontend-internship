@@ -23,8 +23,6 @@ interface User {
 }
 
 const UserRows = ({currentUser, children, isPermission, company_id, index}: CurrentUserProps) => {
-
-    //TODO edit
     const [lastPass, setLastPass] =  useState<quiz>({
         quiz_id: -1,
         last_quiz_pass_at: "2001-01-01T00:00:01"
@@ -32,7 +30,7 @@ const UserRows = ({currentUser, children, isPermission, company_id, index}: Curr
     useEffect(()=>{
         quizzesLastPassCompanyThunk(company_id? company_id: -1)
             .then(res => {
-                const user = res?.data.result.users.find((user: User) => user.user_id === currentUser.user_id);
+                const user = res.result.users.find((user: User) => user.user_id === currentUser.user_id);
 
                 if (user && user.quizzes.length > 0) {
                     const lastQuiz = user.quizzes.reduce((prevQuiz:quiz, currentQuiz:quiz) => {

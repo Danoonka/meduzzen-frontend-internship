@@ -36,7 +36,7 @@ const Chart = ({rating, chartName}: ChartProps) => {
 
     const passAtValues = rating.map((entry) => {
         return entry.pass_at
-    }).flat()
+    })
 
 
     const labels = passAtValues.map((passAt) => {

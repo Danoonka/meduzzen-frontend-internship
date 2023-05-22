@@ -16,8 +16,6 @@
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
     "axios": "^1.4.0",
-    "chart.js": "^4.3.0",
-    "faker": "^6.6.6",
     "react": "^18.2.0",
     "react-avatar-edit": "^1.2.0",
     "react-chartjs-2": "^5.2.0",

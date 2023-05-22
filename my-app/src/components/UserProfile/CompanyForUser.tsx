@@ -27,7 +27,7 @@ const CompanyForUser = ({user_id}: UserProps) => {
     const getCompaniesNames = async (companyIDs: number[]) => {
         const namePromises = companyIDs.map((id) => {
                 if (id >= 0) {
-                    return getCompanyByIdThunk(id).then((res) => res?.data.result.company_name)
+                    return getCompanyByIdThunk(id).then(res => res.result.company_name)
                 }
             }
         );
@@ -37,16 +37,16 @@ const CompanyForUser = ({user_id}: UserProps) => {
 
     useEffect(() => {
         myCompanyListThunk(user_id).then((res) => {
-            setRatingCompany(res?.data.result);
+            setRatingCompany(res.result);
         });
-    }, [JSON.stringify(ratingCompany)]);
+    }, [ratingCompany.companies.length]);
 
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {
         const company_id = event.currentTarget.getAttribute('data-value')
         getRatingAnalyticInCompanyThunk(user_id, Number(company_id))
             .then((res) => {
-                setRating(res?.data.result.rating);
+                setRating(res.result.rating);
             });
     }
 

@@ -43,7 +43,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
     useEffect(() => {
         membersListCompanyThunk(company_id)
             .then((res) => {
-                const admins = (res?.data.result.users).filter(function (el: ActionUserState) {
+                const admins = (res.result.users).filter(function (el: ActionUserState) {
                     return el.action === 'admin'
                 })
                 setAdminsList({users: admins})

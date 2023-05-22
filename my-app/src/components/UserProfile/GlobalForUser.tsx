@@ -10,9 +10,9 @@ const GlobalForUser = ({user_id}: UserProps) => {
     useEffect(() => {
         getGlobalRatingAnalyticThunk(user_id)
             .then((res) => {
-                setRatingCompany(res?.data.result.rating);
+                setRatingCompany(res.result.rating);
             });
-    }, [JSON.stringify(ratingCompany)]);
+    }, []);
 
 
     return (
