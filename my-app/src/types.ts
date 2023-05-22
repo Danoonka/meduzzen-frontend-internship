@@ -1,4 +1,5 @@
 import userImg from './assets/ffa09aec412db3f54deadf1b3781de2a.png'
+import React from "react";
 
 export interface CurrentUserState {
     "user_id": number,
@@ -179,11 +180,121 @@ export interface CheckModalProps {
     isOpen: boolean,
     toggle: () => void;
     callback: () => void;
+    company_id?: number;
+    quiz_id?: number;
 }
 
 export interface UserProps {
     user_id: number;
 }
+
+export interface QuizForListState {
+    quiz_id: number,
+    quiz_name: string,
+    quiz_title: string,
+    quiz_description: string,
+}
+
+export const initialQuizForListState: QuizForListState = {
+    quiz_id: -1,
+    quiz_name: '',
+    quiz_title: '',
+    quiz_description: '',
+}
+
+export interface AllQuizForListState {
+    quizzes: [
+        QuizForListState
+    ]
+}
+
+export const initialAllQuizForListState: AllQuizForListState = {
+    quizzes: [
+        initialQuizForListState
+    ]
+}
+
+export interface QuestionState {
+    question_id: number,
+    question_text: string,
+    question_answers: string[],
+    question_correct_answer: number
+}
+
+export const InitialQuestionState: QuestionState = {
+    question_id: -1,
+    question_text: '',
+    question_answers: [''],
+    question_correct_answer: -1
+}
+
+
+export interface GetQuizByIdState {
+    quiz_id: number,
+    quiz_name: string,
+    quiz_title: string,
+    quiz_description: string,
+    quiz_frequency: number,
+    created_by: CurrentUserState,
+    questions_list: []
+}
+
+
+export interface NewQuizState {
+    quiz_name: string,
+    quiz_frequency: number,
+    company_id: number,
+    questions_list: QuestionState[]
+}
+
+export const initialNewQuizState: NewQuizState = {
+    quiz_name: '',
+    quiz_frequency: 0,
+    company_id: -1,
+    questions_list: []
+}
+
+export interface EditQuizState {
+    quiz_name: string,
+    quiz_title: string,
+    quiz_description: string,
+    quiz_frequency: number
+}
+
+export const initialEditQuizState: EditQuizState = {
+    quiz_name: '',
+    quiz_title: '',
+    quiz_description: '',
+    quiz_frequency: 0
+}
+
+export interface EditQuestionState {
+    question_id: number,
+    question_text: string,
+    question_answers: string[],
+    question_correct_answer: number
+}
+
+export const initialEditQuestionState: EditQuestionState = {
+    question_id: -1,
+    question_text: '',
+    question_answers: [''],
+    question_correct_answer: -1
+}
+
+export interface AddQuestionModalProps {
+    isOpen: boolean
+    toggle: () => void;
+    callback: () => void;
+    questionText: string;
+    handleQuestionTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleAnswerChange: (question_index: number, answer_index: number, e: React.ChangeEvent<HTMLInputElement>) => void
+    handleRadioChange: (index: number, e: React.ChangeEvent<HTMLInputElement>) => void
+    answerArray: string[],
+    question_id: number
+}
+
+
 
 
 

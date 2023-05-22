@@ -1,0 +1,54 @@
+.create-quiz-modal-box {
+    display: block;
+    background: white;
+    position: absolute;
+    top: 10vw;
+    left: 35vw;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.input-answer {
+    display: flex;
+    gap: 10px;
+}
+
+.question-component-container {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #42a5f5;
+}
+
+.button-remove-q {
+    margin-left: 415px;
+}
+
+.button-submit {
+    display: block;
+    margin: 10px auto;
+}
+
+.edit-quiz-modal-box {
+    display: block;
+    background: white;
+    position: absolute;
+    top: 10vw;
+    width: 800px;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.edit-question-modal-box {
+    display: block;
+    background: white;
+    position: absolute;
+    top: 10vw;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+}

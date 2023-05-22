@@ -1,23 +1,23 @@
 import {
     acceptInvite,
-    acceptRequest, addToBlackList,
+    acceptRequest, addQuestionForQuiz, addToBlackList,
     addUser, BlackList,
     changeUserAvatar,
     checkAuth,
     createCompany,
-    createInvite,
+    createInvite, createQuiz,
     createRequest,
     declineAction,
-    deleteCompany,
+    deleteCompany, deleteQuestion, deleteQuiz,
     deleteUser,
     fireLeaveMember,
-    getCompanyById,
+    getCompanyById, getQuizById, getQuizList,
     getUserById, invitesList, invitesListCompany,
     logInUser, makeMemberAdmin, membersListCompany, myCompanyList,
     pagination, removeAdmin, removeFromBlackList, requestList, requestListCompany,
     updateCompanyAvatar,
     updateCompanyInfo,
-    updateCompanyVisible,
+    updateCompanyVisible, updateQuestion, updateQuiz,
     updateUserInfo,
     updateUserPassword
 } from "../api/api";
@@ -30,7 +30,7 @@ import {
 } from "./userActionCreators";
 import {NewUser} from "../pages/UserRegistration";
 import {toast} from "react-toastify";
-import {CompanyState, CurrentUserState} from "../types";
+import {CompanyState, CurrentUserState, EditQuestionState, EditQuizState, NewQuizState, QuestionState} from "../types";
 
 export const checkAuthThunk = async () => {
     return await checkAuth()
@@ -372,7 +372,7 @@ export const BlackListThunk = async (company_id: number) => {
 }
 
 export const removeFromBlackListThunk = async (action_id: number) => {
-    return removeFromBlackList(action_id)
+    return await removeFromBlackList(action_id)
         .then(res => {
                 toast.success('Removed from black list', {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -388,7 +388,7 @@ export const removeFromBlackListThunk = async (action_id: number) => {
 }
 
 export const addToBlackListThunk = async (action_id: number) => {
-    return addToBlackList(action_id)
+    return await addToBlackList(action_id)
         .then(res => {
                 toast.success('Added to black list', {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -403,8 +403,8 @@ export const addToBlackListThunk = async (action_id: number) => {
         })
 }
 
-export const  makeMemberAdminThunk = async (action_id: number) => {
-    return makeMemberAdmin(action_id)
+export const makeMemberAdminThunk = async (action_id: number) => {
+    return await makeMemberAdmin(action_id)
         .then(res => {
                 toast.success('Added to admin', {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -419,8 +419,8 @@ export const  makeMemberAdminThunk = async (action_id: number) => {
         })
 }
 
-export const  removeAdminThunk = async (action_id: number) => {
-    return removeAdmin(action_id)
+export const removeAdminThunk = async (action_id: number) => {
+    return await removeAdmin(action_id)
         .then(res => {
                 toast.success('Remove admin', {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -434,6 +434,121 @@ export const  removeAdminThunk = async (action_id: number) => {
             })
         })
 }
+
+export const getQuizByIdThunk = async (quiz_id: number) => {
+    return await getQuizById(quiz_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getQuizListThunk = async (company_id: number) => {
+    return await getQuizList(company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const deleteQuizThunk = async (quiz_id: number) => {
+    return await deleteQuiz(quiz_id)
+        .then(res => {
+                toast.success('Quiz deleted', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const createQuizThunk = async (quiz: NewQuizState, company_id: number) => {
+    return await createQuiz(quiz, company_id)
+        .then(res => {
+                toast.success('Quiz created', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const updateQuizThunk = async (quiz_id: number, quiz: EditQuizState) => {
+    return await updateQuiz(quiz_id, quiz)
+        .then(res => {
+                toast.success('Quiz updated', {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                })
+                return res
+            }
+        )
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const addQuestionForQuizThunk = async (question: QuestionState, quiz_id: number) => {
+    return await addQuestionForQuiz(question, quiz_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const deleteQuestionThunk = async (question_id: number) => {
+    return await deleteQuestion(question_id)
+        .then(res => {
+            toast.success('Question deleted', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            return res
+        })
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+
+export const updateQuestionThunk = async (question_id: number, question: EditQuestionState) => {
+    return await updateQuestion(question_id, question)
+        .then(res => {
+            toast.success('Question updated', {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            return res
+        })
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+
+
+
+
+
 
 
 
