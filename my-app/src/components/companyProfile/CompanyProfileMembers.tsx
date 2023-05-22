@@ -17,7 +17,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         membersListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setMembersList(res?.data.result)
+                setMembersList(res.result)
             })
 
     }, [membersList.users.length])
@@ -26,7 +26,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
         fireLeaveMemberThunk(action_id)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setMembersList(res?.data.result)
+                    setMembersList(res.result)
                 }))
     }
 
@@ -35,7 +35,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
         addToBlackListThunk(action_id)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setMembersList(res?.data.result)
+                    setMembersList(res.result)
                 }))
     }
 
@@ -68,7 +68,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
     const onCallBack = () => {
         makeMemberAdminThunk(modalData)
             .then(() => membersListCompanyThunk(companyData.company_id)
-                .then((res) => setMembersList(res?.data.result)))
+                .then((res) => setMembersList(res.result)))
     }
 
     return (

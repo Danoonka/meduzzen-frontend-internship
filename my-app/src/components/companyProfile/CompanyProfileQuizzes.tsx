@@ -6,11 +6,12 @@ import {
     initialAllQuizForListState, QuizForListState
 } from "../../types";
 import {deleteQuizThunk, getQuizListThunk, myCompanyListThunk} from "../../store/reduxThunk";
-import QuizRows from "./quiz/quizRows";
 import CreateQuizModal from "../modalWindows/CreateQuizModal";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import EditQuizModal from "../modalWindows/EditQuizModal";
+import {useNavigate} from "react-router-dom";
+import QuestionRows from "./questionRows";
 
 const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
@@ -23,14 +24,14 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         myCompanyListThunk(currentUser.user_id)
             .then((res) => {
-                setCompanyList(res?.data.result)
+                setCompanyList(res.result)
             })
     }, [companyList.companies.length])
 
     const updateQuizList = () => {
         getQuizListThunk(companyData.company_id)
             .then((res) => {
-                setQuizzesList(res?.data.result)
+                setQuizzesList(res.result)
             })
     }
 
@@ -58,14 +59,17 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
 
     const isAdminOrIsOwner = isAdmin(companyList, companyData.company_id)
 
+    const navigate = useNavigate()
     const quiz = (quizzesList.quizzes).map((item: QuizForListState) => {
         return (
-            <QuizRows
-                quiz={item}
+            <QuestionRows
+                heading = {item.quiz_name}
                 key={item.quiz_id}
                 children={
                     <>
-                        <Button>Take quiz</Button>
+                        <Button onClick={() =>
+                            navigate(`/takeQuiz`, {state: {quiz_id: item.quiz_id}})
+                        }>Take quiz</Button>
                         {isAdminOrIsOwner &&
                         <>
                             <Button onClick={() => onClickEditQuiz(item.quiz_id)}>Edit quiz</Button>

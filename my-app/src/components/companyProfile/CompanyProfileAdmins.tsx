@@ -13,7 +13,7 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         membersListCompanyThunk(companyData.company_id)
             .then((res) => {
-                const admins = (res?.data.result.users).filter(function (el: ActionUserState) {
+                const admins = (res.result.users).filter(function (el: ActionUserState) {
                     return el.action === 'admin'
                 })
                 setAdminsList({users: admins})
@@ -39,7 +39,7 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
         removeAdminThunk(modalData)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    const admins = (res?.data.result.users)
+                    const admins = (res.result.users)
                         .filter(function (el: ActionUserState) {
                             return el.action === 'admin'
                         })

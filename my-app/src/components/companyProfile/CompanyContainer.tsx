@@ -33,7 +33,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
     useEffect(() => {
         myCompanyListThunk(currentUser.user_id)
             .then((res) => {
-                setCompanyList(res?.data.result)
+                setCompanyList(res.result)
             })
     }, [companyList.companies.length])
 

@@ -15,7 +15,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         BlackListThunk(companyData.company_id)
             .then((res) => {
-                setBlockList(res?.data.result)
+                setBlockList(res.result)
             })
     }, [blockList.users.length])
 
@@ -23,7 +23,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
         removeFromBlackListThunk(action_id)
             .then(() => BlackListThunk(companyData.company_id)
                 .then((res) => {
-                    setBlockList(res?.data.result)
+                    setBlockList(res.result)
                 })
             )
     }
