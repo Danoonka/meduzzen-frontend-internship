@@ -5,7 +5,12 @@ import {
     AllQuizForListState, CompanyItemProps, initialAllActionCompaniesState,
     initialAllQuizForListState, QuizForListState
 } from "../../types";
-import {deleteQuizThunk, getQuizListThunk, myCompanyListThunk} from "../../store/reduxThunk";
+import {
+    deleteQuizThunk,
+    getLastAnswersCsvFoeQuizInCompanyThunk,
+    getQuizListThunk,
+    myCompanyListThunk
+} from "../../store/reduxThunk";
 import CreateQuizModal from "../modalWindows/CreateQuizModal";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
@@ -57,13 +62,17 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
         return companyList.companies.some(company => (company.company_id === companyId && (company.action === 'admin' || company.action === 'owner')));
     }
 
+    const getAllQuizResult = (company_id: number, quiz_id: number) => {
+        getLastAnswersCsvFoeQuizInCompanyThunk(company_id, quiz_id)
+    }
+
     const isAdminOrIsOwner = isAdmin(companyList, companyData.company_id)
 
     const navigate = useNavigate()
     const quiz = (quizzesList.quizzes).map((item: QuizForListState) => {
         return (
             <QuestionRows
-                heading = {item.quiz_name}
+                heading={item.quiz_name}
                 key={item.quiz_id}
                 children={
                     <>
@@ -74,6 +83,8 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
                         <>
                             <Button onClick={() => onClickEditQuiz(item.quiz_id)}>Edit quiz</Button>
                             <Button onClick={() => onClickDelete(item.quiz_id)}>Delete quiz</Button>
+                            <Button onClick={() => getAllQuizResult(companyData.company_id, item.quiz_id)}>Download
+                                Quiz Results</Button>
                         </>}
 
                     </>}
@@ -84,7 +95,11 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     return (
         <div>
             {isAdminOrIsOwner &&
-            <Button onClick={() => onClickCreateQuiz()}>Create quiz</Button>
+            <>
+                <Button onClick={() => onClickCreateQuiz()}>Create quiz</Button>
+            </>
+
+
             }
             {quiz}
             <div className="checkModal">

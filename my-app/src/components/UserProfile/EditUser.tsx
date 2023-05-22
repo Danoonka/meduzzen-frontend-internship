@@ -9,9 +9,12 @@ import {CurrentUserState} from "../../types";
 import {deleteUserThunk, updateUserInfoThunk, updateUserPasswordThunk} from "../../store/reduxThunk";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
+import CheckModal from "../modalWindows/CheckModal";
 
 const EditUser = () => {
     const user = useSelector((state: RootState) => state.currentUser);
+    const [isOpen, setIsOpen] = useState(false);
+
     const [updateUser, setUpdateUser] = useState<CurrentUserState>({
         user_id: user.user_id,
         user_email: user.user_email,
@@ -72,8 +75,12 @@ const EditUser = () => {
         })
     }
 
-    const deleteUserById = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+    const onClickDeleteUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+        setIsOpen(!isOpen);
+    }
+
+    const deleteUserById = async () => {
         await deleteUserThunk(user.user_id)
         logout()
         localStorage.removeItem('accessToken');
@@ -173,21 +180,25 @@ const EditUser = () => {
         />))
 
     return (
-        <form className='edit-form'>
-            <div className="section_update_user_info">
-                <h2>Edit Info</h2>
-                {fields}
-                <Button onClick={saveChanges}>Save Changes</Button>
-            </div>
-            <div className="section_update_user_password">
-                <h2>Change Password</h2>
-                {passwdFields}
-                <div className="section_update_user_password-buttons">
-                    <Button onClick={updateUserPasswordOnClick}>Update Password</Button>
-                    <Button className="delete-button" onClick={deleteUserById}>Delete user</Button>
+        <>
+            <form className='edit-form'>
+                <div className="section_update_user_info">
+                    <h2>Edit Info</h2>
+                    {fields}
+                    <Button onClick={saveChanges}>Save Changes</Button>
                 </div>
-            </div>
-        </form>
+                <div className="section_update_user_password">
+                    <h2>Change Password</h2>
+                    {passwdFields}
+                    <div className="section_update_user_password-buttons">
+                        <Button onClick={updateUserPasswordOnClick}>Update Password</Button>
+                        <Button className="delete-button" onClick={onClickDeleteUser}>Delete user</Button>
+                    </div>
+                </div>
+            </form>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={()=>deleteUserById()}/>
+        </>
+
     );
 };
 

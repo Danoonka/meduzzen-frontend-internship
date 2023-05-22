@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {
     addToBlackListThunk,
-    fireLeaveMemberThunk, makeMemberAdminThunk,
+    fireLeaveMemberThunk,
+    getLastAnswersCsvForCompanyThunk,
+    getLastAnswersCsvForUserInCompanyThunk,
+    makeMemberAdminThunk,
     membersListCompanyThunk,
 } from "../../store/reduxThunk";
 import {ActionUserState, AllActionUsersState, CompanyItemProps, initialActionAllUsersState} from "../../types";
@@ -46,6 +49,13 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
         setIsOpen(!isOpen);
     }
 
+    const onClickDownloadResults = (company_id: number, user_id: number) => {
+        getLastAnswersCsvForUserInCompanyThunk(company_id, user_id)
+    }
+
+    const getAllUsersResult = (company_id: number) => {
+        getLastAnswersCsvForCompanyThunk(company_id)
+    }
     const members = (membersList.users).map((item: ActionUserState, index: number) => {
         const isOwner = item.action === 'owner';
         const isAdmin = item.action === 'admin';
@@ -66,6 +76,9 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
                         {!(isOwner || isAdmin) &&
                         <Button onClick={() => onClickAddToAdmin(item.action_id)}>Add to Admin</Button>
                         }
+                        {isPermission &&
+                        <Button onClick={() => onClickDownloadResults(companyData.company_id, item.user_id)}>Download
+                            results</Button>}
                     </>}
             />)
     })
@@ -78,6 +91,7 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
 
     return (
         <div>
+            <Button onClick={() => getAllUsersResult(companyData.company_id)}>Download All Users Results</Button>
             {members}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
                         callback={() => onCallBack()}/>
