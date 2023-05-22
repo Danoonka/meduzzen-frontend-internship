@@ -12,3 +12,15 @@
     height: 50px;
     border-radius: 50%;
 }
+
+.notification-box {
+    display: block;
+    background: white;
+    position: absolute;
+    top: 10vw;
+    left: 40vw;
+    width: fit-content;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 1rem;
+}

@@ -18,6 +18,7 @@ import SendRequestModal from "../modalWindows/SendRequestModal";
 import {UserProps} from "../../types";
 import UserProfileQuizzes from "./UserProfileQuizzes";
 import UserProfileAnalytics from "./UserProfileAnalytics";
+import NotificationModal from "../modalWindows/NotificationModal";
 
 
 const UserContainer = ({user_id}: UserProps) => {
@@ -65,6 +66,10 @@ const UserContainer = ({user_id}: UserProps) => {
     const download = () => {
         getLastAnswersCsvForUserThunk(user.user_id)
     }
+    const [isMessagesOpen, setIsMessagesOpen] = useState(false)
+    const openNotification = () => {
+        setIsMessagesOpen(!isMessagesOpen)
+    }
 
     const menuHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
@@ -94,6 +99,8 @@ const UserContainer = ({user_id}: UserProps) => {
         stars.push(<span className="star" key={i}>&#9733;</span>);
     }
 
+
+
     return (
         <div className="container">
             <div className="user-profile-container">
@@ -122,6 +129,7 @@ const UserContainer = ({user_id}: UserProps) => {
                         <Button onClick={goToEditUser}>Edit Info</Button>
                         <Button onClick={toggle}>Send Request</Button>
                         <Button onClick={download}>Download Answers</Button>
+                        <Button onClick={openNotification}>Messages</Button>
                     </>}
                 </div>
             </div>
@@ -140,6 +148,7 @@ const UserContainer = ({user_id}: UserProps) => {
                     </div>
                 </div>
                 <SendRequestModal isOpen={isOpen} toggle={toggle}/>
+                <NotificationModal callback={()=>{}} isOpen={isMessagesOpen} toggle={openNotification} user_id={user.user_id}/>
             </>
             }
         </div>
