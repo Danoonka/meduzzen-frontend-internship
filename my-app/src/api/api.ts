@@ -207,3 +207,61 @@ export const updateQuestion = (question_id: number, question: EditQuestionState)
 export const takeQuiz = (quiz_id: number, answers: { [key: string]: string }) => {
     return instance.post(`/quiz/${quiz_id}/take_quiz/`, {'answers': answers});
 };
+
+export const getGlobalRating = (user_id: number) => {
+    return instance.get(`/user/${user_id}/global_rating/`);
+};
+
+export const getGlobalRatingAnalytic = (user_id: number) => {
+    return instance.get(`/user/${user_id}/global_rating_analytic/`);
+};
+
+export const getRatingInCompany = (user_id: number, company_id:number) => {
+    return instance.get(`/user/${user_id}/rating_in_company/${company_id}/`);
+};
+
+export const getRatingAnalyticInCompany = (user_id: number, company_id:number)=>{
+    return instance.get(`/user/${user_id}/rating_analytic_in_company/${company_id}/`);
+};
+
+export const getRatingForQuiz = (user_id: number, quiz_id: number) => {
+    return instance.get(`/user/${user_id}/rating_for_quiz/${quiz_id}/`);
+};
+
+export const getRatingAnalyticsForQuiz = (user_id: number, quiz_id: number) => {
+    return instance.get(`/user/${user_id}/rating_analytic_for_quiz/${quiz_id}/`);
+};
+
+export const getSummaryRatingForUsers = (company_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_for_users/`);
+};
+
+export const getSummaryRatingAnalyticForUsers = (company_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_analytic_for_users/`);
+};
+
+export const getSummaryRatingForUser = (company_id: number, user_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_for_user/${user_id}/`);
+};
+
+export const getSummaryRatingAnalyticForUser = (company_id: number, user_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_analytic_for_user/${user_id}/`);
+};
+
+export const getSummaryRatingForQuiz = (company_id: number, quiz_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_for_quiz/${quiz_id}/`);
+};
+
+export const getSummaryRatingAnalyticForQuiz = (company_id: number, quiz_id: number) => {
+    return instance.get(`/company/${company_id}/summary_rating_analytic_for_quiz/${quiz_id}/`);
+};
+
+export const quizzesLastPass = (user_id: number) => {
+    return instance.get(`user/${user_id}/quizzes_last_pass/`);
+};
+
+export const quizzesLastPassCompany = (company_id: number) => {
+    return instance.get(`/company/${company_id}/quizzes_last_pass/`);
+};
+
+

@@ -5,12 +5,14 @@ import '../../utils/Input.css'
 import {useNavigate} from "react-router-dom";
 import './UserContainer.css'
 import {useSelector} from "react-redux";
-import {changeUserAvatarThunk, getUserByIdThunk} from "../../store/reduxThunk";
+import {changeUserAvatarThunk, getGlobalRatingThunk, getUserByIdThunk} from "../../store/reduxThunk";
 import UserProfileCompanyList from "./UserProfileCompanyList";
 import UserProfileInvites from "./UserProfileInvites";
 import UserProfileRequests from "./UserProfileRequests";
 import SendRequestModal from "../modalWindows/SendRequestModal";
 import {UserProps} from "../../types";
+import UserProfileQuizzes from "./UserProfileQuizzes";
+import UserProfileAnalytics from "./UserProfileAnalytics";
 
 
 const UserContainer = ({user_id}: UserProps) => {
@@ -18,9 +20,17 @@ const UserContainer = ({user_id}: UserProps) => {
     const user = useSelector((state: RootState) => state.userById);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
-    useEffect(()=>{
-        getUserByIdThunk(user_id)
-    }, [])
+    const [starsCount, setStarsCount] = useState(0); // moved up
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await getUserByIdThunk(user_id);
+            const res = await getGlobalRatingThunk(user_id);
+            setStarsCount(res?.data.result.rating);
+        };
+
+        fetchData();
+    }, [user_id]);
     const [currentElement, setCurrentElement] = useState<ReactNode>(<></>)
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {
@@ -61,7 +71,19 @@ const UserContainer = ({user_id}: UserProps) => {
             case 'requests':
                 setCurrentElement(<UserProfileRequests user_id={user.user_id}/>)
                 return
+            case 'quizzes':
+                setCurrentElement(<UserProfileQuizzes user_id={user.user_id}/>)
+                return
+            case 'analytics':
+                setCurrentElement(<UserProfileAnalytics user_id={user.user_id}/>)
+                return
         }
+    }
+
+    const stars = [];
+
+    for (let i = 0; i < Math.trunc(starsCount / 20); i++) {
+        stars.push(<span className="star" key={i}>&#9733;</span>);
     }
 
     return (
@@ -84,6 +106,9 @@ const UserContainer = ({user_id}: UserProps) => {
                     {(user.user_links !== null) &&
                     <div><p>Links:</p> {user.user_links.map((item, idx) => <p key={idx}>{item}</p>)}</div>
                     }
+                    <div>
+                         <p> {stars} {starsCount + `%`}</p>
+                    </div>
                     {isOwner &&
                     <>
                         <Button onClick={goToEditUser}>Edit Info</Button>
@@ -98,6 +123,8 @@ const UserContainer = ({user_id}: UserProps) => {
                         <Button onClick={menuHandler} name='my-companies'>My Companies</Button>
                         <Button onClick={menuHandler} name='invites'>Invites</Button>
                         <Button onClick={menuHandler} name='requests'>Requests</Button>
+                        <Button onClick={menuHandler} name='quizzes'>Quizzes</Button>
+                        <Button onClick={menuHandler} name='analytics'>Analytics</Button>
                         <div>
                             {currentElement}
                         </div>

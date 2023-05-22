@@ -9,7 +9,8 @@ import UserRows from "./UserRows";
 import Button from "../../utils/Button";
 import CheckModal from "../modalWindows/CheckModal";
 
-const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
+
+const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) => {
     const [membersList, setMembersList] = useState<AllActionUsersState>(initialActionAllUsersState)
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(0);
@@ -21,6 +22,7 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
             })
 
     }, [membersList.users.length])
+
 
     const onClickFire = (action_id: number) => {
         fireLeaveMemberThunk(action_id)
@@ -44,13 +46,16 @@ const CompanyProfileMembers = ({companyData}: CompanyItemProps) => {
         setIsOpen(!isOpen);
     }
 
-    const members = (membersList.users).map((item: ActionUserState) => {
+    const members = (membersList.users).map((item: ActionUserState, index: number) => {
         const isOwner = item.action === 'owner';
         const isAdmin = item.action === 'admin';
         return (
             <UserRows
                 currentUser={item}
                 key={item.user_id}
+                isPermission={isPermission}
+                company_id={companyData.company_id}
+                index={index}
                 children={
                     <>
                         <Button

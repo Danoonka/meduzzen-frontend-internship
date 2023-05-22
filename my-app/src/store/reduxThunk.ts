@@ -1,23 +1,53 @@
 import {
     acceptInvite,
-    acceptRequest, addQuestionForQuiz, addToBlackList,
-    addUser, BlackList,
+    acceptRequest,
+    addQuestionForQuiz,
+    addToBlackList,
+    addUser,
+    BlackList,
     changeUserAvatar,
     checkAuth,
     createCompany,
-    createInvite, createQuiz,
+    createInvite,
+    createQuiz,
     createRequest,
     declineAction,
-    deleteCompany, deleteQuestion, deleteQuiz,
+    deleteCompany,
+    deleteQuestion,
+    deleteQuiz,
     deleteUser,
     fireLeaveMember,
-    getCompanyById, getQuizById, getQuizList,
-    getUserById, invitesList, invitesListCompany,
-    logInUser, makeMemberAdmin, membersListCompany, myCompanyList,
-    pagination, removeAdmin, removeFromBlackList, requestList, requestListCompany, takeQuiz,
+    getCompanyById,
+    getGlobalRating,
+    getGlobalRatingAnalytic,
+    getQuizById,
+    getQuizList,
+    getRatingAnalyticInCompany,
+    getRatingAnalyticsForQuiz,
+    getRatingForQuiz,
+    getRatingInCompany, getSummaryRatingAnalyticForQuiz,
+    getSummaryRatingAnalyticForUser,
+    getSummaryRatingAnalyticForUsers, getSummaryRatingForQuiz,
+    getSummaryRatingForUser,
+    getSummaryRatingForUsers,
+    getUserById,
+    invitesList,
+    invitesListCompany,
+    logInUser,
+    makeMemberAdmin,
+    membersListCompany,
+    myCompanyList,
+    pagination, quizzesLastPass, quizzesLastPassCompany,
+    removeAdmin,
+    removeFromBlackList,
+    requestList,
+    requestListCompany,
+    takeQuiz,
     updateCompanyAvatar,
     updateCompanyInfo,
-    updateCompanyVisible, updateQuestion, updateQuiz,
+    updateCompanyVisible,
+    updateQuestion,
+    updateQuiz,
     updateUserInfo,
     updateUserPassword
 } from "../api/api";
@@ -75,6 +105,7 @@ export const getUserByIdThunk = async (id: number) => {
     return await getUserById(id)
         .then(res => {
             store.dispatch(receiveUserByIdAction(res.data.result))
+            return res
         })
         .catch(function (error) {
             toast.error(error.response.data.detail, {
@@ -202,6 +233,7 @@ export const getCompanyByIdThunk = async (id: number) => {
     return await getCompanyById(id)
         .then(res => {
             store.dispatch(receiveCompanyByIdAction(res.data.result))
+            return res
         })
         .catch(function (error) {
             toast.error(error.response.data.detail, {
@@ -529,12 +561,114 @@ export const takeQuizThunk = async (quiz_id: number, answers: { [key: string]: s
         })
 }
 
+export const getGlobalRatingThunk = async (user_id: number) => {
+    return await getGlobalRating(user_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+
+export const getGlobalRatingAnalyticThunk = async (user_id: number) => {
+    return await getGlobalRatingAnalytic(user_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+
+export const getRatingInCompanyThunk = async (user_id: number, company_id: number) => {
+    return await getRatingInCompany(user_id, company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+
+export const getRatingAnalyticInCompanyThunk = async (user_id: number, company_id: number) => {
+    return await getRatingAnalyticInCompany(user_id, company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+
+export const getRatingForQuizThunk = async (user_id: number, quiz_id: number) => {
+    return await getRatingForQuiz(user_id, quiz_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+
+export const getRatingAnalyticsForQuizThunk = async (user_id: number, quiz_id: number) => {
+    return await getRatingAnalyticsForQuiz(user_id, quiz_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
 
 
+export const getSummaryRatingAnalyticForUsersThunk = async (company_id: number) => {
+    return await getSummaryRatingAnalyticForUsers(company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
 
 
+export const getSummaryRatingAnalyticForUserThunk = async (company_id: number, user_id: number) => {
+    return await getSummaryRatingAnalyticForUser(company_id, user_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
 
 
+export const getSummaryRatingAnalyticForQuizThunk = async (company_id: number, quiz_id: number) => {
+    return await getSummaryRatingAnalyticForQuiz(company_id, quiz_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
+export const quizzesLastPassThunk = async (user_id: number) => {
+    return await quizzesLastPass(user_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
 
-
-
+export const quizzesLastPassCompanyThunk = async (company_id: number) => {
+    return await quizzesLastPassCompany(company_id)
+        .then(res => res)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+};
