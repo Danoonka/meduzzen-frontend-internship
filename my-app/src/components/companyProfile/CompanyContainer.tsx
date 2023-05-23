@@ -27,6 +27,7 @@ import CompanyProfileAnalytics from "./CompanyProfileAnalytics";
 const CompanyContainer = ({company_id}: CompanyProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
     const company = useSelector((state: RootState) => state.company)
+
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [adminsList, setAdminsList] = useState<AllActionUsersState>(initialActionAllUsersState)
     const navigate = useNavigate();
@@ -41,14 +42,15 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
     }, [companyList.companies.length])
 
     useEffect(() => {
-        membersListCompanyThunk(company_id)
-            .then((res) => {
-                const admins = (res.result.users).filter(function (el: ActionUserState) {
-                    return el.action === 'admin'
+        if (isMember) {
+            membersListCompanyThunk(company_id)
+                .then((res) => {
+                    const admins = (res.result.users).filter(function (el: ActionUserState) {
+                        return el.action === 'admin'
+                    })
+                    setAdminsList({users: admins})
                 })
-                setAdminsList({users: admins})
-            })
-
+        }
     }, [adminsList.users.length])
 
     useEffect(() => {
@@ -170,7 +172,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                         </div>
                     </div>
                 </div>
-                <SendInviteModal isOpen={isOpen} toggle={toggle}/>
+                <div data-testid='send-invite-modal'>
+                    <SendInviteModal isOpen={isOpen} toggle={toggle}/>
+                </div>
             </>
 
             }

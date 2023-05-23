@@ -39,8 +39,8 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
                 .then((res) => setInviteList(res.result)))
     }
     return (
-        <>
-            <div>
+        < >
+            <div data-testid="company-profile-invites">
                 {invites}
             </div>
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={() => onCallBack()}/>

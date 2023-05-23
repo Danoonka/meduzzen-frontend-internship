@@ -93,7 +93,7 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     })
 
     return (
-        <div>
+        <div data-testid='company-profile-quizzes'>
             {isAdminOrIsOwner &&
             <>
                 <Button onClick={() => onClickCreateQuiz()}>Create quiz</Button>

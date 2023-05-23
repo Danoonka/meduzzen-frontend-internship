@@ -34,7 +34,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
                   children={<Button onClick={() => onClickRemove(item.action_id)}>Remove</Button>}/>
     )
     return (
-        <div>
+        <div data-testid="company-profile-blockList">
             {blackList}
         </div>
     );

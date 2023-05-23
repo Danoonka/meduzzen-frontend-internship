@@ -90,7 +90,7 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
     }
 
     return (
-        <div>
+        <div data-testid="company-profile-members">
             <Button onClick={() => getAllUsersResult(companyData.company_id)}>Download All Users Results</Button>
             {members}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}

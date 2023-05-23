@@ -47,9 +47,9 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
                 }))
     }
     return (
-        <div>
+        <div data-testid="company-profile-admins">
             {adminRows}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}  callback={() => onCallBack()}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={() => onCallBack()}/>
         </div>
     );
 };

@@ -55,7 +55,7 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
                 .then((res) => setRequestList(res.result)))
     }
     return (
-        <div>
+        <div data-testid="company-profile-requests">
             {request}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
                         callback={() => onCallBack()}/>
