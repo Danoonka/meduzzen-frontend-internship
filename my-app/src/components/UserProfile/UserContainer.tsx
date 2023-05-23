@@ -5,7 +5,12 @@ import '../../utils/Input.css'
 import {useNavigate} from "react-router-dom";
 import './UserContainer.css'
 import {useSelector} from "react-redux";
-import {changeUserAvatarThunk, getGlobalRatingThunk, getUserByIdThunk} from "../../store/reduxThunk";
+import {
+    changeUserAvatarThunk,
+    getGlobalRatingThunk,
+    getLastAnswersCsvForUserThunk,
+    getUserByIdThunk
+} from "../../store/reduxThunk";
 import UserProfileCompanyList from "./UserProfileCompanyList";
 import UserProfileInvites from "./UserProfileInvites";
 import UserProfileRequests from "./UserProfileRequests";
@@ -55,6 +60,10 @@ const UserContainer = ({user_id}: UserProps) => {
 
     const goToEditUser = () => {
         navigate('/editUser')
+    }
+
+    const download = () => {
+        getLastAnswersCsvForUserThunk(user.user_id)
     }
 
     const menuHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -112,6 +121,7 @@ const UserContainer = ({user_id}: UserProps) => {
                     <>
                         <Button onClick={goToEditUser}>Edit Info</Button>
                         <Button onClick={toggle}>Send Request</Button>
+                        <Button onClick={download}>Download Answers</Button>
                     </>}
                 </div>
             </div>

@@ -20,6 +20,10 @@ import {
     getCompanyById,
     getGlobalRating,
     getGlobalRatingAnalytic,
+    getLastAnswersCsvFoeQuizInCompany,
+    getLastAnswersCsvForCompany,
+    getLastAnswersCsvForUser,
+    getLastAnswersCsvForUserInCompany,
     getQuizById,
     getQuizList,
     getRatingAnalyticInCompany,
@@ -27,13 +31,16 @@ import {
     getSummaryRatingAnalyticForUser,
     getSummaryRatingAnalyticForUsers,
     getUserById,
+    instance,
     invitesList,
     invitesListCompany,
     logInUser,
     makeMemberAdmin,
     membersListCompany,
     myCompanyList,
-    pagination, quizzesLastPass, quizzesLastPassCompany,
+    pagination,
+    quizzesLastPass,
+    quizzesLastPassCompany,
     removeAdmin,
     removeFromBlackList,
     requestList,
@@ -48,6 +55,7 @@ import {
     updateUserPassword
 } from "../api/api";
 import {store} from "./store";
+
 import {
     changeUserAvatarAction, receiveAllCompaniesAction,
     receiveAllUsersAction, receiveCompanyByIdAction,
@@ -646,3 +654,49 @@ export const quizzesLastPassCompanyThunk = async (company_id: number) => {
             })
         })
 };
+
+const FileDownload = require('js-file-download');
+
+export const getLastAnswersCsvForUserThunk = async (user_id: number) => {
+    return await getLastAnswersCsvForUser(user_id)
+        .then(res => {
+            FileDownload(res.data, 'getLastAnswersCsvForUser.csv');
+        })
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getLastAnswersCsvForCompanyThunk = async (company_id: number) => {
+    return await getLastAnswersCsvForCompany(company_id)
+        .then(res => {
+            FileDownload(res.data, 'getLastAnswersCsvForCompany.csv')
+        })
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getLastAnswersCsvForUserInCompanyThunk = async (company_id: number, user_id: number) => {
+    return await getLastAnswersCsvForUserInCompany(company_id, user_id)
+        .then(res =>  FileDownload(res.data, 'getLastAnswersCsvForUserInCompany.csv'))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getLastAnswersCsvFoeQuizInCompanyThunk = async (company_id: number, quiz_id: number) => {
+    return await getLastAnswersCsvFoeQuizInCompany(company_id, quiz_id)
+        .then(res =>  FileDownload(res.data, 'getLastAnswersCsvFoeQuizInCompany.csv'))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
