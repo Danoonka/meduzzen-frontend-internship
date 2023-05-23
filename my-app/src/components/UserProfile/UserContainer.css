@@ -23,3 +23,13 @@
     margin-left: 200px;
 }
 
+.star{
+    font-size: 30px;
+    color: yellow;
+}
+
+.data-time{
+    color: #42a5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+

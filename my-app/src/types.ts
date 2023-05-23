@@ -160,6 +160,7 @@ export const initialAllActionCompaniesState: AllActionCompaniesState = {
 
 export interface CompanyItemProps {
     companyData: CompanyState;
+    isPermission?: boolean
 }
 
 export interface ModalProps {
@@ -239,7 +240,7 @@ export interface GetQuizByIdState {
     questions_list: QuestionState[]
 }
 
-export const initialGetQuizByIdState:GetQuizByIdState= {
+export const initialGetQuizByIdState: GetQuizByIdState = {
     quiz_id: -1,
     quiz_name: '',
     quiz_title: '',
@@ -303,6 +304,30 @@ export interface AddQuestionModalProps {
     answerArray: string[],
     question_id: number
 }
+
+export interface Rating {
+    current_rating: number;
+    average_rating: number;
+    pass_at: string;
+}
+
+export interface RatingState {
+    rating: Rating[];
+    user_id: number;
+}
+
+export interface RatingForUsersState {
+    rating: Rating[];
+    quiz_id: number;
+}
+
+export interface quiz {
+    quiz_id: number,
+    last_quiz_pass_at: string
+}
+
+
+
 
 
 

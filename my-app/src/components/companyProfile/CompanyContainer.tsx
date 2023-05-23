@@ -4,7 +4,7 @@ import {RootState} from "../../store/store";
 import {useNavigate} from "react-router-dom";
 import Button from "../../utils/Button";
 import {
-    getCompanyByIdThunk,
+    getCompanyByIdThunk, membersListCompanyThunk,
     myCompanyListThunk,
     updateCompanyAvatarThunk
 } from "../../store/reduxThunk";
@@ -14,18 +14,21 @@ import CompanyProfileRequests from "./CompanyProfileRequests";
 import CompanyProfileBlockList from "./CompanyProfileBlockList";
 import SendInviteModal from "../modalWindows/SendInviteModal";
 import {
-    AllActionCompaniesState,
-    CompanyProps,
+    ActionUserState,
+    AllActionCompaniesState, AllActionUsersState,
+    CompanyProps, initialActionAllUsersState,
     initialAllActionCompaniesState
 } from "../../types";
 import CompanyProfileAdmins from "./CompanyProfileAdmins";
 import CompanyProfileQuizzes from "./CompanyProfileQuizzes";
+import CompanyProfileAnalytics from "./CompanyProfileAnalytics";
 
 
 const CompanyContainer = ({company_id}: CompanyProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
     const company = useSelector((state: RootState) => state.company)
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [adminsList, setAdminsList] = useState<AllActionUsersState>(initialActionAllUsersState)
     const navigate = useNavigate();
 
     const [companyList, setCompanyList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
@@ -36,6 +39,17 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                 setCompanyList(res.result)
             })
     }, [companyList.companies.length])
+
+    useEffect(() => {
+        membersListCompanyThunk(company_id)
+            .then((res) => {
+                const admins = (res.result.users).filter(function (el: ActionUserState) {
+                    return el.action === 'admin'
+                })
+                setAdminsList({users: admins})
+            })
+
+    }, [adminsList.users.length])
 
     useEffect(() => {
         getCompanyByIdThunk(company_id)
@@ -50,8 +64,13 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
         return companyList.companies.some(company => company.company_id === companyId);
     }
 
+    function isUserInAdminsList(adminList: AllActionUsersState, userId: number): boolean {
+        return adminList.users.some(user => user.user_id === userId);
+    }
+
     const isOwner = company.company_owner.user_id === currentUser.user_id
     const isMember = isCompanyInList(companyList, company.company_id)
+    const isAdmin = isUserInAdminsList(adminsList, currentUser.user_id)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -79,7 +98,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
         const btn = event.target as HTMLButtonElement
         switch (btn.name) {
             case 'members':
-                setCurrentElement(<CompanyProfileMembers companyData={company}/>)
+                setCurrentElement(<CompanyProfileMembers companyData={company} isPermission={(isOwner || isAdmin)}/>)
                 return
             case 'invites':
                 setCurrentElement(<CompanyProfileInvites companyData={company}/>)
@@ -95,6 +114,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                 return
             case 'quizzes':
                 setCurrentElement(<CompanyProfileQuizzes companyData={company}/>)
+                return
+            case 'analytics':
+                setCurrentElement(<CompanyProfileAnalytics companyData={company}/>)
         }
     }
     return (
@@ -138,6 +160,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                             <Button onClick={menuHandler} name='blockList'>Block List</Button>
                             <Button onClick={menuHandler} name='admins'>Admins</Button>
                         </>
+                        }
+                        {(isOwner || isAdmin) &&
+                        <Button onClick={menuHandler} name='analytics'>Analytics</Button>
                         }
                         <Button onClick={menuHandler} name='quizzes'>Quizzes</Button>
                         <div>
