@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import './Modal.css'
 
-interface ModalType {
+export interface ModalType {
     children: ReactNode;
     isOpen: boolean;
     toggle: () => void;

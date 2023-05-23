@@ -106,7 +106,7 @@ const CreateQuizModal = ({toggle, isOpen, callback, company_id}: CheckModalProps
         }
         if (company_id) {
             if (ValidateForm(localQuiz)) {
-                createQuizThunk(localQuiz, company_id)
+                createQuizThunk(localQuiz)
                     .then(() => {
                         callback()
                         clearForm()

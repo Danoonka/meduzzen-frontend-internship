@@ -24,6 +24,7 @@ import {
     getLastAnswersCsvForCompany,
     getLastAnswersCsvForUser,
     getLastAnswersCsvForUserInCompany,
+    getNotificationList,
     getQuizById,
     getQuizList,
     getRatingAnalyticInCompany,
@@ -31,11 +32,10 @@ import {
     getSummaryRatingAnalyticForUser,
     getSummaryRatingAnalyticForUsers,
     getUserById,
-    instance,
     invitesList,
     invitesListCompany,
     logInUser,
-    makeMemberAdmin,
+    makeMemberAdmin, markNotificationAsRead,
     membersListCompany,
     myCompanyList,
     pagination,
@@ -486,8 +486,8 @@ export const deleteQuizThunk = async (quiz_id: number) => {
         })
 }
 
-export const createQuizThunk = async (quiz: NewQuizState, company_id: number) => {
-    return await createQuiz(quiz, company_id)
+export const createQuizThunk = async (quiz: NewQuizState) => {
+    return await createQuiz(quiz)
         .then(() => {
             toast.success('Quiz created', {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -683,7 +683,7 @@ export const getLastAnswersCsvForCompanyThunk = async (company_id: number) => {
 
 export const getLastAnswersCsvForUserInCompanyThunk = async (company_id: number, user_id: number) => {
     return await getLastAnswersCsvForUserInCompany(company_id, user_id)
-        .then(res =>  FileDownload(res.data, 'getLastAnswersCsvForUserInCompany.csv'))
+        .then(res => FileDownload(res.data, 'getLastAnswersCsvForUserInCompany.csv'))
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -693,7 +693,27 @@ export const getLastAnswersCsvForUserInCompanyThunk = async (company_id: number,
 
 export const getLastAnswersCsvFoeQuizInCompanyThunk = async (company_id: number, quiz_id: number) => {
     return await getLastAnswersCsvFoeQuizInCompany(company_id, quiz_id)
-        .then(res =>  FileDownload(res.data, 'getLastAnswersCsvFoeQuizInCompany.csv'))
+        .then(res => FileDownload(res.data, 'getLastAnswersCsvFoeQuizInCompany.csv'))
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const getNotificationListThunk = async (user_id: number) => {
+    return await getNotificationList(user_id)
+        .then(res => res.data)
+        .catch(function (error) {
+            toast.error(error.response.data.detail, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+}
+
+export const markNotificationAsReadThunk = async (user_id: number, notification_id: number) => {
+    return await markNotificationAsRead(user_id, notification_id)
+        .then(res => res.data)
         .catch(function (error) {
             toast.error(error.response.data.detail, {
                 position: toast.POSITION.BOTTOM_RIGHT

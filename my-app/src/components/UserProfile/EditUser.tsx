@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Button from "../../utils/Button";
 import Input from "../../utils/Input";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 import './EditUser.css'
 import {toast} from "react-toastify";

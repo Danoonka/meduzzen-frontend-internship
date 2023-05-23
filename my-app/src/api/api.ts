@@ -184,7 +184,7 @@ export const deleteQuiz = (quiz_id: number) => {
     return instance.delete(`/quiz/${quiz_id}/`);
 };
 
-export const createQuiz = (quiz: NewQuizState, company_id: number) => {
+export const createQuiz = (quiz: NewQuizState) => {
     return instance.post('/quiz/', {...quiz});
 };
 
@@ -232,10 +232,6 @@ export const getRatingAnalyticsForQuiz = (user_id: number, quiz_id: number) => {
     return instance.get(`/user/${user_id}/rating_analytic_for_quiz/${quiz_id}/`);
 };
 
-export const getSummaryRatingForUsers = (company_id: number) => {
-    return instance.get(`/company/${company_id}/summary_rating_for_users/`);
-};
-
 export const getSummaryRatingAnalyticForUsers = (company_id: number) => {
     return instance.get(`/company/${company_id}/summary_rating_analytic_for_users/`);
 };
@@ -246,10 +242,6 @@ export const getSummaryRatingForUser = (company_id: number, user_id: number) => 
 
 export const getSummaryRatingAnalyticForUser = (company_id: number, user_id: number) => {
     return instance.get(`/company/${company_id}/summary_rating_analytic_for_user/${user_id}/`);
-};
-
-export const getSummaryRatingForQuiz = (company_id: number, quiz_id: number) => {
-    return instance.get(`/company/${company_id}/summary_rating_for_quiz/${quiz_id}/`);
 };
 
 export const getSummaryRatingAnalyticForQuiz = (company_id: number, quiz_id: number) => {
@@ -272,22 +264,28 @@ export const getLastAnswersCsvForUser = (user_id: number) => {
     })
 }
 
-export const getLastAnswersCsvForCompany = (company_id: number) =>{
+export const getLastAnswersCsvForCompany = (company_id: number) => {
     return instance.get(`/company/${company_id}/last_answers_csv/`, {
         responseType: 'blob'
     })
 }
 
-export const getLastAnswersCsvForUserInCompany = (company_id:number, user_id:number) =>{
+export const getLastAnswersCsvForUserInCompany = (company_id: number, user_id: number) => {
     return instance.get(`/company/${company_id}/last_answers_csv_for_user/${user_id}/`, {
         responseType: 'blob'
     })
 }
 
-export const getLastAnswersCsvFoeQuizInCompany = (company_id: number, quiz_id:number) =>{
+export const getLastAnswersCsvFoeQuizInCompany = (company_id: number, quiz_id: number) => {
     return instance.get(`/company/${company_id}/last_answers_csv_for_quiz/${quiz_id}/`, {
         responseType: 'blob'
     })
 }
 
+export const getNotificationList = (user_id: number) => {
+    return instance.get(`/user/${user_id}/notifications_list/`);
+}
 
+export const markNotificationAsRead = (user_id: number, notification_id: number) => {
+    return instance.get(`/user/${user_id}/mark_notification_as_read/${notification_id}/`);
+}

@@ -183,6 +183,7 @@ export interface CheckModalProps {
     callback: () => void;
     company_id?: number;
     quiz_id?: number;
+    user_id?:number
 }
 
 export interface UserProps {
