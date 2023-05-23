@@ -23,10 +23,7 @@ interface User {
 }
 
 const UserRows = ({currentUser, children, isPermission, company_id, index}: CurrentUserProps) => {
-    const [lastPass, setLastPass] =  useState<quiz>({
-        quiz_id: -1,
-        last_quiz_pass_at: ""
-    })
+    const [lastPass, setLastPass] =  useState<quiz>()
     useEffect(()=>{
         quizzesLastPassCompanyThunk(company_id? company_id: -1)
             .then(res => {
@@ -53,9 +50,9 @@ const UserRows = ({currentUser, children, isPermission, company_id, index}: Curr
             <div>
                 <h4 className='user-row-container-heading'>{currentUser.user_firstname} {currentUser.user_lastname}</h4>
                 {isPermission &&
-                    <p className='data-time'>Last pass: {(lastPass.last_quiz_pass_at === "")
-                        ? 'No attempt'
-                        : new Date(lastPass.last_quiz_pass_at).toLocaleString()}</p>
+                    <p className='data-time'>Last pass: {lastPass
+                        ? new Date(lastPass.last_quiz_pass_at).toLocaleString()
+                        : 'No attempt'}</p>
                 }
             </div>
             <div>

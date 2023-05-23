@@ -7,10 +7,7 @@ import {getQuizById} from "../../api/api";
 
 const UserProfileQuizzes = ({user_id}: UserProps) => {
     const [quizNameArr, setQuizNameArr] = useState<string[]>([]);
-    const [quizList, setQuizList] = useState<quiz[]>([{
-        quiz_id: -1,
-        last_quiz_pass_at: ''
-    }])
+    const [quizList, setQuizList] = useState<quiz[]>([])
     useEffect(() => {
         quizzesLastPassThunk(user_id)
             .then(res => {
@@ -37,9 +34,10 @@ const UserProfileQuizzes = ({user_id}: UserProps) => {
                 key={index}
                 heading={(quizNameArr[index])}
                 children={
-                    <p className='data-time'>{(item.last_quiz_pass_at === "")
-                        ? 'No attempt'
-                        : new Date(item.last_quiz_pass_at).toLocaleString()}</p>}/>)
+                    <p className='data-time'>{new Date(item.last_quiz_pass_at).toLocaleString()}</p>
+                }
+            />
+        )
     })
 
     return (
