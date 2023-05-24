@@ -21,7 +21,7 @@ const SummaryForCompany = ({companyData}: CompanyItemProps) => {
 
     useEffect(() => {
         getSummaryRatingAnalyticForUsersThunk(companyData.company_id).then((res) => {
-            setRatingCompany(res.result.rating);
+            setRatingCompany(res?.result.rating);
         });
     }, [companyData.company_id]);
 
@@ -32,7 +32,7 @@ const SummaryForCompany = ({companyData}: CompanyItemProps) => {
 
     const getUserNames = async (userIds: number[]) => {
         const namePromises = userIds.map((id) =>
-            getUserByIdThunk(id).then((res) => res.result.user_firstname + ' ' + res.result.user_lastname)
+            getUserByIdThunk(id).then((res) => res?.result.user_firstname + ' ' + res?.result.user_lastname)
         );
         const names = await Promise.all(namePromises);
         setUserNameArr(names);

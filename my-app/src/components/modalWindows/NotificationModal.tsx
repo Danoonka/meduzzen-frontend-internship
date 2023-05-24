@@ -23,7 +23,7 @@ const NotificationModal = ({toggle, isOpen, callback, user_id}: CheckModalProps)
         if (user_id) {
             getNotificationListThunk(user_id)
                 .then((res) => {
-                    setNotifyList((res.result.notifications).reverse())
+                    setNotifyList((res?.result.notifications).reverse())
                     setHandleChange(false)
                 })
         }

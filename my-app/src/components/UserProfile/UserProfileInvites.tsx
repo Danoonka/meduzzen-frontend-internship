@@ -21,7 +21,7 @@ const UserProfileInvites = ({user_id}: UserProps) => {
     useEffect(() => {
         invitesListThunk(user_id)
             .then((res) => {
-                setInviteList(res.result)
+                setInviteList(res?.result)
             })
     }, [inviteList.companies.length, user_id])
 
@@ -30,7 +30,7 @@ const UserProfileInvites = ({user_id}: UserProps) => {
         acceptInviteThunk(action_id)
             .then(() => invitesListThunk(user_id)
                 .then((res) => {
-                    setInviteList(res.result)
+                    setInviteList(res?.result)
                 }))
     }
 
@@ -48,7 +48,7 @@ const UserProfileInvites = ({user_id}: UserProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => invitesListThunk(user_id)
-                .then((res) => setInviteList(res.result)))
+                .then((res) => setInviteList(res?.result)))
     }
 
     return (

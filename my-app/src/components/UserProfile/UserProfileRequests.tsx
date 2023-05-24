@@ -24,7 +24,7 @@ const UserProfileRequests = ({user_id}: UserProps) => {
     useEffect(() => {
         requestListThunk(user_id)
             .then((res) => {
-                setRequestList(res.result)
+                setRequestList(res?.result)
             })
 
     }, [requestList.companies.length, user_id])
@@ -43,7 +43,7 @@ const UserProfileRequests = ({user_id}: UserProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => requestListThunk(user_id)
-                .then((res) => setRequestList(res.result)))
+                .then((res) => setRequestList(res?.result)))
     }
     return (
         <div>

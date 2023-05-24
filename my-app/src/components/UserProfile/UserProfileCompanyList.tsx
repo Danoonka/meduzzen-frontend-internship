@@ -22,7 +22,7 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
     useEffect(() => {
         myCompanyListThunk(user_id)
             .then((res) => {
-                setCompanyList(res.result)
+                setCompanyList(res?.result)
             })
     }, [companyList.companies.length, user_id])
 
@@ -41,7 +41,7 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
         fireLeaveMemberThunk(modalData).then(() =>
             myCompanyListThunk(user_id)
                 .then((res) => {
-                    setCompanyList(res.result)
+                    setCompanyList(res?.result)
                 })
         )
     }

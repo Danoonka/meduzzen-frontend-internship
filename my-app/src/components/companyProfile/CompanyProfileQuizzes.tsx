@@ -29,14 +29,16 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         myCompanyListThunk(currentUser.user_id)
             .then((res) => {
-                setCompanyList(res.result)
+                setCompanyList(res?.result)
             })
     }, [companyList.companies.length, currentUser.user_id])
 
     const updateQuizList = useCallback(() => {
         getQuizListThunk(companyData.company_id)
             .then((res) => {
-                setQuizzesList(res.result);
+                if (res){
+                    setQuizzesList(res?.result);
+                }
             });
     }, [companyData.company_id]);
 
