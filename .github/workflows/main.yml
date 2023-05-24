@@ -19,8 +19,8 @@ jobs:
       - name: Build React App
       
         run: |
-          cd /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/build
+          cd /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/
           npm install
           npm run build
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync . s3://mymeduzzenbucket --delete
+        run: aws s3 sync /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/build s3://mymeduzzenbucket --delete
