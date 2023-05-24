@@ -2,14 +2,14 @@ import React from 'react';
 import {QuestionState} from "../types";
 import TakeAnswerList from "./TakeAnswerList";
 
-interface TakeQuestionList {
+interface TakeQuestionListProps {
     item: QuestionState,
     index: number,
     handleRadioChange: (index: number, el: string) => void
 }
 
 
-const TakeQuestionList = ({item, index, handleRadioChange}: TakeQuestionList) => {
+const TakeQuestionList = ({item, index, handleRadioChange}: TakeQuestionListProps) => {
     return (
         <div>
             <div className='question-component-container'>

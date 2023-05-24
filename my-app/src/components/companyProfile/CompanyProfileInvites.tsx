@@ -19,7 +19,7 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
                 setInviteList(res.result)
             })
 
-    }, [inviteList.users.length])
+    }, [inviteList.users.length, companyData.company_id])
 
     const onClickDecline = (action_id: number) => {
         setModalData(action_id)

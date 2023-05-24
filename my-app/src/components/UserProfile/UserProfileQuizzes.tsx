@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {quiz, UserProps} from "../../types";
 import {getQuizByIdThunk, quizzesLastPassThunk} from "../../store/reduxThunk";
 import QuestionRows from "../companyProfile/questionRows";
-import {getQuizById} from "../../api/api";
 
 
 const UserProfileQuizzes = ({user_id}: UserProps) => {

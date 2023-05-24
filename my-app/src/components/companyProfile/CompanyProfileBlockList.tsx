@@ -17,7 +17,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
             .then((res) => {
                 setBlockList(res.result)
             })
-    }, [blockList.users.length])
+    }, [blockList.users.length, companyData.company_id])
 
     const onClickRemove = (action_id: number) => {
         removeFromBlackListThunk(action_id)

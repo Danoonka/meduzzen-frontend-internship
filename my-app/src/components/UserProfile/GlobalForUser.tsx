@@ -12,7 +12,7 @@ const GlobalForUser = ({user_id}: UserProps) => {
             .then((res) => {
                 setRatingCompany(res.result.rating);
             });
-    }, []);
+    }, [user_id]);
 
 
     return (

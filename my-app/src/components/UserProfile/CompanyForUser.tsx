@@ -3,7 +3,7 @@ import {AllCompaniesState, initialAllCompaniesState, Rating, UserProps} from "..
 import {Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {
     getCompanyByIdThunk,
-    getRatingAnalyticInCompanyThunk, getUserByIdThunk,
+    getRatingAnalyticInCompanyThunk,
     myCompanyListThunk
 } from "../../store/reduxThunk";
 import Chart from "../../utils/Chart";
@@ -29,7 +29,7 @@ const CompanyForUser = ({user_id}: UserProps) => {
                 if (id >= 0) {
                     return getCompanyByIdThunk(id).then(res => res.result.company_name)
                 }
-            }
+            return null            }
         );
         const names = await Promise.all(namePromises);
         setCompanyNameArr(names);
@@ -39,7 +39,7 @@ const CompanyForUser = ({user_id}: UserProps) => {
         myCompanyListThunk(user_id).then((res) => {
             setRatingCompany(res.result);
         });
-    }, [ratingCompany.companies.length]);
+    }, [ratingCompany.companies.length, user_id]);
 
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {

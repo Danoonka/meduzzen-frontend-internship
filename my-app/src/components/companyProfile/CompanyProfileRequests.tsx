@@ -29,7 +29,7 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
             .then((res) => {
                 setRequestList(res.result)
             })
-    }, [requestList.users.length])
+    }, [requestList.users.length, companyData.company_id])
 
     const onClickAcceptRequest = (action_id: number) => {
         acceptRequestThunk(action_id)

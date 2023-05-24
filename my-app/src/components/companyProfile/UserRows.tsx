@@ -40,7 +40,7 @@ const UserRows = ({currentUser, children, isPermission, company_id, index}: Curr
                     setLastPass(lastQuiz);
                 }
             })
-    }, [])
+    }, [company_id, currentUser.user_id])
 
 
     return (

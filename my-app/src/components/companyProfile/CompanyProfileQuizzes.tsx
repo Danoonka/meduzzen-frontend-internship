@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Button from "../../utils/Button";
 import {
     AllActionCompaniesState,
@@ -31,18 +31,19 @@ const CompanyProfileQuizzes = ({companyData}: CompanyItemProps) => {
             .then((res) => {
                 setCompanyList(res.result)
             })
-    }, [companyList.companies.length])
+    }, [companyList.companies.length, currentUser.user_id])
 
-    const updateQuizList = () => {
+    const updateQuizList = useCallback(() => {
         getQuizListThunk(companyData.company_id)
             .then((res) => {
-                setQuizzesList(res.result)
-            })
-    }
+                setQuizzesList(res.result);
+            });
+    }, [companyData.company_id]);
 
     useEffect(() => {
-        updateQuizList()
-    }, [quizzesList.quizzes.length])
+        updateQuizList();
+    }, [quizzesList.quizzes.length, updateQuizList]);
+
 
     const onClickCreateQuiz = () => {
         setIsOpen(!isOpen);

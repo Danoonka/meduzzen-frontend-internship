@@ -19,7 +19,7 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
                 setAdminsList({users: admins})
             })
 
-    }, [adminsList.users.length])
+    }, [adminsList.users.length, companyData.company_id])
 
     const onClickRemoveAdmin = (action_id: number) => {
         setModalData(action_id)

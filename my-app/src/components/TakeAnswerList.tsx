@@ -1,7 +1,7 @@
 import React from 'react';
 import {QuestionState} from "../types";
 
-interface TakeAnswerList {
+interface TakeAnswerListProps {
     item: QuestionState,
     el: string,
     id: number,
@@ -9,7 +9,7 @@ interface TakeAnswerList {
     handleRadioChange: (index:number,el:string) => void
 }
 
-const TakeAnswerList = ({item, el, id, handleRadioChange, index}:TakeAnswerList) => {
+const TakeAnswerList = ({item, el, id, handleRadioChange, index}:TakeAnswerListProps) => {
     return (
         <div key={index} className="input-answer">
             <input

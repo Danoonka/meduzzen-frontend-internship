@@ -39,7 +39,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
             .then((res) => {
                 setCompanyList(res.result)
             })
-    }, [companyList.companies.length])
+    }, [companyList.companies.length, currentUser.user_id])
 
     useEffect(() => {
         if (isMember) {
@@ -51,11 +51,11 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                     setAdminsList({users: admins})
                 })
         }
-    }, [adminsList.users.length])
+    }, [adminsList.users.length, company_id])
 
     useEffect(() => {
         getCompanyByIdThunk(company_id)
-    }, [])
+    }, [company_id])
 
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {

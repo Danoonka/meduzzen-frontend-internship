@@ -24,7 +24,7 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
                 setMembersList(res.result)
             })
 
-    }, [membersList.users.length])
+    }, [membersList.users.length, companyData.company_id])
 
 
     const onClickFire = (action_id: number) => {

@@ -23,7 +23,7 @@ const UserProfileInvites = ({user_id}: UserProps) => {
             .then((res) => {
                 setInviteList(res.result)
             })
-    }, [inviteList.companies.length])
+    }, [inviteList.companies.length, user_id])
 
 
     const onClickAcceptInvite = (action_id: number) => {

@@ -33,11 +33,12 @@ const QuizzesForUser = ({user_id}: UserProps) => {
         setQuizNameArr(names);
     };
 
+    const stringsfied = JSON.stringify(ratingQuiz)
 
     useEffect(() => {
         quizzesLastPassThunk(user_id)
             .then(res => setRatingQuiz(res.result.quizzes))
-    }, [JSON.stringify(ratingQuiz)]);
+    }, [stringsfied, user_id]);
 
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {

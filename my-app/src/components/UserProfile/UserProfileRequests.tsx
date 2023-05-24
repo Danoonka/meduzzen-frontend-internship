@@ -27,7 +27,7 @@ const UserProfileRequests = ({user_id}: UserProps) => {
                 setRequestList(res.result)
             })
 
-    }, [requestList.companies.length])
+    }, [requestList.companies.length, user_id])
 
 
     const requests = (requestList.companies).map((item: ActionCompanyState) =>

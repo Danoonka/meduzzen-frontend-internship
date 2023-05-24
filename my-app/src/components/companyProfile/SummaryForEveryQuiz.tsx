@@ -30,11 +30,13 @@ const SummaryForEveryQuiz = ({companyData}: CompanyItemProps) => {
         setQuiz(event.target.value as string);
     };
 
+    const ratingCompanyStringified = JSON.stringify(ratingCompany)
+
     useEffect(() => {
         getQuizListThunk(companyData.company_id).then((res) => {
             setRatingCompany(res.result.quizzes);
         });
-    }, [JSON.stringify(ratingCompany)]);
+    }, [ratingCompanyStringified, companyData.company_id]);
 
     useEffect(() => {
         const quizIDs = ratingCompany.map((entry) => entry.quiz_id);

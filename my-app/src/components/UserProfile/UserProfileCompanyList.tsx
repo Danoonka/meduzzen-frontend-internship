@@ -24,7 +24,7 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
             .then((res) => {
                 setCompanyList(res.result)
             })
-    }, [companyList.companies.length])
+    }, [companyList.companies.length, user_id])
 
     const companies = (companyList.companies).map((item: ActionCompanyState) => {
             const isOwner = item.action === 'owner';

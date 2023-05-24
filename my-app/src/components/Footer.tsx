@@ -20,9 +20,9 @@ const Footer = () => {
                 <div>
                     <h3>Contact  Us</h3>
                     <ul>
-                        <li><a href="#" className="contact-links">LinkedIn</a></li>
-                        <li><a href="#" className="contact-links">GitHub</a></li>
-                        <li><a href="#" className="contact-links">Telegram</a></li>
+                        <li><a href="/" className="contact-links">LinkedIn</a></li>
+                        <li><a href="/" className="contact-links">GitHub</a></li>
+                        <li><a href="/" className="contact-links">Telegram</a></li>
                     </ul>
                 </div>
                 <div className="footer-rights">

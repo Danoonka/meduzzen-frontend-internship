@@ -27,7 +27,7 @@ const NotificationModal = ({toggle, isOpen, callback, user_id}: CheckModalProps)
                     setHandleChange(false)
                 })
         }
-    }, [notifyList.length, handleChange])
+    }, [notifyList.length, handleChange, user_id])
 
     const HandleCheckBox = (user_id: number, notification_id: number) => {
         markNotificationAsReadThunk(user_id, notification_id)
@@ -36,9 +36,11 @@ const NotificationModal = ({toggle, isOpen, callback, user_id}: CheckModalProps)
 
     const notifications = notifyList.map((item, index) => {
         if (!item.is_read) {
-            return user_id && <NotificationRows user_id={user_id} HandleCheckBox={HandleCheckBox} item={item}/>
+            return user_id && <NotificationRows user_id={user_id} HandleCheckBox={HandleCheckBox} item={item}/>;
         }
-    })
+        return null;
+    });
+
     return (
         <div className="checkModal">
             <Modal isOpen={isOpen} toggle={toggle} classNM="notification-box">
