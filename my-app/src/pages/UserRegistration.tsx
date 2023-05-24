@@ -3,11 +3,11 @@ import Input from '../utils/Input';
 import './UserRegistration.css';
 import Button from '../utils/Button';
 import {toast} from "react-toastify";
-import {useAuth0} from '@auth0/auth0-react';
+// import {useAuth0} from '@auth0/auth0-react';
 import {validUserRegistration} from "../utils/authorizaton";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
-import {checkAuthThunk} from "../store/reduxThunk";
+// import {checkAuthThunk} from "../store/reduxThunk";
 
 export interface NewUser {
     user_password: string,
@@ -18,7 +18,7 @@ export interface NewUser {
 }
 
 const UserRegistration: React.FC = () => {
-    const {loginWithPopup, getAccessTokenSilently} = useAuth0()
+    // const {loginWithPopup, getAccessTokenSilently} = useAuth0()
     const [newUser, setNewUser] = useState<NewUser>({
         user_password: '',
         user_password_repeat: '',
@@ -28,10 +28,10 @@ const UserRegistration: React.FC = () => {
 
     })
 
-    const setTokenAuth = async () => {
-        const accessToken = await getAccessTokenSilently();
-        localStorage.setItem('accessToken', accessToken);
-    }
+    // const setTokenAuth = async () => {
+    //     const accessToken = await getAccessTokenSilently();
+    //     localStorage.setItem('accessToken', accessToken);
+    // }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -109,17 +109,17 @@ const UserRegistration: React.FC = () => {
         store.dispatch(authTrue())
     }
 
-    const logInAuth0 = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        await loginWithPopup({authorizationParams: {screen_hint: 'signup'}});
-        await setTokenAuth();
-        if (await checkAuthThunk()) {
-            store.dispatch(authTrue())
-            toast.success('Welcome!', {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-        }
-    }
+    // const logInAuth0 = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     event.preventDefault();
+    //     await loginWithPopup({authorizationParams: {screen_hint: 'signup'}});
+    //     await setTokenAuth();
+    //     if (await checkAuthThunk()) {
+    //         store.dispatch(authTrue())
+    //         toast.success('Welcome!', {
+    //             position: toast.POSITION.BOTTOM_RIGHT
+    //         })
+    //     }
+    // }
 
 
     return (
@@ -128,7 +128,7 @@ const UserRegistration: React.FC = () => {
             <form>
                 {fields}
                 <Button onClick={register}>Submit</Button>
-                <Button onClick={logInAuth0}>Log In with auth</Button>
+                {/*<Button onClick={logInAuth0}>Log In with auth</Button>*/}
             </form>
         </div>
     );
