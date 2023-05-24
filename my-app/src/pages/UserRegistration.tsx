@@ -5,7 +5,6 @@ import Button from '../utils/Button';
 import {toast} from "react-toastify";
 import {useAuth0} from '@auth0/auth0-react';
 import {validUserRegistration} from "../utils/authorizaton";
-import {useNavigate} from "react-router-dom";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
 import {checkAuthThunk} from "../store/reduxThunk";
@@ -28,7 +27,6 @@ const UserRegistration: React.FC = () => {
         user_lastname: ''
 
     })
-    const navigate = useNavigate();
 
     const setTokenAuth = async () => {
         const accessToken = await getAccessTokenSilently();
