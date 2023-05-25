@@ -36,8 +36,8 @@ const EditQuizModal = ({toggle, isOpen, callback, quiz_id}: CheckModalProps,) =>
         if (quiz_id) {
             getQuizByIdThunk(quiz_id)
                 .then(res => {
-                    setQuiz(res.result)
-                    setQuizQuestion(res.result.questions_list)
+                    setQuiz(res?.result)
+                    setQuizQuestion(res?.result.questions_list)
                 })
         }
     }, [quiz_id, quizQuestion.length])
@@ -84,7 +84,7 @@ const EditQuizModal = ({toggle, isOpen, callback, quiz_id}: CheckModalProps,) =>
     const reloadQuestionList = () => {
         getQuizByIdThunk(quiz_id ? quiz_id : -1)
             .then(res => {
-                setQuizQuestion(res.result.questions_list)
+                setQuizQuestion(res?.result.questions_list)
             })
     }
 

@@ -26,7 +26,6 @@ const CreateQuizModal = ({toggle, isOpen, callback, company_id}: CheckModalProps
         question_answers: [''],
         question_correct_answer: -1
     }])
-    const Arr: QuestionState[] = [];
 
     const handleQuestionTextChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         let data = [...questionTextFields];
@@ -91,13 +90,15 @@ const CreateQuizModal = ({toggle, isOpen, callback, company_id}: CheckModalProps
 
     const onClickSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        questionTextFields.map((el, index) => {
+        const Arr: QuestionState[] = questionTextFields.map((el, index) => {
             let newQuestion: QuestionState = {
-                question_id: index, question_text: el.question_text,
-                question_correct_answer: el.question_correct_answer, question_answers: el.question_answers
-            }
-            Arr.push(newQuestion)
-        })
+                question_id: index,
+                question_text: el.question_text,
+                question_correct_answer: el.question_correct_answer,
+                question_answers: el.question_answers,
+            };
+            return newQuestion;
+        });
         let localQuiz: NewQuizState = {
             quiz_name: quiz.quiz_name,
             quiz_frequency: Number(quiz.quiz_frequency),

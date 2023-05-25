@@ -15,15 +15,15 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         BlackListThunk(companyData.company_id)
             .then((res) => {
-                setBlockList(res.result)
+                setBlockList(res?.result)
             })
-    }, [blockList.users.length])
+    }, [blockList.users.length, companyData.company_id])
 
     const onClickRemove = (action_id: number) => {
         removeFromBlackListThunk(action_id)
             .then(() => BlackListThunk(companyData.company_id)
                 .then((res) => {
-                    setBlockList(res.result)
+                    setBlockList(res?.result)
                 })
             )
     }
@@ -34,7 +34,7 @@ const CompanyProfileBlockList = ({companyData}: CompanyItemProps) => {
                   children={<Button onClick={() => onClickRemove(item.action_id)}>Remove</Button>}/>
     )
     return (
-        <div>
+        <div data-testid="company-profile-blockList">
             {blackList}
         </div>
     );

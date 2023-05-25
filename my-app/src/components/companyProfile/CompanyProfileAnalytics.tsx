@@ -37,8 +37,8 @@ const CompanyProfileAnalytics = ({companyData}: CompanyItemProps) => {
     };
 
     return (
-        <>
-            <Box sx={{minWidth: 120,  mt: 5}}>
+        <div data-testid='company-profile-analytics'>
+            <Box sx={{minWidth: 120, mt: 5}}>
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Type</InputLabel>
                     <Select
@@ -59,7 +59,7 @@ const CompanyProfileAnalytics = ({companyData}: CompanyItemProps) => {
                     </div>
                 )}
             </Box>
-        </>
+        </div>
     );
 };
 

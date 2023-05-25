@@ -11,14 +11,18 @@ const TakeQuiz = () => {
     const [quiz, setQuiz] = useState<GetQuizByIdState>(initialGetQuizByIdState)
     const [answers, setAnswers] = useState<{ [key: string]: string }>();
     const navigate = useNavigate()
+
+    const quizStringified = JSON.stringify(quiz);
     useEffect(() => {
         if (quiz_id) {
             getQuizByIdThunk(quiz_id)
                 .then(res => {
-                    setQuiz(res.result)
+                    setQuiz(res?.result)
                 })
         }
-    }, [JSON.stringify(quiz), quiz_id])
+    }, [quizStringified, quiz_id])
+
+
 
     const addAnswer = (index: string, el: string) => {
         setAnswers((prevAnswers) => ({

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {quiz, UserProps} from "../../types";
 import {getQuizByIdThunk, quizzesLastPassThunk} from "../../store/reduxThunk";
 import QuestionRows from "../companyProfile/questionRows";
-import {getQuizById} from "../../api/api";
 
 
 const UserProfileQuizzes = ({user_id}: UserProps) => {
@@ -11,13 +10,13 @@ const UserProfileQuizzes = ({user_id}: UserProps) => {
     useEffect(() => {
         quizzesLastPassThunk(user_id)
             .then(res => {
-                setQuizList(res.result.quizzes)
+                setQuizList(res?.result.quizzes)
             })
     }, [user_id])
 
     const getQuizNames = async (quizIDs: number[]) => {
         const namePromises = quizIDs.map((id) =>
-            getQuizByIdThunk(id).then(res => res.result.quiz_name)
+            getQuizByIdThunk(id).then(res => res?.result.quiz_name)
         );
         const names = await Promise.all(namePromises);
         setQuizNameArr(names);

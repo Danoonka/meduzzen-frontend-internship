@@ -31,7 +31,7 @@ const UserContainer = ({user_id}: UserProps) => {
     useEffect(() => {
         const fetchData = async () => {
             await getUserByIdThunk(user_id);
-            getGlobalRatingThunk(user_id).then(res => setStarsCount(res.result.rating))
+            getGlobalRatingThunk(user_id).then(res => setStarsCount(res?.result.rating))
         };
 
         fetchData();

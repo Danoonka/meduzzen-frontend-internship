@@ -27,15 +27,15 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         requestListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setRequestList(res.result)
+                setRequestList(res?.result)
             })
-    }, [requestList.users.length])
+    }, [requestList.users.length, companyData.company_id])
 
     const onClickAcceptRequest = (action_id: number) => {
         acceptRequestThunk(action_id)
             .then(() => requestListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setRequestList(res.result)
+                    setRequestList(res?.result)
                 }))
     }
 
@@ -52,10 +52,10 @@ const CompanyProfileRequests = ({companyData}: CompanyItemProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => requestListCompanyThunk(companyData.company_id)
-                .then((res) => setRequestList(res.result)))
+                .then((res) => setRequestList(res?.result)))
     }
     return (
-        <div>
+        <div data-testid="company-profile-requests">
             {request}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}
                         callback={() => onCallBack()}/>

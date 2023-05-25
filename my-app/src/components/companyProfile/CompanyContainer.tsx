@@ -27,41 +27,44 @@ import CompanyProfileAnalytics from "./CompanyProfileAnalytics";
 const CompanyContainer = ({company_id}: CompanyProps) => {
     const currentUser = useSelector((state: RootState) => state.currentUser);
     const company = useSelector((state: RootState) => state.company)
+
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [adminsList, setAdminsList] = useState<AllActionUsersState>(initialActionAllUsersState)
     const navigate = useNavigate();
 
     const [companyList, setCompanyList] = useState<AllActionCompaniesState>(initialAllActionCompaniesState)
+    const isMember = isCompanyInList(companyList)
 
     useEffect(() => {
         myCompanyListThunk(currentUser.user_id)
             .then((res) => {
-                setCompanyList(res.result)
+                setCompanyList(res?.result)
             })
-    }, [companyList.companies.length])
+    }, [companyList.companies.length, currentUser.user_id])
 
     useEffect(() => {
-        membersListCompanyThunk(company_id)
-            .then((res) => {
-                const admins = (res.result.users).filter(function (el: ActionUserState) {
-                    return el.action === 'admin'
+        if (isMember) {
+            membersListCompanyThunk(company_id)
+                .then((res) => {
+                    const admins = (res?.result.users).filter(function (el: ActionUserState) {
+                        return el.action === 'admin'
+                    })
+                    setAdminsList({users: admins})
                 })
-                setAdminsList({users: admins})
-            })
-
-    }, [adminsList.users.length])
+        }
+    }, [adminsList.users.length, company_id, isMember])
 
     useEffect(() => {
         getCompanyByIdThunk(company_id)
-    }, [])
+    }, [company_id])
 
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => {
         setIsOpen(!isOpen);
     };
 
-    function isCompanyInList(companyList: AllActionCompaniesState, companyId: number): boolean {
-        return companyList.companies.some(company => company.company_id === companyId);
+    function isCompanyInList(companyList: AllActionCompaniesState ): boolean {
+        return companyList.companies.some(company => company.company_id === company_id);
     }
 
     function isUserInAdminsList(adminList: AllActionUsersState, userId: number): boolean {
@@ -69,7 +72,7 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
     }
 
     const isOwner = company.company_owner.user_id === currentUser.user_id
-    const isMember = isCompanyInList(companyList, company.company_id)
+
     const isAdmin = isUserInAdminsList(adminsList, currentUser.user_id)
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +173,9 @@ const CompanyContainer = ({company_id}: CompanyProps) => {
                         </div>
                     </div>
                 </div>
-                <SendInviteModal isOpen={isOpen} toggle={toggle}/>
+                <div data-testid='send-invite-modal'>
+                    <SendInviteModal isOpen={isOpen} toggle={toggle}/>
+                </div>
             </>
 
             }

@@ -1,0 +1,32 @@
+name: s3-depl
+
+on:
+  push:
+    branches: [ FE-20-Add-Github-Actions ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Install Dependencies
+        run: |
+          cd /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/
+          npm install --force
+      - name: Test
+        run: |
+          cd /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/
+          npm run test
+      - name: Build React App
+        run: |
+          cd /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/
+          npm run build
+      - name: Deploy app build to S3 bucket
+        run: aws s3 sync /home/runner/work/meduzzen-frontend-internship/meduzzen-frontend-internship/my-app/build s3://mymeduzzenbucket --delete

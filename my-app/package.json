@@ -2,16 +2,12 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://danoonka.github.io/meduzzen-demo/",
   "dependencies": {
     "@auth0/auth0-react": "^2.0.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.12.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.24",
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
@@ -32,9 +28,17 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.1",
     "@types/react-router-dom": "^5.3.3",
+    "@types/redux-mock-store": "^1.0.3",
+    "axios-mock-adapter": "^1.21.4",
     "gh-pages": "^5.0.0",
-    "nodemon": "^2.0.20"
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.20",
+    "redux-mock-store": "^1.5.4",
+    "ts-jest": "^29.1.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -48,7 +52,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -61,5 +68,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }

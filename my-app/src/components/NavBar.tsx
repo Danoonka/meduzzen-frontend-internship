@@ -1,21 +1,23 @@
 import React from 'react';
 import './NavBar.css'
 import Button from "../utils/Button";
-import {Link} from "react-router-dom";
-import {useAuth0} from '@auth0/auth0-react';
+import {Link, useNavigate,} from "react-router-dom";
+// import {useAuth0} from '@auth0/auth0-react';
 import {RootState, store} from "../store/store";
 import {useSelector} from "react-redux";
 import {authFalse} from "../store/userActionCreators";
 
 
 const NavBar: React.FC = () => {
-    const{logout} = useAuth0()
+    // const{logout} = useAuth0()
+    const navigate = useNavigate()
     const isAuthenticated = useSelector((state: RootState) => state.isAuthorised.isAuthorised);
     const { user_email, user_firstname, user_id } = useSelector((state: RootState) => state.currentUser);
     const LogOut = async () => {
-        logout()
+        // logout()
         localStorage.removeItem('accessToken');
         store.dispatch(authFalse())
+        navigate('/')
     }
 
     return (

@@ -16,10 +16,10 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         invitesListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setInviteList(res.result)
+                setInviteList(res?.result)
             })
 
-    }, [inviteList.users.length])
+    }, [inviteList.users.length, companyData.company_id])
 
     const onClickDecline = (action_id: number) => {
         setModalData(action_id)
@@ -36,11 +36,11 @@ const CompanyProfileInvites = ({companyData}: CompanyItemProps) => {
     const onCallBack = () => {
         declineActionThunk(modalData)
             .then(() => invitesListCompanyThunk(companyData.company_id)
-                .then((res) => setInviteList(res.result)))
+                .then((res) => setInviteList(res?.result)))
     }
     return (
-        <>
-            <div>
+        < >
+            <div data-testid="company-profile-invites">
                 {invites}
             </div>
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={() => onCallBack()}/>

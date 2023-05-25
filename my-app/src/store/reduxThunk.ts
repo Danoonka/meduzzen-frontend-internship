@@ -66,6 +66,7 @@ import {NewUser} from "../pages/UserRegistration";
 import {toast} from "react-toastify";
 import {CompanyState, CurrentUserState, EditQuestionState, EditQuizState, NewQuizState, QuestionState} from "../types";
 
+
 export const checkAuthThunk = async () => {
     return await checkAuth()
         .then((res) => {

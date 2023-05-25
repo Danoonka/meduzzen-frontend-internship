@@ -21,17 +21,17 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
     useEffect(() => {
         membersListCompanyThunk(companyData.company_id)
             .then((res) => {
-                setMembersList(res.result)
+                setMembersList(res?.result)
             })
 
-    }, [membersList.users.length])
+    }, [membersList.users.length, companyData.company_id])
 
 
     const onClickFire = (action_id: number) => {
         fireLeaveMemberThunk(action_id)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setMembersList(res.result)
+                    setMembersList(res?.result)
                 }))
     }
 
@@ -40,7 +40,7 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
         addToBlackListThunk(action_id)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    setMembersList(res.result)
+                    setMembersList(res?.result)
                 }))
     }
 
@@ -86,11 +86,11 @@ const CompanyProfileMembers = ({companyData, isPermission}: CompanyItemProps) =>
     const onCallBack = () => {
         makeMemberAdminThunk(modalData)
             .then(() => membersListCompanyThunk(companyData.company_id)
-                .then((res) => setMembersList(res.result)))
+                .then((res) => setMembersList(res?.result)))
     }
 
     return (
-        <div>
+        <div data-testid="company-profile-members">
             <Button onClick={() => getAllUsersResult(companyData.company_id)}>Download All Users Results</Button>
             {members}
             <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}

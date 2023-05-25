@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import Input from "../utils/Input";
 import {toast} from "react-toastify";
 import Button from "../utils/Button";
-import {useAuth0} from '@auth0/auth0-react';
+// import {useAuth0} from '@auth0/auth0-react';
 import {validUserAuthorization} from "../utils/authorizaton";
 import {store} from "../store/store";
 import {authTrue} from "../store/userActionCreators";
-import {checkAuthThunk} from "../store/reduxThunk";
+// import {checkAuthThunk} from "../store/reduxThunk";
 
 interface User {
     user_email: string;
@@ -14,17 +14,17 @@ interface User {
 }
 
 const UserAuthorization: React.FC = () => {
-    const {loginWithPopup, getAccessTokenSilently} = useAuth0()
+    // const {loginWithPopup, getAccessTokenSilently} = useAuth0()
     const [user, setUser] = useState<User>({
             user_email: '',
             user_password: '',
         }
     )
 
-    const setTokenAuth = async () => {
-        const accessToken = await getAccessTokenSilently();
-        localStorage.setItem('accessToken', accessToken);
-    }
+    // const setTokenAuth = async () => {
+    //     const accessToken = await getAccessTokenSilently();
+    //     localStorage.setItem('accessToken', accessToken);
+    // }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -77,17 +77,17 @@ const UserAuthorization: React.FC = () => {
         store.dispatch(authTrue())
     };
 
-    const logInAuth = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        await loginWithPopup();
-        await setTokenAuth();
-        if (await checkAuthThunk()) {
-            store.dispatch(authTrue())
-            toast.success('Welcome!', {
-                position: toast.POSITION.BOTTOM_RIGHT
-            })
-        }
-    }
+    // const logInAuth = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     event.preventDefault();
+    //     await loginWithPopup();
+    //     await setTokenAuth();
+    //     if (await checkAuthThunk()) {
+    //         store.dispatch(authTrue())
+    //         toast.success('Welcome!', {
+    //             position: toast.POSITION.BOTTOM_RIGHT
+    //         })
+    //     }
+    // }
 
 
     return (
@@ -96,7 +96,7 @@ const UserAuthorization: React.FC = () => {
             <form>
                 {fields}
                 <Button onClick={logIn}>Submit</Button>
-                <Button onClick={logInAuth}>Log In with auth</Button>
+                {/*<Button onClick={logInAuth}>Log In with auth</Button>*/}
             </form>
         </div>
     );

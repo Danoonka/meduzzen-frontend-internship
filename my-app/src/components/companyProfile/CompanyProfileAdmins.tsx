@@ -13,13 +13,13 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
     useEffect(() => {
         membersListCompanyThunk(companyData.company_id)
             .then((res) => {
-                const admins = (res.result.users).filter(function (el: ActionUserState) {
+                const admins = (res?.result.users)?.filter(function (el: ActionUserState) {
                     return el.action === 'admin'
                 })
                 setAdminsList({users: admins})
             })
 
-    }, [adminsList.users.length])
+    }, [adminsList.users.length, companyData.company_id])
 
     const onClickRemoveAdmin = (action_id: number) => {
         setModalData(action_id)
@@ -39,7 +39,7 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
         removeAdminThunk(modalData)
             .then(() => membersListCompanyThunk(companyData.company_id)
                 .then((res) => {
-                    const admins = (res.result.users)
+                    const admins = (res?.result.users)
                         .filter(function (el: ActionUserState) {
                             return el.action === 'admin'
                         })
@@ -47,9 +47,9 @@ const CompanyProfileAdmins = ({companyData}: CompanyItemProps) => {
                 }))
     }
     return (
-        <div>
+        <div data-testid="company-profile-admins">
             {adminRows}
-            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}  callback={() => onCallBack()}/>
+            <CheckModal isOpen={isOpen} toggle={() => setIsOpen(!isOpen)} callback={() => onCallBack()}/>
         </div>
     );
 };

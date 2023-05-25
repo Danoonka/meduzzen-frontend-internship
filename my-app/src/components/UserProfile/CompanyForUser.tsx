@@ -3,7 +3,7 @@ import {AllCompaniesState, initialAllCompaniesState, Rating, UserProps} from "..
 import {Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {
     getCompanyByIdThunk,
-    getRatingAnalyticInCompanyThunk, getUserByIdThunk,
+    getRatingAnalyticInCompanyThunk,
     myCompanyListThunk
 } from "../../store/reduxThunk";
 import Chart from "../../utils/Chart";
@@ -27,9 +27,9 @@ const CompanyForUser = ({user_id}: UserProps) => {
     const getCompaniesNames = async (companyIDs: number[]) => {
         const namePromises = companyIDs.map((id) => {
                 if (id >= 0) {
-                    return getCompanyByIdThunk(id).then(res => res.result.company_name)
+                    return getCompanyByIdThunk(id).then(res => res?.result.company_name)
                 }
-            }
+            return null            }
         );
         const names = await Promise.all(namePromises);
         setCompanyNameArr(names);
@@ -37,16 +37,16 @@ const CompanyForUser = ({user_id}: UserProps) => {
 
     useEffect(() => {
         myCompanyListThunk(user_id).then((res) => {
-            setRatingCompany(res.result);
+            setRatingCompany(res?.result);
         });
-    }, [ratingCompany.companies.length]);
+    }, [ratingCompany.companies.length, user_id]);
 
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {
         const company_id = event.currentTarget.getAttribute('data-value')
         getRatingAnalyticInCompanyThunk(user_id, Number(company_id))
             .then((res) => {
-                setRating(res.result.rating);
+                setRating(res?.result.rating);
             });
     }
 

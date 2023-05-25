@@ -27,7 +27,7 @@ const UserRows = ({currentUser, children, isPermission, company_id, index}: Curr
     useEffect(()=>{
         quizzesLastPassCompanyThunk(company_id? company_id: -1)
             .then(res => {
-                const user = res.result.users.find((user: User) => user.user_id === currentUser.user_id);
+                const user = res?.result.users.find((user: User) => user.user_id === currentUser.user_id);
 
                 if (user && user.quizzes.length > 0) {
                     const lastQuiz = user.quizzes.reduce((prevQuiz:quiz, currentQuiz:quiz) => {
@@ -40,7 +40,7 @@ const UserRows = ({currentUser, children, isPermission, company_id, index}: Curr
                     setLastPass(lastQuiz);
                 }
             })
-    }, [])
+    }, [company_id, currentUser.user_id])
 
 
     return (

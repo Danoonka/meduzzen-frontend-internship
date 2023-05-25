@@ -22,9 +22,9 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
     useEffect(() => {
         myCompanyListThunk(user_id)
             .then((res) => {
-                setCompanyList(res.result)
+                setCompanyList(res?.result)
             })
-    }, [companyList.companies.length])
+    }, [companyList.companies.length, user_id])
 
     const companies = (companyList.companies).map((item: ActionCompanyState) => {
             const isOwner = item.action === 'owner';
@@ -41,7 +41,7 @@ const UserProfileCompanyList = ({user_id}: UserProps) => {
         fireLeaveMemberThunk(modalData).then(() =>
             myCompanyListThunk(user_id)
                 .then((res) => {
-                    setCompanyList(res.result)
+                    setCompanyList(res?.result)
                 })
         )
     }

@@ -30,11 +30,13 @@ const SummaryForEveryQuiz = ({companyData}: CompanyItemProps) => {
         setQuiz(event.target.value as string);
     };
 
+    const ratingCompanyStringified = JSON.stringify(ratingCompany)
+
     useEffect(() => {
         getQuizListThunk(companyData.company_id).then((res) => {
-            setRatingCompany(res.result.quizzes);
+            setRatingCompany(res?.result.quizzes);
         });
-    }, [JSON.stringify(ratingCompany)]);
+    }, [ratingCompanyStringified, companyData.company_id]);
 
     useEffect(() => {
         const quizIDs = ratingCompany.map((entry) => entry.quiz_id);
@@ -43,7 +45,7 @@ const SummaryForEveryQuiz = ({companyData}: CompanyItemProps) => {
 
     const getQuizNames = async (companyIDs: number[]) => {
         const namePromises = companyIDs.map((id) =>
-            getQuizByIdThunk(id).then((res) => res.result.quiz_name)
+            getQuizByIdThunk(id).then((res) => res?.result.quiz_name)
         );
         const names = await Promise.all(namePromises);
         setQuizNameArr(names);
@@ -52,7 +54,7 @@ const SummaryForEveryQuiz = ({companyData}: CompanyItemProps) => {
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {
         const quiz_id = event.currentTarget.getAttribute('data-value')
         getSummaryRatingAnalyticForQuizThunk(companyData.company_id, Number(quiz_id))
-            .then(res => setUsers(res.result.rating))
+            .then(res => setUsers(res?.result.rating))
     }
     const uniqueUserIds = Array.from(new Set(users.map(entry => entry.user_id)));
     const colors = generateColors(uniqueUserIds.length);

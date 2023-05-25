@@ -27,23 +27,24 @@ const QuizzesForUser = ({user_id}: UserProps) => {
 
     const getQuizNames = async (companyIDs: number[]) => {
         const namePromises = companyIDs.map((id) =>
-            getQuizByIdThunk(id).then((res) => res.result.quiz_name)
+            getQuizByIdThunk(id).then((res) => res?.result.quiz_name)
         );
         const names = await Promise.all(namePromises);
         setQuizNameArr(names);
     };
 
+    const stringsfied = JSON.stringify(ratingQuiz)
 
     useEffect(() => {
         quizzesLastPassThunk(user_id)
-            .then(res => setRatingQuiz(res.result.quizzes))
-    }, [JSON.stringify(ratingQuiz)]);
+            .then(res => setRatingQuiz(res?.result.quizzes))
+    }, [stringsfied, user_id]);
 
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {
         const quiz_id = event.currentTarget.getAttribute('data-value')
         getRatingAnalyticsForQuizThunk(user_id, Number(quiz_id))
-            .then(res => setRating(res.result.rating))
+            .then(res => setRating(res?.result.rating))
     }
 
 

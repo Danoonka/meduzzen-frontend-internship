@@ -39,7 +39,7 @@ function App() {
             {(isAuthenticated)
                 ?
                 (<Routes>
-                    <Route path="/meduzzen-demo" element={<MainPage/>}/>
+                    <Route path="/" element={<MainPage/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/userList" element={<UserList/>}/>
                     <Route path="/userProfile/:userId" element={<UserProfile/>}/>
@@ -48,19 +48,19 @@ function App() {
                     <Route path="/editUser" element={<EditUser/>}/>
                     <Route path="/editCompany" element={<EditCompany/>}/>
                     <Route path="/404" element={<NotFound/>}/>
-                    <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
-                    <Route path="/*" element={<Navigate to="/meduzzen-demo"/>}/>
+                    {/*<Route path="/" element={<Navigate to="/"/>}/>*/}
+                    <Route path="/*" element={<Navigate to="/"/>}/>
                     <Route path="/takeQuiz" element={<TakeQuiz/>}/>
                 </Routes>)
                 :
                 (<Routes>
-                    <Route path="/meduzzen-demo" element={<MainPage/>}/>
+                    <Route path="/" element={<MainPage/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/userRegistration" element={<UserRegistration/>}/>
                     <Route path="/userAuthorization" element={<UserAuthorization/>}/>
                     <Route path="/404" element={<NotFound/>}/>
                     {/*<Route path="/*" element={ <Navigate to="/meduzzen-demo"/>}/>*/}
-                    <Route path="/" element={<Navigate to="/meduzzen-demo"/>}/>
+                    <Route path="/" element={<Navigate to="/"/>}/>
                 </Routes>)
             }
 
