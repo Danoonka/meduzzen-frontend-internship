@@ -24,6 +24,9 @@ This is a template for creating a React application using TypeScript and followi
 
 ### Hello! Let`s go started
 
+You can check deployed project here:
+[http://mymeduzzenbucket.s3-website-ap-northeast-1.amazonaws.com/](http://mymeduzzenbucket.s3-website-ap-northeast-1.amazonaws.com/)
+
 To run project in your device follow this few steps:
 
 1. Open command prompt in folder, where you want your app to be located, after this enter command:
@@ -85,6 +88,7 @@ password: 12345678
 ```
 
 Or create your own account.
+
 
 # Conclusion
 You now have a React application template with TypeScript, Redux, Axios, Auth0 integration, CRUD operations for managing users and companies, validation rules, permissions for editing user and company information, Docker setup, and GitHub Pages deployment. Feel free to modify the structure and customize the application to meet your specific requirements. Happy coding!
