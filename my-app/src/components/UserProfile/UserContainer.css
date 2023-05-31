@@ -1,0 +1,35 @@
+.user-profile-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-profile-image-container img {
+    width: 300px;
+}
+
+.user-profile-image-container form {
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+
+.user-profile-image-container form Button {
+    display: block;
+    margin: 20px auto;
+}
+
+.user-profile-info-container Button {
+    margin-top: 60px;
+    margin-left: 200px;
+}
+
+.star{
+    font-size: 30px;
+    color: yellow;
+}
+
+.data-time{
+    color: #42a5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+}
+
